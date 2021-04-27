@@ -34,8 +34,7 @@
         </div>
         <div style="width: 20px;"></div>
         <el-menu style="padding-left: 150px;padding-right: 150px" router :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
-          <el-menu-item index="/Hot"><span style="font-size: 20px">热销</span></el-menu-item>
-          <el-menu-item index="/Other">其他1</el-menu-item>
+          <el-menu-item style="padding-left: 545px" index="/Hot"><span style="font-size: 30px;color: red">今日特价</span></el-menu-item>
         </el-menu>
         <router-view></router-view>
         <div style="height: 600px">
