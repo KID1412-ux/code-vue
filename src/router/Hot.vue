@@ -9,7 +9,7 @@
         <el-col :span="4"><div class="grid-content bg-purple"></div></el-col>
         <el-col :span="4"><div class="grid-content bg-purple-light"></div></el-col>
       </el-row>
-      <el-row style="padding-top: 5px">
+      <el-row style="padding-top: 7px">
         <el-col :span="4"><div class="grid-content bg-purple"></div></el-col>
         <el-col :span="4"><div class="grid-content bg-purple-light"></div></el-col>
         <el-col :span="4"><div class="grid-content bg-purple"></div></el-col>
@@ -17,7 +17,7 @@
         <el-col :span="4"><div class="grid-content bg-purple"></div></el-col>
         <el-col :span="4"><div class="grid-content bg-purple-light"></div></el-col>
       </el-row>
-      <el-row style="padding-top: 5px">
+      <el-row style="padding-top: 7px">
         <el-col :span="4"><div class="grid-content bg-purple"></div></el-col>
         <el-col :span="4"><div class="grid-content bg-purple-light"></div></el-col>
         <el-col :span="4"><div class="grid-content bg-purple"></div></el-col>
@@ -25,7 +25,7 @@
         <el-col :span="4"><div class="grid-content bg-purple"></div></el-col>
         <el-col :span="4"><div class="grid-content bg-purple-light"></div></el-col>
       </el-row>
-      <el-row style="padding-top: 5px">
+      <el-row style="padding-top: 7px">
         <el-col :span="4"><div class="grid-content bg-purple"></div></el-col>
         <el-col :span="4"><div class="grid-content bg-purple-light"></div></el-col>
         <el-col :span="4"><div class="grid-content bg-purple"></div></el-col>
@@ -33,7 +33,7 @@
         <el-col :span="4"><div class="grid-content bg-purple"></div></el-col>
         <el-col :span="4"><div class="grid-content bg-purple-light"></div></el-col>
       </el-row>
-      <el-row style="padding-top: 5px">
+      <el-row style="padding-top: 7px">
         <el-col :span="4"><div class="grid-content bg-purple"></div></el-col>
         <el-col :span="4"><div class="grid-content bg-purple-light"></div></el-col>
         <el-col :span="4"><div class="grid-content bg-purple"></div></el-col>
@@ -66,7 +66,7 @@ export default {
 }
 .grid-content {
   border-radius: 4px;
-  min-height: 200px;
+  min-height: 300px;
 }
 
 .divcss5{
@@ -76,6 +76,6 @@ export default {
 }
 
 .el-col{
-  padding-right: 5px
+  padding-right: 7px
 }
 </style>
