@@ -1,35 +1,44 @@
 <template>
   <div id="app">
-    <el-container>
-
-    </el-container>
     <el-container class="footer">
       <el-header style="background: red">
       </el-header>
       <el-main>
         <el-row>
+          <el-col :span="24"><div class="grid-content"></div></el-col>
+        </el-row>
+        <el-row>
           <el-col :span="8"><div class="grid-content"></div></el-col>
-          <el-col :span="8"><div class="grid-content">
-            <el-input id="name" class="input"  v-model="name" placeholder="请输入帐号">
-              <template slot="prepend">帐号</template>
-            </el-input>
-          </div></el-col>
+          <el-col :span="8">
+            <div class="grid-content">
+              <el-input id="name" class="input"  v-model="name" placeholder="请输入帐号">
+                <template slot="prepend">帐号</template>
+              </el-input>
+            </div>
+          </el-col>
           <el-col :span="8"><div class="grid-content"></div></el-col>
         </el-row>
         <el-row>
           <el-col :span="8"><div class="grid-content"></div></el-col>
-          <el-col :span="8"><div class="grid-content">
-            <el-input id="password" class="input"  type="password"  v-model="password" placeholder="请输入帐号">
-              <template slot="prepend">密码</template>
-            </el-input>
-          </div></el-col>
+          <el-col :span="8">
+            <div class="grid-content">
+              <el-input id="password" class="input"  type="password"  v-model="password" placeholder="请输入密码">
+                <template slot="prepend">密码</template>
+              </el-input>
+            </div>
+          </el-col>
           <el-col :span="8"><div class="grid-content"></div></el-col>
         </el-row>
         <el-row>
           <el-col :span="8"><div class="grid-content"></div></el-col>
-          <el-col :span="8"><div class="grid-content">
-            <el-button id="login" class="input"  type="primary">登录</el-button>
-          </div></el-col>
+          <el-col :span="8">
+            <div class="grid-content">
+              <el-button id="login" class="input"  type="primary">登录</el-button>
+            </div>
+            <div class="grid-content">
+              <el-button id="register" class="input"  type="primary">注册</el-button>
+            </div>
+          </el-col>
           <el-col :span="8"><div class="grid-content"></div></el-col>
         </el-row>
       </el-main>
