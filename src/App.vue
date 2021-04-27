@@ -9,9 +9,9 @@
           <el-col :span="12" id="div1">
             <a href="#">你好,请登录</a>
             <a href="#">注册</a>
-            <a href="#"><i class="el-icon-user"></i>我的订单</a>
+            <a href="#"><i class="el-icon-shopping-bag-2"></i>我的订单</a>
             <a href="#"><i class="el-icon-shopping-cart-2"></i>购物车</a>
-            <a href="#">商品分类</a>
+            <a href="/Classification"><i class="el-icon-guide"></i>商品分类</a>
           </el-col>
         </el-row>
         <hr/>
@@ -32,11 +32,10 @@
             </el-carousel>
           </slot>
         </div>
-        <div style="width: 20px;"></div>
-        <el-menu style="padding-left: 150px;padding-right: 150px" router :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
-          <el-menu-item style="padding-left: 545px" index="/Hot"><span style="font-size: 30px;color: red">今日特价</span></el-menu-item>
-        </el-menu>
-        <router-view></router-view>
+        <div style="padding-left: 150px;padding-right: 150px;padding-top: 20px">
+          <span style="font-size: 30px;color: red;padding-left: 525px">今日特价<i class="el-icon-magic-stick" style="color: red"></i></span>
+        </div>
+        <Hot></Hot>
         <div style="height: 600px">
 
         </div>
@@ -45,9 +44,13 @@
   </div>
 </template>
 
+import Classification from './Classification.vue'
+
 <script>
+import Hot from "./router/Hot";
 export default {
   name: 'app',
+  components: {Hot},
 }
 </script>
 

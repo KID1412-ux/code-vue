@@ -1,45 +1,72 @@
 <template>
   <div class="divcss5">
     <div style="padding-left: 150px;padding-right: 150px">
-      <el-row>
-        <el-col :span="4"><div class="grid-content bg-purple"></div></el-col>
-        <el-col :span="4"><div class="grid-content bg-purple-light"></div></el-col>
-        <el-col :span="4"><div class="grid-content bg-purple"></div></el-col>
-        <el-col :span="4"><div class="grid-content bg-purple-light"></div></el-col>
-        <el-col :span="4"><div class="grid-content bg-purple"></div></el-col>
-        <el-col :span="4"><div class="grid-content bg-purple-light"></div></el-col>
+      <el-row id="elrow">
+        <el-col :span="4">
+          <div class="grid-content">
+            <el-image style="width: 100%; height: 200px" :src="require('../img/logo.png')" fit="contain"></el-image>
+            <div><h3>白菜</h3></div>
+            <div>价格：<span style="color: red">￥15</span>/500g</div>
+          </div>
+        </el-col>
+        <el-col :span="4">
+          <div class="grid-content">
+            <el-image style="width: 100%; height: 200px" :src="require('../img/logo.png')" fit="contain"></el-image>
+          </div>
+        </el-col>
+        <el-col :span="4">
+          <div class="grid-content">
+            <el-image style="width: 100%; height: 200px" :src="require('../img/logo.png')" fit="contain"></el-image>
+          </div>
+        </el-col>
+        <el-col :span="4">
+          <div class="grid-content">
+            <el-image style="width: 100%; height: 200px" :src="require('../img/logo.png')" fit="contain"></el-image>
+          </div>
+        </el-col>
+        <el-col :span="4">
+          <div class="grid-content">
+            <el-image style="width: 100%; height: 200px" :src="require('../img/logo.png')" fit="contain"></el-image>
+          </div>
+        </el-col>
+        <el-col :span="4">
+          <div class="grid-content">
+            <el-image style="width: 100%; height: 200px" :src="require('../img/logo.png')" fit="contain"></el-image>
+          </div>
+        </el-col>
       </el-row>
       <el-row style="padding-top: 7px">
-        <el-col :span="4"><div class="grid-content bg-purple"></div></el-col>
-        <el-col :span="4"><div class="grid-content bg-purple-light"></div></el-col>
-        <el-col :span="4"><div class="grid-content bg-purple"></div></el-col>
-        <el-col :span="4"><div class="grid-content bg-purple-light"></div></el-col>
-        <el-col :span="4"><div class="grid-content bg-purple"></div></el-col>
-        <el-col :span="4"><div class="grid-content bg-purple-light"></div></el-col>
-      </el-row>
-      <el-row style="padding-top: 7px">
-        <el-col :span="4"><div class="grid-content bg-purple"></div></el-col>
-        <el-col :span="4"><div class="grid-content bg-purple-light"></div></el-col>
-        <el-col :span="4"><div class="grid-content bg-purple"></div></el-col>
-        <el-col :span="4"><div class="grid-content bg-purple-light"></div></el-col>
-        <el-col :span="4"><div class="grid-content bg-purple"></div></el-col>
-        <el-col :span="4"><div class="grid-content bg-purple-light"></div></el-col>
-      </el-row>
-      <el-row style="padding-top: 7px">
-        <el-col :span="4"><div class="grid-content bg-purple"></div></el-col>
-        <el-col :span="4"><div class="grid-content bg-purple-light"></div></el-col>
-        <el-col :span="4"><div class="grid-content bg-purple"></div></el-col>
-        <el-col :span="4"><div class="grid-content bg-purple-light"></div></el-col>
-        <el-col :span="4"><div class="grid-content bg-purple"></div></el-col>
-        <el-col :span="4"><div class="grid-content bg-purple-light"></div></el-col>
-      </el-row>
-      <el-row style="padding-top: 7px">
-        <el-col :span="4"><div class="grid-content bg-purple"></div></el-col>
-        <el-col :span="4"><div class="grid-content bg-purple-light"></div></el-col>
-        <el-col :span="4"><div class="grid-content bg-purple"></div></el-col>
-        <el-col :span="4"><div class="grid-content bg-purple-light"></div></el-col>
-        <el-col :span="4"><div class="grid-content bg-purple"></div></el-col>
-        <el-col :span="4"><div class="grid-content bg-purple-light"></div></el-col>
+        <el-col :span="4">
+          <div class="grid-content">
+            <el-image style="width: 100%; height: 200px" :src="require('../img/logo.png')" fit="contain"></el-image>
+            <div></div>
+          </div>
+        </el-col>
+        <el-col :span="4">
+          <div class="grid-content">
+            <el-image style="width: 100%; height: 200px" :src="require('../img/logo.png')" fit="contain"></el-image>
+          </div>
+        </el-col>
+        <el-col :span="4">
+          <div class="grid-content">
+            <el-image style="width: 100%; height: 200px" :src="require('../img/logo.png')" fit="contain"></el-image>
+          </div>
+        </el-col>
+        <el-col :span="4">
+          <div class="grid-content">
+            <el-image style="width: 100%; height: 200px" :src="require('../img/logo.png')" fit="contain"></el-image>
+          </div>
+        </el-col>
+        <el-col :span="4">
+          <div class="grid-content">
+            <el-image style="width: 100%; height: 200px" :src="require('../img/logo.png')" fit="contain"></el-image>
+          </div>
+        </el-col>
+        <el-col :span="4">
+          <div class="grid-content">
+            <el-image style="width: 100%; height: 200px" :src="require('../img/logo.png')" fit="contain"></el-image>
+          </div>
+        </el-col>
       </el-row>
     </div>
   </div>
@@ -58,15 +85,11 @@ export default {
 
 <style scoped>
 
-.bg-purple {
-  background: #d3dce6;
-}
-.bg-purple-light {
-  background: #e5e9f2;
-}
+
 .grid-content {
   border-radius: 4px;
   min-height: 300px;
+  border: 1px solid gray;
 }
 
 .divcss5{
@@ -77,5 +100,12 @@ export default {
 
 .el-col{
   padding-right: 7px
+}
+.grid-content div{
+  text-align:center;
+  margin:0px auto;
+}
+.grid-content:hover {
+  border: 1px solid red;
 }
 </style>
