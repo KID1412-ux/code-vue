@@ -1,6 +1,8 @@
 <template>
   <div id="app">
-    <el-container></el-container>
+    <el-container>
+
+    </el-container>
     <el-container class="footer">
       <el-header style="background: red">
       </el-header>
