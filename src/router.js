@@ -5,7 +5,7 @@ import VueRouter from 'vue-router';
 //第三方库需要use一下才能用
 Vue.use(VueRouter)
 
-import Hot from './router/Hot.vue';
+import Hot from './components/Hot.vue';
 import Other from './router/Other.vue'
 
 //定义routes路由的集合，数组类型

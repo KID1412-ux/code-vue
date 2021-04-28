@@ -47,7 +47,7 @@
 import Classification from './Classification.vue'
 
 <script>
-import Hot from "./router/Hot";
+import Hot from "./components/Hot";
 export default {
   name: 'app',
   components: {Hot},
