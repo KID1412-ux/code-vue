@@ -26,8 +26,8 @@
           <slot>
             <!--Carousel 走马灯-卡片话-->
             <el-carousel :interval="4000" type="card" height="300px">
-              <el-carousel-item v-for="item in 5" :key="item">
-                <h3 class="medium">{{ item }}</h3>
+              <el-carousel-item v-for="item in advertisements" :key="item.index">
+                <el-image :src="item.picture" fit="fill"></el-image>
               </el-carousel-item>
             </el-carousel>
           </slot>
@@ -51,6 +51,17 @@ import Hot from "./router/Hot";
 export default {
   name: 'app',
   components: {Hot},
+  data(){
+    return{
+      advertisements:[
+        {index:0,picture:require('./img/gg1.png')},
+        {index:1,picture:require('./img/gg2.png')},
+        {index:2,picture:require('./img/gg3.png')},
+        {index:3,picture:require('./img/gg4.png')},
+        {index:4,picture:require('./img/gg5.png')},
+      ]
+    }
+  }
 }
 </script>
 
