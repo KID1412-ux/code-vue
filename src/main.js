@@ -1,12 +1,12 @@
 import Vue from 'vue'
 import App from './App.vue'
+import First from "./First";
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
+//引用router.js
+import router from './router.js'
+Vue.config.productionTip = false
 
-
-//导入elementui
-import ElementUI from 'element-ui'
-import 'element-ui/lib/theme-chalk/index.css'
-
-//Vue使用Elementui
 Vue.use(ElementUI)
 
 //导入axios
@@ -20,5 +20,5 @@ Vue.prototype.$axios = Axios
 
 new Vue({
   el: '#app',
-  render: h => h(App)
+  render: h => h(First)
 })
