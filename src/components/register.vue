@@ -8,7 +8,7 @@
           <el-col :span="8"><div class="grid-content"></div></el-col>
           <el-col :span="8">
             <div class="grid-content">
-              <el-input id="username" class="input"  v-model="username" placeholder="请输入帐号">
+              <el-input id="userName" class="input"  v-model="username" placeholder="请输入帐号">
                 <template slot="prepend">帐号:</template>
               </el-input>
             </div>
@@ -19,16 +19,17 @@
             </div>
             <div class="grid-content">
               <label >性别:</label>
-              <el-radio v-model="sex" label="1" style="margin-left: 10%" border>男</el-radio>
-              <el-radio v-model="sex" label="2" style="margin-left: 10%" border>女</el-radio>
+              <el-radio v-model="sex" label="0" style="margin-left: 10%" border>男</el-radio>
+              <el-radio v-model="sex" label="1" style="margin-left: 10%" border>女</el-radio>
             </div>
             <div class="grid-content">
-              <el-input id="phone" class="input"  type="password"  v-model="phone" placeholder="请输入电话">
+              <el-input id="phone" class="input"  type="text"  v-model="phone" placeholder="请输入电话">
                 <template slot="prepend">电话</template>
               </el-input>
-              <div>
-                <template slot="prepend">电话</template>
-              </div>
+            </div>
+            <div class="grid-content">
+                <el-date-picker slot="append"  v-model="birthday" type="date" placeholder="选择日期">
+                </el-date-picker>
             </div>
             <div class="grid-content">
               <el-button id="register" class="input"  type="primary">注册</el-button>
@@ -49,7 +50,9 @@ export default {
     return {
       username:"",
       password:"",
-      sex:"1"
+      sex:"0",
+      phone:"",
+      birthday:""
     }
   }
 }

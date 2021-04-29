@@ -9,36 +9,23 @@
         </el-row>
         <el-row>
           <el-col :span="8"><div class="grid-content"></div></el-col>
-          <el-col :span="8">
             <div class="grid-content">
-              <el-input id="name" class="input"  v-model="name" placeholder="请输入帐号">
+              <el-input id="userName" class="input"  v-model="username" placeholder="请输入帐号">
                 <template slot="prepend">帐号</template>
               </el-input>
             </div>
-          </el-col>
-          <el-col :span="8"><div class="grid-content"></div></el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="8"><div class="grid-content"></div></el-col>
-          <el-col :span="8">
             <div class="grid-content">
               <el-input id="password" class="input"  type="password"  v-model="password" placeholder="请输入密码">
                 <template slot="prepend">密码</template>
-              </el-input>
+              </el-input><br>
+              <label style="color: red">{{msg}}</label>
             </div>
-          </el-col>
-          <el-col :span="8"><div class="grid-content"></div></el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="8"><div class="grid-content"></div></el-col>
-          <el-col :span="8">
             <div class="grid-content">
-              <el-button id="login" class="input"  type="primary">登录</el-button>
+              <el-button id="login" class="input" @click="userLogin" type="primary">登录</el-button>
             </div>
             <div class="grid-content">
               <el-button id="register" class="input"  type="primary">注册</el-button>
             </div>
-          </el-col>
           <el-col :span="8"><div class="grid-content"></div></el-col>
         </el-row>
       </el-main>
@@ -52,9 +39,29 @@ export default {
   name: 'app',
   data () {
     return {
-      name:"",
-      password:""
+      username:"",
+      password:"",
+      msg:""
     }
+  },
+  methods:{
+    userLogin(){
+      var _this=this;
+      var params =new URLSearchParams();
+      params.append("userName",this.username);
+      params.append("password",this.password);
+      this.$axios.post("user/userLogin",params).then(function(result) {
+          if (result.data==""){
+            _this.msg="用户名或密码错误";
+          }
+          else {
+            _this.msg="";
+            alert("登录成功")
+            console.log(result)
+          }
+      }).catch();
+    }
+
   }
 }
 </script>
