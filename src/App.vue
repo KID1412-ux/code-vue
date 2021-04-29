@@ -4,7 +4,7 @@
       <el-header>
         <el-row>
           <el-col :span="12">
-            <img style="height: 55px" src="./img/logo.png">
+            <img style="height: 60px;margin-right: 400px;" src="./img/logo.png">
           </el-col>
           <el-col :span="12" id="div1">
             <router-link to="/login">你好,请登录</router-link>
