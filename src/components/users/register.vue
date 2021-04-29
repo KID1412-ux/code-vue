@@ -1,4 +1,3 @@
-<!--登录界面-->
 <template>
   <div id="app">
     <el-container class="footer">
@@ -6,35 +5,31 @@
       </el-header>
       <el-main>
         <el-row>
-          <el-col :span="24"><div class="grid-content"></div></el-col>
-        </el-row>
-        <el-row>
           <el-col :span="8"><div class="grid-content"></div></el-col>
           <el-col :span="8">
             <div class="grid-content">
-              <el-input id="name" class="input"  v-model="name" placeholder="请输入帐号">
-                <template slot="prepend">帐号</template>
+              <el-input id="userName" class="input"  v-model="username" placeholder="请输入帐号">
+                <template slot="prepend">帐号:</template>
               </el-input>
             </div>
-          </el-col>
-          <el-col :span="8"><div class="grid-content"></div></el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="8"><div class="grid-content"></div></el-col>
-          <el-col :span="8">
             <div class="grid-content">
               <el-input id="password" class="input"  type="password"  v-model="password" placeholder="请输入密码">
-                <template slot="prepend">密码</template>
+                <template slot="prepend">密码:</template>
               </el-input>
             </div>
-          </el-col>
-          <el-col :span="8"><div class="grid-content"></div></el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="8"><div class="grid-content"></div></el-col>
-          <el-col :span="8">
             <div class="grid-content">
-              <el-button id="login" class="input"  type="primary">登录</el-button>
+              <label >性别:</label>
+              <el-radio v-model="sex" label="0" style="margin-left: 10%" border>男</el-radio>
+              <el-radio v-model="sex" label="1" style="margin-left: 10%" border>女</el-radio>
+            </div>
+            <div class="grid-content">
+              <el-input id="phone" class="input"  type="text"  v-model="phone" placeholder="请输入电话">
+                <template slot="prepend">电话</template>
+              </el-input>
+            </div>
+            <div class="grid-content">
+                <el-date-picker slot="append"  v-model="birthday" type="date" placeholder="选择日期">
+                </el-date-picker>
             </div>
             <div class="grid-content">
               <el-button id="register" class="input"  type="primary">注册</el-button>
@@ -53,8 +48,11 @@ export default {
   name: 'app',
   data () {
     return {
-      name:"",
-      password:""
+      username:"",
+      password:"",
+      sex:"0",
+      phone:"",
+      birthday:""
     }
   }
 }
@@ -92,7 +90,7 @@ a {
 }
 
 .grid-content {
-  margin-top: 40px;
+  margin-top: 30px;
 }
 
 .footer{
