@@ -6,7 +6,7 @@ import VueRouter from 'vue-router';
 Vue.use(VueRouter)
 
 import Hot from "../components/Home/Hot";
-import Login from "../components/login";
+import Login from "../components/Login";
 import Home from "../components/Home";
 
 //定义routes路由的集合，数组类型

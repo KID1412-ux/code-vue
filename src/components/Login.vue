@@ -1,12 +1,15 @@
 <template>
-<div>
- 登录之后的主页
-</div>
+  <div>
+    <h1>登录界面</h1>
+  </div>
 </template>
 
 <script>
 export default {
-  name: "home"
+  name: "Login",
+  methods:{
+
+  }
 }
 </script>
 
