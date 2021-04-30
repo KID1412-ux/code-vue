@@ -9,6 +9,9 @@ import Hot from './router/Hot.vue';
 import Other from './router/Other.vue'
 import Login from "./components/users/login";
 import Register from "./components/users/register";
+import Hot from "../components/Home/Hot";
+import Login from "../components/Login";
+import Home from "../components/Home";
 
 //定义routes路由的集合，数组类型
 const routes=[
@@ -17,6 +20,8 @@ const routes=[
   {path:"/Other",component:Other},
   {path:"/",component:Login},
   {path:"/Register",component:Register}
+  {path:"/login",component:Login},
+  {path:"/",component:Home},
 ]
 
 //实例化VueRouter并将routes添加进去
