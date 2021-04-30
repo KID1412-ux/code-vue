@@ -7,10 +7,11 @@
         <el-row>
           <el-col :span="8"><div class="grid-content"></div></el-col>
           <el-col :span="8">
-            <div class="grid-content">
+            <div class="grid-content" @mouseleave="userAttest" @mousedown="clearInput">
               <el-input id="userName" class="input"  v-model="username" placeholder="请输入帐号">
                 <template slot="prepend">帐号:</template>
               </el-input>
+              <label>{{userMsg}}</label>
             </div>
             <div class="grid-content">
               <el-input id="password" class="input"  type="password"  v-model="password" placeholder="请输入密码">
@@ -28,8 +29,12 @@
               </el-input>
             </div>
             <div class="grid-content">
-                <el-date-picker slot="append"  v-model="birthday" type="date" placeholder="选择日期">
+              <el-input class="input" type="text">
+                <template slot="prepend">生日</template>
+                <el-date-picker slot="append"  v-model="birthday" type="date" style="width: 280px;height: 38px;top:-1px;margin-left:-54px;margin-right:-20px;background-color: #fff;" placeholder="选择日期">
                 </el-date-picker>
+              </el-input>
+
             </div>
             <div class="grid-content">
               <el-button id="register" class="input"  type="primary">注册</el-button>
@@ -49,10 +54,26 @@ export default {
   data () {
     return {
       username:"",
+      userMsg:"",
       password:"",
       sex:"0",
       phone:"",
       birthday:""
+    }
+  },
+  methods:{
+    userAttest(){
+      var _this=this;
+      var params =new URLSearchParams();
+      params.append("userName",this.username);
+      this.$axios.post("user/selectOneUser",params).then(function(result) {
+        if (result.data!=""){
+          _this.userMsg="用户名已存在";
+        }
+      }).catch();
+    },
+    clearInput(){
+      this.userMsg="";
     }
   }
 }

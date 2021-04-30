@@ -7,12 +7,16 @@ Vue.use(VueRouter)
 
 import Hot from './router/Hot.vue';
 import Other from './router/Other.vue'
+import Login from "./components/users/login";
+import Register from "./components/users/register";
 
 //定义routes路由的集合，数组类型
 const routes=[
   //单个路由均为对象类型，path代表的是路径，component代表组件
   {path:'/Hot',component:Hot},
-  {path:"/Other",component:Other}
+  {path:"/Other",component:Other},
+  {path:"/",component:Login},
+  {path:"/Register",component:Register}
 ]
 
 //实例化VueRouter并将routes添加进去

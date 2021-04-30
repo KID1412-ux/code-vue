@@ -3,6 +3,8 @@ import Router from "vue-router"
 
 import Home from "../components/home"
 import Denglu from "../components/denglu"
+import Login from "../components/users/login"
+import Register from "../components/users/register"
 
 Vue.use(Router)
 

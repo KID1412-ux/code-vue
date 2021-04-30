@@ -10,7 +10,7 @@
         <el-row>
           <el-col :span="8"><div class="grid-content"></div></el-col>
             <div class="grid-content">
-              <el-input id="userName" class="input"  v-model="username" placeholder="请输入帐号">
+              <el-input id="userName" class="input"  v-model="username"  placeholder="请输入帐号">
                 <template slot="prepend">帐号</template>
               </el-input>
             </div>
@@ -24,7 +24,8 @@
               <el-button id="login" class="input" @click="userLogin" type="primary">登录</el-button>
             </div>
             <div class="grid-content">
-              <el-button id="register" class="input"  type="primary">注册</el-button>
+              <el-button id="register" class="input" @click="goRegister" type="primary">注册</el-button>
+<!--                <router-link to="/Register">注册</router-link>-->
             </div>
           <el-col :span="8"><div class="grid-content"></div></el-col>
         </el-row>
@@ -57,9 +58,12 @@ export default {
           else {
             _this.msg="";
             alert("登录成功")
-            console.log(result)
+            sessionStorage.setItem("username",_this.username);;
           }
       }).catch();
+    },
+    goRegister(){
+      this.$router.push('/Register');
     }
 
   }
