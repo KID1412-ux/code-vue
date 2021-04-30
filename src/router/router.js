@@ -5,12 +5,8 @@ import VueRouter from 'vue-router';
 //第三方库需要use一下才能用
 Vue.use(VueRouter)
 
-import Hot from './router/Hot.vue';
-import Other from './router/Other.vue'
-import Login from "./components/users/login";
-import Register from "./components/users/register";
 import Hot from "../components/Home/Hot";
-import Login from "../components/Login";
+import Login from "../components/users/login";
 import Home from "../components/Home";
 import ProductData from "../components/Product/ProductData";
 
@@ -18,9 +14,6 @@ import ProductData from "../components/Product/ProductData";
 const routes=[
   //单个路由均为对象类型，path代表的是路径，component代表组件
   {path:'/Hot',component:Hot},
-  {path:"/Other",component:Other},
-  {path:"/",component:Login},
-  {path:"/Register",component:Register}
   {path:"/login",component:Login},
   {path:"/",component:Home},
   {path:"/ProductData",component:ProductData},
