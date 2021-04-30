@@ -2,13 +2,13 @@ import Vue from 'vue'
 import App from './App.vue'
 import login from "./components/users/login";
 import register from "./components/users/register";
-import First from "./First";
+// import First from "./First";
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import AppUserLogin from "./AppUserLogin";
 import App5 from "./App5";
 //引用router.js
-import router from './router.js'
+import router from './router/router.js'
 Vue.config.productionTip = false
 
 Vue.use(ElementUI)
