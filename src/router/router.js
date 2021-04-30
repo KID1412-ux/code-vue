@@ -5,12 +5,11 @@ import VueRouter from 'vue-router';
 //第三方库需要use一下才能用
 Vue.use(VueRouter)
 
-// import Hot from './router/Hot.vue';
-// import Other from './router/Other.vue'
-import Login from "./components/users/login";
-import Register from "./components/users/register";
 import Hot from "../components/Home/Hot";
+import Login from "../components/users/login";
+import Register from "./components/users/register";
 import Home from "../components/Home";
+import ProductData from "../components/Product/ProductData";
 
 //定义routes路由的集合，数组类型
 const routes=[
@@ -20,6 +19,7 @@ const routes=[
   {path:"/Register",component:Register},
   {path:"/login",component:Login},
   {path:"/",component:Home},
+  {path:"/ProductData",component:ProductData},
 ]
 
 //实例化VueRouter并将routes添加进去
