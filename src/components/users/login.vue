@@ -5,35 +5,28 @@
       </el-header>
       <el-main>
         <el-row>
+          <el-col :span="24"><div class="grid-content"></div></el-col>
+        </el-row>
+        <el-row>
           <el-col :span="8"><div class="grid-content"></div></el-col>
-          <el-col :span="8">
             <div class="grid-content">
-              <el-input id="username" class="input"  v-model="username" placeholder="请输入帐号">
-                <template slot="prepend">帐号:</template>
+              <el-input id="userName" class="input"  v-model="username"  placeholder="请输入帐号">
+                <template slot="prepend">帐号</template>
               </el-input>
             </div>
             <div class="grid-content">
               <el-input id="password" class="input"  type="password"  v-model="password" placeholder="请输入密码">
-                <template slot="prepend">密码:</template>
-              </el-input>
+                <template slot="prepend">密码</template>
+              </el-input><br>
+              <label style="color: red">{{msg}}</label>
             </div>
             <div class="grid-content">
-              <label >性别:</label>
-              <el-radio v-model="sex" label="1" style="margin-left: 10%" border>男</el-radio>
-              <el-radio v-model="sex" label="2" style="margin-left: 10%" border>女</el-radio>
+              <el-button id="login" class="input" @click="userLogin" type="primary">登录</el-button>
             </div>
             <div class="grid-content">
-              <el-input id="phone" class="input"  type="password"  v-model="phone" placeholder="请输入电话">
-                <template slot="prepend">电话</template>
-              </el-input>
-              <div>
-                <template slot="prepend">电话</template>
-              </div>
+              <el-button id="register" class="input" @click="goRegister" type="primary">注册</el-button>
+<!--                <router-link to="/Register">注册</router-link>-->
             </div>
-            <div class="grid-content">
-              <el-button id="register" class="input"  type="primary">注册</el-button>
-            </div>
-          </el-col>
           <el-col :span="8"><div class="grid-content"></div></el-col>
         </el-row>
       </el-main>
@@ -49,8 +42,30 @@ export default {
     return {
       username:"",
       password:"",
-      sex:"1"
+      msg:""
     }
+  },
+  methods:{
+    userLogin(){
+      var _this=this;
+      var params =new URLSearchParams();
+      params.append("userName",this.username);
+      params.append("password",this.password);
+      this.$axios.post("user/userLogin",params).then(function(result) {
+          if (result.data==""){
+            _this.msg="用户名或密码错误";
+          }
+          else {
+            _this.msg="";
+            alert("登录成功")
+            sessionStorage.setItem("username",_this.username);;
+          }
+      }).catch();
+    },
+    goRegister(){
+      this.$router.push('/Register');
+    }
+
   }
 }
 </script>
@@ -87,7 +102,7 @@ a {
 }
 
 .grid-content {
-  margin-top: 30px;
+  margin-top: 40px;
 }
 
 .footer{

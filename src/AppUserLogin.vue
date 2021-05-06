@@ -1,17 +1,12 @@
 <template>
   <div>
-    水果蔬菜
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
 export default {
-  name: "Other",
-  data(){
-    return{
-      tabPosition: 'left'
-    }
-  }
+  name: "test"
 }
 </script>
 
