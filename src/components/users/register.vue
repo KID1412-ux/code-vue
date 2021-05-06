@@ -34,10 +34,9 @@
                 <el-date-picker slot="append"  v-model="birthday" type="date" style="width: 280px;height: 38px;top:-1px;margin-left:-54px;margin-right:-20px;background-color: #fff;" placeholder="选择日期">
                 </el-date-picker>
               </el-input>
-
             </div>
             <div class="grid-content">
-              <el-button id="register" class="input"  type="primary">注册</el-button>
+              <el-button id="register" class="input" @click="insertUser" type="primary">注册</el-button>
             </div>
           </el-col>
           <el-col :span="8"><div class="grid-content"></div></el-col>
@@ -74,7 +73,20 @@ export default {
     },
     clearInput(){
       this.userMsg="";
+    },
+    insertUser(){
+      var _this=this;
+      var params =new URLSearchParams();
+      params.append("userName",this.username);
+      params.append("password",this.password);
+      params.append("sex",this.sex);
+      params.append("phone",this.phone);
+      params.append("birthday",this.birthday);
+      this.$axios.post("user/insertUser",params).then(function(result) {
+      }).catch();
+      this.$router.push('/Login');
     }
+
   }
 }
 </script>
