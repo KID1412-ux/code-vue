@@ -65,7 +65,6 @@ export default {
     goRegister(){
       this.$router.push('/Register');
     }
-
   }
 }
 </script>

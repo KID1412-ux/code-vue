@@ -34,7 +34,6 @@
                 <el-date-picker slot="append"  v-model="birthday" type="date" style="width: 280px;height: 38px;top:-1px;margin-left:-54px;margin-right:-20px;background-color: #fff;" placeholder="选择日期">
                 </el-date-picker>
               </el-input>
-
             </div>
             <div class="grid-content">
               <el-button id="register" class="input" @click="insertUser" type="primary">注册</el-button>
