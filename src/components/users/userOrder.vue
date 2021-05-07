@@ -4,24 +4,23 @@
       <el-header style="background: red">
       </el-header>
       <el-main>
-        <el-row>
+        <el-row gutter="20">
           <el-col :span="4"><div class="grid-content"></div></el-col>
           <el-col :span="16">
-            <div class="grid-content" >
-              <el-input id="userName" class="input" style="margin-left: 20%;" v-model="username" placeholder="请输入帐号">
+            <div class="grid-content"  style="background-color: #ffffff">
+              <el-input id="userName" class="input" style="margin-left: 55%;" v-model="username" placeholder="请输入订单号">
               </el-input>
+              <el-button slot="append" @click="selectUserOrder" type="primary">查询</el-button>
+
               <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
                 <el-tab-pane label="全部订单" name="first">all</el-tab-pane>
                 <el-tab-pane label="待付款" name="second"></el-tab-pane>
                 <el-tab-pane label="待收货" name="third"></el-tab-pane>
                 <el-tab-pane label="已收货" name="fourth"></el-tab-pane>
-
               </el-tabs>
-
-
             </div>
           </el-col>
-          <el-col :span="4"><div class="grid-content"></div></el-col>
+          <el-col :span="4"><div class="grid-content"><div style="height: 100%"></div></div></el-col>
         </el-row>
       </el-main>
       <el-footer style="background: yellow">Footer</el-footer>
@@ -44,9 +43,10 @@ export default {
     }
   },
   methods: {
-    handleClick(){
-
-    }
+    handleClick(tab, event) {
+      console.log(tab, event);
+    },
+    selectUserOrder(){}
   }
 }
 </script>
