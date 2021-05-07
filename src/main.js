@@ -1,16 +1,14 @@
 import Vue from 'vue'
 import App from './App.vue'
 import login from "./components/users/login";
-import register from "./components/users/register";
 import userOrder from "./components/users/userOrder";
-// import First from "./First";
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import AppUserLogin from "./AppUserLogin";
 import Merchant from "./components/Merchant";
 
 //引用router.js
-import router from './router/router.js'
+import router from "./router/router";
 Vue.config.productionTip = false
 
 Vue.use(ElementUI)
@@ -26,6 +24,6 @@ Vue.prototype.$axios = Axios
 
 new Vue({
   el: '#app',
-  render: h => h(userOrder),
+  render: h => h(App),
   router
 })
