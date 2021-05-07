@@ -7,6 +7,7 @@ Vue.use(VueRouter)
 
 import Hot from "../components/Home/Hot";
 import Login from "../components/users/login";
+import Register from "../components/users/register";
 import Home from "../components/Home";
 import ProductData from "../components/Product/ProductData";
 
@@ -14,13 +15,15 @@ import ProductData from "../components/Product/ProductData";
 const routes=[
   //单个路由均为对象类型，path代表的是路径，component代表组件
   {path:'/Hot',component:Hot},
+  {path:"/Register",component:Register},
   {path:"/login",component:Login},
-  {path:"/",component:Home},
+  {path:"/",component:Login},
   {path:"/ProductData",component:ProductData},
 ]
 
 //实例化VueRouter并将routes添加进去
 const router=new VueRouter({
+
 //ES6简写，等于routes：routes
   routes
 });
