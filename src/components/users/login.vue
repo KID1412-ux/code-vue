@@ -62,6 +62,8 @@ export default {
             alert("登录成功")
             console.log(result.data)
             sessionStorage.setItem("user",result.data )
+            console.log(sessionStorage.getItem("user"))
+            _this.$router.push('/')
           }
       }).catch();
     },

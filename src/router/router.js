@@ -17,7 +17,7 @@ const routes=[
   {path:'/Hot',component:Hot},
   {path:"/Register",component:Register},
   {path:"/login",component:Login},
-  {path:"/",component:Login},
+  {path:"/",component:Home},
   {path:"/ProductData",component:ProductData},
 ]
 

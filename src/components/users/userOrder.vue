@@ -12,8 +12,24 @@
               </el-input>
               <el-button slot="append" @click="selectUserOrder" type="primary">查询</el-button>
 
-              <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
-                <el-tab-pane label="全部订单" name="first">all</el-tab-pane>
+              <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">
+                <el-tab-pane label="全部订单" name="first">
+
+                  <el-table :data="tableData" style="width: 100%">
+                    <el-table-column label="商品详情">
+                      <el-table-column prop="province" label="商品名" width="338">
+                      </el-table-column>
+                      <el-table-column prop="city" label="价格" width="160">
+                      </el-table-column>
+                    </el-table-column>
+                    <el-table-column  prop="date"  label="收货人"  width="150">
+                    </el-table-column>
+                    <el-table-column  prop="date"  label="总金额"  width="160">
+                    </el-table-column>
+                    <el-table-column  prop="date"  label="操作"  width="150">
+                    </el-table-column>
+                  </el-table>
+                </el-tab-pane>
                 <el-tab-pane label="待付款" name="second"></el-tab-pane>
                 <el-tab-pane label="待收货" name="third"></el-tab-pane>
                 <el-tab-pane label="已收货" name="fourth"></el-tab-pane>
@@ -33,13 +49,14 @@ export default {
   name: "userOrder",
   data () {
     return {
-      activeName:"",
+      activeName:"first",
       username:"",
       userMsg:"",
       password:"",
       sex:"0",
       phone:"",
-      birthday:""
+      birthday:"",
+      tableData: []
     }
   },
   methods: {
