@@ -5,20 +5,23 @@
       </el-header>
       <el-main>
         <el-row gutter="20">
-          <el-col :span="4"><div class="grid-content"></div></el-col>
+          <el-col :span="4">
+            <div class="grid-content"></div>
+          </el-col>
           <el-col :span="16">
             <el-card class="box-card">
-<!--              <div slot="header" class="clearfix">-->
-<!--                <span>个人信息</span>-->
-<!--                <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>-->
-<!--              </div>-->
+              <!--              <div slot="header" class="clearfix">-->
+              <!--                <span>个人信息</span>-->
+              <!--                <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>-->
+              <!--              </div>-->
               <div>
-                <el-avatar :size="80" :src="circleUrl" style="margin-top: 50px"></el-avatar><br>
+                <el-avatar :size="80" :src="circleUrl" style="margin-top: 50px"></el-avatar>
+                <br>
                 <h3>用户名</h3>
               </div>
 
             </el-card>
-            <div class="grid-content"  style="background-color: #ffffff">
+            <div class="grid-content" style="background-color: #ffffff">
 
               <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">
                 <el-tab-pane label="全部订单" name="first">
@@ -30,11 +33,11 @@
                       <el-table-column prop="city" label="价格" width="160">
                       </el-table-column>
                     </el-table-column>
-                    <el-table-column  prop="date"  label="收货人"  width="150">
+                    <el-table-column prop="date" label="收货人" width="150">
                     </el-table-column>
-                    <el-table-column  prop="date"  label="总金额"  width="160">
+                    <el-table-column prop="date" label="总金额" width="160">
                     </el-table-column>
-                    <el-table-column  prop="date"  label="操作"  width="150">
+                    <el-table-column prop="date" label="操作" width="150">
                     </el-table-column>
                   </el-table>
                 </el-tab-pane>
@@ -44,7 +47,11 @@
               </el-tabs>
             </div>
           </el-col>
-          <el-col :span="4"><div class="grid-content"><div style="height: 100%"></div></div></el-col>
+          <el-col :span="4">
+            <div class="grid-content">
+              <div style="height: 100%"></div>
+            </div>
+          </el-col>
         </el-row>
       </el-main>
       <el-footer style="background: yellow">Footer</el-footer>
@@ -55,15 +62,15 @@
 <script>
 export default {
   name: "userOrder",
-  data () {
+  data() {
     return {
-      activeName:"first",
-      username:"",
-      userMsg:"",
-      password:"",
-      sex:"0",
-      phone:"",
-      birthday:"",
+      activeName: "first",
+      username: "",
+      userMsg: "",
+      password: "",
+      sex: "0",
+      phone: "",
+      birthday: "",
       tableData: [],
       circleUrl: "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png"
     }
@@ -72,7 +79,8 @@ export default {
     handleClick(tab, event) {
       console.log(tab, event);
     },
-    selectUserOrder(){}
+    selectUserOrder() {
+    }
   }
 }
 </script>
@@ -86,7 +94,7 @@ export default {
   color: #2c3e50;
 }
 
-.input{
+.input {
   width: 350px;
 }
 
@@ -112,7 +120,7 @@ a {
   margin-top: 30px;
 }
 
-.footer{
+.footer {
   position: absolute;
   left: 0;
   top: 0;
@@ -129,6 +137,7 @@ a {
   display: table;
   content: "";
 }
+
 .clearfix:after {
   clear: both
 }

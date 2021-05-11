@@ -5,9 +5,11 @@
       </el-header>
       <el-main>
         <el-row gutter="20">
-          <el-col :span="4"><div class="grid-content"></div></el-col>
+          <el-col :span="4">
+            <div class="grid-content"></div>
+          </el-col>
           <el-col :span="16">
-            <div class="grid-content"  style="background-color: #ffffff">
+            <div class="grid-content" style="background-color: #ffffff">
               <el-input id="userName" class="input" style="margin-left: 55%;" v-model="username" placeholder="请输入订单号">
               </el-input>
               <el-button slot="append" @click="selectUserOrder" type="primary">查询</el-button>
@@ -22,11 +24,11 @@
                       <el-table-column prop="city" label="价格" width="160">
                       </el-table-column>
                     </el-table-column>
-                    <el-table-column  prop="date"  label="收货人"  width="150">
+                    <el-table-column prop="date" label="收货人" width="150">
                     </el-table-column>
-                    <el-table-column  prop="date"  label="总金额"  width="160">
+                    <el-table-column prop="date" label="总金额" width="160">
                     </el-table-column>
-                    <el-table-column  prop="date"  label="操作"  width="150">
+                    <el-table-column prop="date" label="操作" width="150">
                     </el-table-column>
                   </el-table>
                 </el-tab-pane>
@@ -36,7 +38,11 @@
               </el-tabs>
             </div>
           </el-col>
-          <el-col :span="4"><div class="grid-content"><div style="height: 100%"></div></div></el-col>
+          <el-col :span="4">
+            <div class="grid-content">
+              <div style="height: 100%"></div>
+            </div>
+          </el-col>
         </el-row>
       </el-main>
       <el-footer style="background: yellow">Footer</el-footer>
@@ -47,15 +53,15 @@
 <script>
 export default {
   name: "userOrder",
-  data () {
+  data() {
     return {
-      activeName:"first",
-      username:"",
-      userMsg:"",
-      password:"",
-      sex:"0",
-      phone:"",
-      birthday:"",
+      activeName: "first",
+      username: "",
+      userMsg: "",
+      password: "",
+      sex: "0",
+      phone: "",
+      birthday: "",
       tableData: []
     }
   },
@@ -63,7 +69,8 @@ export default {
     handleClick(tab, event) {
       console.log(tab, event);
     },
-    selectUserOrder(){}
+    selectUserOrder() {
+    }
   }
 }
 </script>
@@ -77,7 +84,7 @@ export default {
   color: #2c3e50;
 }
 
-.input{
+.input {
   width: 350px;
 }
 
@@ -103,7 +110,7 @@ a {
   margin-top: 30px;
 }
 
-.footer{
+.footer {
   position: absolute;
   left: 0;
   top: 0;

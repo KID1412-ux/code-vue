@@ -16,7 +16,7 @@
           </el-col>
         </el-row>
       </el-header>
-      <el-main >
+      <el-main>
         <router-view></router-view>
       </el-main>
     </el-container>
@@ -26,14 +26,14 @@
 <script>
 export default {
   name: 'app',
-  data () {
+  data() {
     return {
       msg: 'Welcome to Your Vue.js App'
     }
   },
   methods: {
     verification() {
-      console.log("登录");
+      alert("登录");
     }
   }
 }
@@ -41,18 +41,18 @@ export default {
 
 <style>
 
-html,body,#app{
+html, body, #app {
   margin: 0px;
   height: 100%;
 }
 
-.el-header{
+.el-header {
   background-color: #475669;
   text-align: center;
   line-height: 60px;
 }
 
-el-header span,a{
+el-header span, a {
   padding-right: 20px;
   color: #99a9bf;
   font-size: 20px;
