@@ -12,8 +12,6 @@
               <div style="padding: 14px;">
                 <span>{{ dq.goodsName }}</span>
                 <div class="bottom clearfix">
-                  <time class="time">{{ currentDate }}</time>
-                  <el-button type="text" class="button">操作按钮</el-button>
                 </div>
               </div>
             </el-card>
@@ -32,8 +30,6 @@
               <div style="padding: 14px;">
                 <span>{{ bg.goodsName }}</span>
                 <div class="bottom clearfix">
-                  <time class="time">{{ currentDate }}</time>
-                  <el-button type="text" class="button">操作按钮</el-button>
                 </div>
               </div>
             </el-card>
@@ -52,8 +48,6 @@
               <div style="padding: 14px;">
                 <span>{{ mz.goodsName }}</span>
                 <div class="bottom clearfix">
-                  <time class="time">{{ currentDate }}</time>
-                  <el-button type="text" class="button">操作按钮</el-button>
                 </div>
               </div>
             </el-card>
@@ -72,8 +66,6 @@
               <div style="padding: 14px;">
                 <span>{{ sp.goodsName }}</span>
                 <div class="bottom clearfix">
-                  <time class="time">{{ currentDate }}</time>
-                  <el-button type="text" class="button">操作按钮</el-button>
                 </div>
               </div>
             </el-card>
