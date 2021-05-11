@@ -5,7 +5,7 @@ import VueRouter from 'vue-router';
 
 import Hot from "../components/Home/Hot";
 import Login from "../components/users/login";
-import Register from "../components/users/register";
+// import Register from "../components/users/register";
 import Home from "../components/Home";
 import ProductData from "../components/Product/ProductData";
 import ShopCart from "../components/shop_cart/shop_cart";
@@ -17,7 +17,7 @@ Vue.use(VueRouter)
 const routes = [
   //单个路由均为对象类型，path代表的是路径，component代表组件
   {path: '/Hot', component: Hot},
-  {path: "/Register", component: Register},
+  // {path: "/Register", component: Register},
   {path: "/login", component: Login},
   {path: "/", component: Home},
   {path: "/ProductData", component: ProductData},

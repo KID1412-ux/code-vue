@@ -15,8 +15,8 @@
         </el-carousel>
       </slot>
     </div>
-    <div style="padding-left: 150px;padding-right: 150px;padding-top: 20px">
-      <span style="font-size: 30px;font-weight:900;padding-left: 525px">为您推荐</span>
+    <div style="padding-left: 150px;padding-right: 150px;padding-top: 20px;text-align: center">
+      <span style="font-size: 30px;font-weight:900">为您推荐</span>
     </div>
     <Hot></Hot>
   </div>
@@ -29,6 +29,7 @@ export default {
   components: {Hot},
   data(){
     return{
+      input3:"",
       advertisements:[
         {index:0,picture:require('./../img/gg1.png')},
         {index:1,picture:require('./../img/gg2.png')},
