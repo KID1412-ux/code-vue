@@ -14,13 +14,10 @@ Vue.use(VueRouter)
 const routes = [
   //单个路由均为对象类型，path代表的是路径，component代表组件
   {path: '/Hot', component: Hot},
-  {path: "/Register", component: Register},
   {path: "/login", component: Login},
   {path: "/", component: Home},
   {path: "/ProductData", component: ProductData},
-  {
-    path: "/ShopCart",
-    component: ShopCart,
+  {path: "/ShopCart",component: ShopCart,
     meta: {
       requireAuth: true
     }

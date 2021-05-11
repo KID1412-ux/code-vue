@@ -16,8 +16,8 @@
           </el-col>
         </el-row>
       </el-header>
-      <el-main>
-        <router-view></router-view>
+      <el-main><router-view></router-view>
+
       </el-main>
     </el-container>
   </div>
