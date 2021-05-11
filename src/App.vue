@@ -11,7 +11,7 @@
             <router-link to="">注册</router-link>
             <router-link to=""><i class="el-icon-shopping-bag-2"></i>我的订单</router-link>
             <router-link to=""><i class="el-icon-shopping-cart-2"></i>购物车</router-link>
-            <router-link to=""><i class="el-icon-guide"></i>商品分类</router-link>
+            <router-link to="/Classification"><i class="el-icon-guide"></i>商品分类</router-link>
             <router-link to="/"><i class="el-icon-guide"></i>首页</router-link>
           </el-col>
         </el-row>

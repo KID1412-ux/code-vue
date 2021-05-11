@@ -5,7 +5,7 @@
         <el-button slot="append" icon="el-icon-search"></el-button>
       </el-input>
     </div>
-    <div>
+    <div style="padding-left: 150px;padding-right: 150px">
       <slot>
         <!--Carousel 走马灯-卡片话-->
         <el-carousel :interval="4000" type="card" height="300px">
@@ -16,7 +16,7 @@
       </slot>
     </div>
     <div style="padding-left: 150px;padding-right: 150px;padding-top: 20px">
-      <span style="font-size: 30px;color: red;padding-left: 525px">今日特价<i class="el-icon-magic-stick" style="color: red"></i></span>
+      <span style="font-size: 30px;font-weight:900;padding-left: 525px">为您推荐</span>
     </div>
     <Hot></Hot>
   </div>
@@ -37,6 +37,9 @@ export default {
         {index:4,picture:require('./../img/gg5.png')},
       ]
     }
+  },
+  methods:{
+
   }
 }
 </script>

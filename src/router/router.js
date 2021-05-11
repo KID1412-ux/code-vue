@@ -9,6 +9,7 @@ import Hot from "../components/Home/Hot";
 import Login from "../components/users/login";
 import Home from "../components/Home";
 import ProductData from "../components/Product/ProductData";
+import Classification from "../components/Classification";
 
 //定义routes路由的集合，数组类型
 const routes=[
@@ -17,6 +18,7 @@ const routes=[
   {path:"/login",component:Login},
   {path:"/",component:Home},
   {path:"/ProductData",component:ProductData},
+  {path:"/Classification",component:Classification},
 ]
 
 //实例化VueRouter并将routes添加进去

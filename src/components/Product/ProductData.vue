@@ -8,9 +8,12 @@
       </el-breadcrumb>
     </div>
     <div id="proDiv">
-      <el-avatar :size="50" :src="require('./../../img/gg1.png')"></el-avatar>
-      <div>
-        <h2>{{username}}</h2>
+      <el-avatar style="margin-top: 40px" :size="90" :src="require('./../../img/gg1.png')"></el-avatar><br>
+      <div style="height: 315px;width: 400px;border: 1px red solid;margin-top: 50px;text-align: left;margin-left: 50px">
+        <h1 style="color: #99a9bf">商户名:<a style="color: #333333">{{user.merchantName}}</a></h1>
+        <h1 style="color: #99a9bf;margin-top: 50px">商户描述:<a style="color: #333333">{{user.merchantDescribe}}</a></h1>
+        <h1 style="color: #99a9bf;margin-top: 50px">商户电话:<a style="color: #333333">{{user.merchantPhone}}</a></h1>
+        <h1 style="color: #99a9bf;margin-top: 50px">提货地址:<a style="color: #333333">{{user.deliveryAddress}}</a></h1>
       </div>
     </div>
   </div>
@@ -21,15 +24,12 @@ export default {
   name: "ProductData",
   data(){
     return{
-      username:"",
+      user:"",
     }
   },
   methods:{
     getUser(){
-      var _this =this;
-      this.$axios.post("/Test/test1").then(function (item) {
-        _this.username=item.data;
-      }).catch()
+      sessionStorage.getItem("username",);
     }
   },
   created() {
@@ -46,9 +46,9 @@ span{
 
 #proDiv{
   width: 500px;
-  margin-top: 20px;
+  margin-top: 75px;
   margin-left: 300px;
-  height: 600px;
+  height: 500px;
   border: 1px solid gray;
 }
 
