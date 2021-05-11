@@ -15,8 +15,8 @@
         </el-carousel>
       </slot>
     </div>
-    <div style="padding-left: 150px;padding-right: 150px;padding-top: 20px;text-align: center;">
-      <span style="font-size: 30px;font-weight:900;">为您推荐</span>
+    <div style="padding-left: 150px;padding-right: 150px;padding-top: 20px;text-align: center">
+      <span style="font-size: 30px;font-weight:900">为您推荐</span>
     </div>
     <Hot></Hot>
   </div>
