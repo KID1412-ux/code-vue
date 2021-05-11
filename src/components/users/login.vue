@@ -65,11 +65,16 @@ export default {
           _this.msg = "账号已被拉黑";
         } else {
           _this.msg = "";
-          alert("登录成功")
-          console.log(result.data)
-          sessionStorage.setItem("user", result.data)
-          console.log(sessionStorage.getItem("user"))
-          _this.$router.push('/')
+          alert("登录成功");
+          sessionStorage.setItem("user", result.data);
+
+          // 如果登录后需要重定向页面，那么就通过下面的方式重定向
+          if (_this.$route.query.redirect) {
+            let redirect_path = _this.$route.query.redirect;
+            _this.$router.push({path: redirect_path});
+          } else {
+            _this.$router.push('/');
+          }
         }
       }).catch();
     },
