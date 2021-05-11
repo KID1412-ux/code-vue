@@ -67,7 +67,14 @@ export default {
           _this.msg = "";
           alert("登录成功");
           sessionStorage.setItem("user", result.data);
-          _this.$router.push('/');
+
+          // 如果登录后需要重定向页面，那么就通过下面的方式重定向
+          if (_this.$route.query.redirect) {
+            let redirect_path = _this.$route.query.redirect;
+            _this.$router.push({path: redirect_path});
+          } else {
+            _this.$router.push('/');
+          }
         }
       }).catch();
     },
