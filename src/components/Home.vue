@@ -45,7 +45,6 @@ export default {
 </script>
 
 <style scoped>
-
 .el-carousel__item h3 {
   color: #475669;
   font-size: 14px;
@@ -53,45 +52,35 @@ export default {
   line-height: 200px;
   margin: 0;
 }
-
 .el-carousel__item:nth-child(2n) {
   background-color: #99a9bf;
 }
-
 .el-carousel__item:nth-child(2n+1) {
   background-color: #d3dce6;
 }
-
 .grid-content {
   border-radius: 4px;
   min-height: 36px;
 }
-
 .bg-purple {
   background: #d3dce6;
 }
-
 .bg-purple-light {
   background: #e5e9f2;
 }
-
 el-header span,a{
   padding-right: 20px;
   color: #99a9bf;
   font-size: 20px;
   text-decoration: none;
 }
-
 #div1{
   text-align:center;
   margin:20px auto;
 }
-
 #div1 a:hover {  color : red ; }
-
 #div-cx{
   text-align:center;
   margin:20px auto;
 }
-
 </style>
