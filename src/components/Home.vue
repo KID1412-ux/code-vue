@@ -29,6 +29,7 @@ export default {
   components: {Hot},
   data(){
     return{
+      input3:"",
       advertisements:[
         {index:0,picture:require('./../img/gg1.png')},
         {index:1,picture:require('./../img/gg2.png')},
