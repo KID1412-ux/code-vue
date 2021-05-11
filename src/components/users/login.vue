@@ -65,11 +65,9 @@ export default {
           _this.msg = "账号已被拉黑";
         } else {
           _this.msg = "";
-          alert("登录成功")
-          console.log(result.data)
-          sessionStorage.setItem("user", result.data)
-          console.log(sessionStorage.getItem("user"))
-          _this.$router.push('/')
+          alert("登录成功");
+          sessionStorage.setItem("user", result.data);
+          _this.$router.push('/');
         }
       }).catch();
     },

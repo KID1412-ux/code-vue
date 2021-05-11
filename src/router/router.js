@@ -2,12 +2,14 @@
 import Vue from 'vue';
 //引入vue-router
 import VueRouter from 'vue-router';
+
 import Hot from "../components/Home/Hot";
 import Login from "../components/users/login";
 import Register from "../components/users/register";
 import Home from "../components/Home";
 import ProductData from "../components/Product/ProductData";
 import ShopCart from "../components/shop_cart/shop_cart";
+
 //第三方库需要use一下才能用
 Vue.use(VueRouter)
 
@@ -22,7 +24,7 @@ const routes = [
   {
     path: "/ShopCart",
     component: ShopCart,
-    meta: {
+    meta: {                           // 在路由配置元信息
       requireAuth: true
     }
   },
@@ -30,24 +32,23 @@ const routes = [
 
 //实例化VueRouter并将routes添加进去
 const router = new VueRouter({
-
 //ES6简写，等于routes：routes
   routes
 });
 
-router.beforeEach(((to, from, next) => {
-  if (to.matched.some(record => record.meta.requireAuth)) {
-    if (sessionStorage.getItem("user") != null) {
-      next();
+router.beforeEach(((to, from, next) => {        // 使用全局导航守卫beforeEach进行路由跳转时的拦截
+  if (to.matched.some(record => record.meta.requireAuth)) {                         // 判断将要进入的路由是否需要登录
+    if (sessionStorage.getItem("user") != null) {                               // 判断sessionStorage是否有user
+      next();                                                                       // 如果有保存就继续
     } else {
       alert('请先完成登录！');
       next({
-        path: "/login",
-        query: {redirect: to.fullPath}
+        path: "/login",                                                             // 如果没有user就跳转到登录页面
+        query: {redirect: to.fullPath}                                              // 需要重定向的路由，在/login这个组件中跳转页面
       });
     }
   } else {
-    next();
+    next();                                                                         // 如果不需要登录则直接进入页面
   }
 }))
 
