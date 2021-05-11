@@ -5,16 +5,16 @@
       <el-container>
         <el-aside width="200px">
           <el-menu router
-            default-active="2"
-            class="el-menu-vertical-demo"
-            @open="handleOpen"
-            @close="handleClose"
-            background-color="#545c64"
-            text-color="#fff"
-            active-text-color="#ffd04b">
+                   default-active="2"
+                   class="el-menu-vertical-demo"
+                   @open="handleOpen"
+                   @close="handleClose"
+                   background-color="#545c64"
+                   text-color="#fff"
+                   active-text-color="#ffd04b">
             <el-menu-item index="/ProductData">
               <i class="el-icon-menu"></i>
-              <span slot="title" >商户资料维护</span>
+              <span slot="title">商户资料维护</span>
             </el-menu-item>
             <el-submenu index="1">
               <template slot="title">
@@ -48,9 +48,9 @@
 
 export default {
   name: 'Merchant',
-  data(){
-    return{
-      msg:"afdsf"
+  data() {
+    return {
+      msg: "afdsf"
     }
   },
   methods: {
@@ -67,11 +67,12 @@ export default {
 
 <style>
 
-html,body,#app{
+html, body, #app {
   margin: 0px;
   height: 100%;
 }
-.height{
+
+.height {
   height: 100%;
 }
 

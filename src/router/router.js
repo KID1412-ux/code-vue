@@ -39,7 +39,7 @@ const router = new VueRouter({
 
 router.beforeEach(((to, from, next) => {        // 使用全局导航守卫beforeEach进行路由跳转时的拦截
   if (to.matched.some(record => record.meta.requireAuth)) {                         // 判断将要进入的路由是否需要登录
-    if (sessionStorage.getItem("user") != null) {                               // 判断sessionStorage是否有user
+    if (sessionStorage.getItem("userId") != null) {                             // 判断sessionStorage是否有user
       next();                                                                       // 如果有保存就继续
     } else {
       alert('请先完成登录！');

@@ -190,14 +190,15 @@ export default {
       submitForm: {merchantId: 0},
       merchantData: [],
       formLabelWidth: "120px",
-      dialogVisible: false
+      dialogVisible: false,
+      userId: -1
     };
   },
   methods: {
     getData() {
       var _this = this;
       var params = new URLSearchParams();
-      params.append("userId", "1");
+      params.append("userId", this.userId);
       params.append("goodsName", this.input);
       this.$axios.post("shopCart/query", params).then(function (result) {
         _this.tableData = result.data.map(item => {
@@ -209,15 +210,19 @@ export default {
     getTotal() {
       var _this = this;
       var params = new URLSearchParams();
-      params.append("userId", "1");
+      params.append("userId", this.userId);
       params.append("goodsName", this.input);
       this.$axios.post("shopCart/count", params).then(function (result) {
         _this.total = result.data;
       }).catch();
     },
+    getUserId() {
+      this.userId = sessionStorage.getItem("userId");
+    },
     search() {
       this.getTotal();
       this.getData();
+      this.isSelect = false;
     },
     amountChange(id, amount) {
       var _this = this;
@@ -239,7 +244,7 @@ export default {
 
       function query() {
         var params = new URLSearchParams();
-        params.append("userId", "1");
+        params.append("userId", _this.userId);
         params.append("goodsName", _this.input);
         return _this.$axios.post("shopCart/query", params);
       }
@@ -262,6 +267,7 @@ export default {
             }
           }
           if (_this.batch.length == 0) {
+            _this.batch = [];
             _this.isSelect = false;
           }
         }).catch();
@@ -302,6 +308,13 @@ export default {
       }
     },
     remove() {
+      if (this.tableData.length == 0) {
+        this.$message({
+          showClose: true,
+          message: '购物车是空的'
+        });
+        return;
+      }
       this.$confirm('此操作将清空整个购物车, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -309,7 +322,7 @@ export default {
       }).then(() => {
         var _this = this;
         var params = new URLSearchParams();
-        params.append("userId", "1");
+        params.append("userId", this.userId);
         this.$axios.post("shopCart/remove", params).then(function (result) {
           _this.getTotal();
           _this.getData();
@@ -342,9 +355,9 @@ export default {
         }).then(function (result) {
           _this.getData();
           _this.getTotal();
+          _this.batch = [];
           if (_this.isSelect) {
             _this.isSelect = false;
-            _this.batch = [];
           }
         }).catch();
       } else {
@@ -366,7 +379,7 @@ export default {
 
         function queryUser() {
           var params = new URLSearchParams();
-          params.append("id", "1");
+          params.append("id", _this.userId);
           return _this.$axios.post("shopCart/queryUser", params);
         }
 
@@ -389,14 +402,14 @@ export default {
 
       function updateUser() {
         var params = new URLSearchParams();
-        params.append("id", "1");
+        params.append("id", _this.userId);
         params.append("merchantId", _this.submitForm.merchantId);
         return _this.$axios.post("shopCart/updateUser", params);
       }
 
       function saveUserOrder() {
         var params = new URLSearchParams();
-        params.append("userId", "1");
+        params.append("userId", _this.userId);
         params.append("addressId", _this.submitForm.merchantId);
         params.append("amount", _this.summation);
         params.append("orderPrice", _this.totalPrice);
@@ -437,11 +450,29 @@ export default {
         });
       }
 
+      function updateGood(ary) {
+        return _this.$axios({
+          method: 'post',
+          url: 'shopCart/updateGood',
+          data: JSON.stringify(ary),
+          headers: {
+            'Content-Type': 'application/json;charset=UTF-8'
+          }
+        });
+      }
+
       this.$axios.all([updateUser(), saveUserOrder(), listByIds()]).then(this.$axios.spread(function (res1, res2, res3) {
         var nary = res3.data.map((item, index) => {
           return Object.assign(item, {orderId: res2.data, goodsAmount: item.amount});
         });
-        saveUserOrderDetail(nary).then(function (result) {
+        var ary = [];
+        res3.data.forEach((item, index) => {
+          var json = {};
+          json["id"] = item.goodsId;
+          json["goodsSales"] = item.amount;
+          ary.push(json);
+        });
+        _this.$axios.all([saveUserOrderDetail(nary), updateGood(ary)]).then(_this.$axios.spread(function (res1, res2) {
           removeByIds().then(function (result) {
             _this.getTotal();
             _this.getData();
@@ -449,7 +480,7 @@ export default {
             _this.dialogFormVisible = false;
             _this.isSelect = false;
           }).catch();
-        }).catch();
+        })).catch();
       })).catch();
     },
     cancel() {
@@ -457,7 +488,7 @@ export default {
 
       function saveUserOrder() {
         var params = new URLSearchParams();
-        params.append("userId", "1");
+        params.append("userId", _this.userId);
         params.append("addressId", _this.submitForm.merchantId);
         params.append("amount", _this.summation);
         params.append("orderPrice", _this.totalPrice);
@@ -552,6 +583,7 @@ export default {
     }
   },
   created() {
+    this.getUserId();
     this.getTotal();
     this.getData();
   }
