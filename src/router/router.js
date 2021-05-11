@@ -6,7 +6,6 @@ import Hot from "../components/Home/Hot";
 import Login from "../components/users/login";
 import Home from "../components/Home";
 import ProductData from "../components/Product/ProductData";
-import Classification from "../components/Classification";
 import ShopCart from "../components/shop_cart/shop_cart";
 //第三方库需要use一下才能用
 Vue.use(VueRouter)
