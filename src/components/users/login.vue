@@ -54,11 +54,16 @@ export default {
       this.$axios.post("user/userLogin",params).then(function(result) {
           if (result.data==""){
             _this.msg="用户名或密码错误";
+          }else if (result.data.userStats=="1"){
+            _this.msg = "账号已被拉黑";
           }
           else {
             _this.msg="";
             alert("登录成功")
-            sessionStorage.setItem("username",_this.username);;
+            console.log(result.data)
+            sessionStorage.setItem("user",result.data )
+            console.log(sessionStorage.getItem("user"))
+            _this.$router.push('/')
           }
       }).catch();
     },

@@ -9,13 +9,32 @@
     </div>
     <div id="proDiv">
       <el-avatar :size="50" :src="require('./../../img/gg1.png')"></el-avatar>
+      <div>
+        <h2>{{username}}</h2>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: "ProductData"
+  name: "ProductData",
+  data(){
+    return{
+      username:"",
+    }
+  },
+  methods:{
+    getUser(){
+      var _this =this;
+      this.$axios.post("/Test/test1").then(function (item) {
+        _this.username=item.data;
+      }).catch()
+    }
+  },
+  created() {
+    this.getUser();
+  }
 }
 </script>
 
