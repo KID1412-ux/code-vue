@@ -44,7 +44,9 @@ router.beforeEach(((to, from, next) => {        // 使用全局导航守卫befor
       alert('请先完成登录！');
       next({
         path: "/login",                                                             // 如果没有user就跳转到登录页面
-        query: {redirect: to.fullPath}                                              // 需要重定向的路由，在/login这个组件中跳转页面
+        query: {
+          redirect: to.fullPath                                                     // 需要重定向的路由，在/login这个组件中跳转页面
+        }
       });
     }
   } else {
