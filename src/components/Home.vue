@@ -2,7 +2,7 @@
   <div>
     <div id="div-cx" style="margin-top: 15px; width: 700px">
       <el-input placeholder="请输入内容" v-model="input3" class="input-with-select">
-        <el-button slot="append" icon="el-icon-search"></el-button>
+        <el-button slot="append" icon="el-icon-search" @click="search(input3)"></el-button>
       </el-input>
     </div>
     <div style="padding-left: 150px;padding-right: 150px">
@@ -15,8 +15,8 @@
         </el-carousel>
       </slot>
     </div>
-    <div style="padding-left: 150px;padding-right: 150px;padding-top: 20px">
-      <span style="font-size: 30px;font-weight:900;padding-left: 525px">为您推荐</span>
+    <div style="padding-left: 150px;padding-right: 150px;padding-top: 20px;text-align: center">
+      <span style="font-size: 30px;font-weight:900">为您推荐</span>
     </div>
     <Hot></Hot>
   </div>
@@ -29,6 +29,7 @@ export default {
   components: {Hot},
   data(){
     return{
+      input3:"",
       advertisements:[
         {index:0,picture:require('./../img/gg1.png')},
         {index:1,picture:require('./../img/gg2.png')},
@@ -39,7 +40,10 @@ export default {
     }
   },
   methods:{
-
+      search(zhi) {
+        alert(zhi);
+        this.$router.push({name:"Search",params:{ss:zhi}});
+      }
   }
 }
 </script>
