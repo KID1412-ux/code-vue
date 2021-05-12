@@ -92,12 +92,13 @@
                   </el-col>
                   <el-col :span="4">
                     <div style="padding-left: 20px">
-                      <el-input-number @change="amountChange(item.id, item.amount)" size="mini" :max="200" :min="1"
+                      <el-input-number @change="amountChange(item.id, item.amount)" size="mini" :max="item.goodsAmount"
+                                       :min="1"
                                        class="number" v-model="item.amount"></el-input-number>
                     </div>
                   </el-col>
                   <el-col :span="3" :offset="1" class="font cart-body p-price">
-                    ￥{{ item.goodsPrice * item.amount }}
+                    ￥{{ item.goodsPrice * item.amount | numFilter }}
                   </el-col>
                   <el-col :span="2">
                     <a href="javascript:void(0)" @click.prevent="removeOne(item.id)"
@@ -138,7 +139,9 @@
                           <span class="amount-sum cart-body">已选择<span class="em">{{ summation }}</span>件商品</span>
                         </el-col>
                         <el-col :span="14">
-                          <span class="amount-sum cart-body">总价：<span class="priceShow">￥{{ totalPrice }}</span></span>
+                          <span class="amount-sum cart-body">总价：<span class="priceShow">￥{{
+                              totalPrice | numFilter
+                            }}</span></span>
                         </el-col>
                       </el-row>
                     </el-col>
@@ -163,8 +166,7 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="cancel">取 消</el-button>
-        <el-button type="primary" @click="toSettle">确 定</el-button>
+        <el-button type="primary" @click="counter">提交订单</el-button>
       </div>
     </el-dialog>
     <el-dialog title="温馨提示" :visible.sync="dialogVisible" center>
@@ -496,8 +498,8 @@ export default {
             _this.getTotal();
             _this.getData();
             _this.batch = [];
-            _this.dialogFormVisible = false;
             _this.isSelect = false;
+            // _this.$router.push('/');
           }).catch();
         })).catch();
       })).catch();
@@ -557,12 +559,26 @@ export default {
             _this.getTotal();
             _this.getData();
             _this.batch = [];
-            _this.dialogFormVisible = false;
             _this.isSelect = false;
             _this.dialogVisible = true;
           }).catch();
         }).catch();
       })).catch();
+    },
+
+    counter() {
+      this.dialogFormVisible = false;
+      this.$prompt('输入数字支付密码', '收银台', {
+        center: true,
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        inputPattern: /^\d{6}$/,
+        inputErrorMessage: '密码格式不正确'
+      }).then(({value}) => {
+        this.toSettle();
+      }).catch(() => {
+        this.cancel();
+      });
     }
   },
   computed: {
@@ -599,6 +615,12 @@ export default {
         return summation;
       }
       return 0;
+    }
+  },
+  filters: {
+    numFilter(val) {
+      var realVal = parseFloat(val).toFixed(2);
+      return realVal;
     }
   },
   created() {
