@@ -417,6 +417,14 @@ export default {
         return _this.$axios.post("shopCart/saveUserOrder", params);
       }
 
+      function saveMerchantOrder() {
+        var params = new URLSearchParams();
+        params.append("merchantId", _this.submitForm.merchantId);
+        params.append("amount", _this.summation);
+        params.append("stats", "0");
+        return _this.$axios.post("shopCart/saveMerchantOrder", params);
+      }
+
       function listByIds() {
         return _this.$axios({
           method: 'post',
@@ -450,6 +458,17 @@ export default {
         });
       }
 
+      function saveMerchantOrderDetail(nary) {
+        return _this.$axios({
+          method: 'post',
+          url: 'shopCart/saveMerchantOrderDetail',
+          data: JSON.stringify(nary),
+          headers: {
+            'Content-Type': 'application/json;charset=UTF-8'
+          }
+        });
+      }
+
       function updateGood(ary) {
         return _this.$axios({
           method: 'post',
@@ -461,9 +480,9 @@ export default {
         });
       }
 
-      this.$axios.all([updateUser(), saveUserOrder(), listByIds()]).then(this.$axios.spread(function (res1, res2, res3) {
+      this.$axios.all([updateUser(), saveUserOrder(), listByIds(), saveMerchantOrder()]).then(this.$axios.spread(function (res1, res2, res3, res4) {
         var nary = res3.data.map((item, index) => {
-          return Object.assign(item, {orderId: res2.data, goodsAmount: item.amount});
+          return Object.assign(item, {orderId: res2.data, goodsAmount: item.amount, merchantOrderId: res4.data});
         });
         var ary = [];
         res3.data.forEach((item, index) => {
@@ -472,7 +491,7 @@ export default {
           json["goodsSales"] = item.amount;
           ary.push(json);
         });
-        _this.$axios.all([saveUserOrderDetail(nary), updateGood(ary)]).then(_this.$axios.spread(function (res1, res2) {
+        _this.$axios.all([saveUserOrderDetail(nary), updateGood(ary), saveMerchantOrderDetail(nary)]).then(_this.$axios.spread(function (res1, res2, res3) {
           removeByIds().then(function (result) {
             _this.getTotal();
             _this.getData();

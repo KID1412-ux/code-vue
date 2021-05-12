@@ -107,7 +107,7 @@
           <div>
             <label>数量：<el-input-number v-model="num" @change="handleChange" :min="1" :max=warehouse.goodsAmount label="描述文字"></el-input-number></label>
             <el-button type="danger">立即购买</el-button>
-            <el-button type="warning">加入购物车</el-button>
+            <el-button type="warning" @click="addCart">加入购物车</el-button>
           </div>
         </div>
       </div>
@@ -172,6 +172,27 @@ export default {
     },
     handleChange(value) {
       console.log(value);
+    },
+    addCart() {
+      var userId = sessionStorage.getItem("userId");
+      if (userId == null) {
+        alert('请先完成登录！');
+        this.$router.push('/login');
+        return;
+      }
+      var _this = this;
+      var param = new URLSearchParams();
+      param.append("goodsId", this.soso.id);
+      param.append("userId", userId);
+      param.append("amount", this.num);
+      param.append("goodsPrice", this.soso.goodsPrice);
+      this.$axios.post("shopCart/saveOrUpdate", param).then(function (result) {
+        _this.$message({
+          showClose: true,
+          type: 'success',
+          message: '成功加入购物车!'
+        });
+      }).catch()
     }
   },
   created() {
@@ -181,20 +202,8 @@ export default {
 </script>
 
 <style scoped>
-
-.span{
-  max-width: 10em;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis; /*超出部分用...代替*/
-}
-
-.el-tabs{
-  margin-top: 20px;
-}
-
-.divcss5{
-  width:100%;
+.divcss5 {
+  width: 100%;
   height: 100%;
   padding-top: 20px;
 }
@@ -209,16 +218,15 @@ last-child {
   border: 1px solid gray;
 }
 
-.el-col{
-  padding-top: 12px;
+.el-col {
+  padding-top: 12px
 }
 
 .grid-content:hover {
   border: 1px solid red;
 }
 
-.el-card:hover{
+.el-card:hover {
   border: 1px solid red;
 }
-
 </style>
