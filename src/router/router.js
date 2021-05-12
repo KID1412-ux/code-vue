@@ -9,6 +9,7 @@ import Login from "../components/users/login";
 import Home from "../components/Home";
 import ProductData from "../components/Product/ProductData";
 import ShopCart from "../components/shop_cart/shop_cart";
+import Search from "../components/Home/Search";
 
 //第三方库需要use一下才能用
 Vue.use(VueRouter)
@@ -20,6 +21,7 @@ const routes = [
   // {path: "/Register", component: Register},
   {path: "/login", component: Login},
   {path: "/", component: Home},
+  {path: "/Search", component: Search,name:"Search"},
   {path: "/ProductData", component: ProductData},
   {
     path: "/ShopCart",

@@ -2,7 +2,7 @@
   <div>
     <div id="div-cx" style="margin-top: 15px; width: 700px">
       <el-input placeholder="请输入内容" v-model="input3" class="input-with-select">
-        <el-button slot="append" icon="el-icon-search"></el-button>
+        <el-button slot="append" icon="el-icon-search" @click="search(input3)"></el-button>
       </el-input>
     </div>
     <div style="padding-left: 150px;padding-right: 150px">
@@ -40,7 +40,10 @@ export default {
     }
   },
   methods:{
-
+      search(zhi) {
+        alert(zhi);
+        this.$router.push({name:"Search",params:{ss:zhi}});
+      }
   }
 }
 </script>
