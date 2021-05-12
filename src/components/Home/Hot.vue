@@ -94,16 +94,18 @@
           <img height="100%" width="100%" src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png">
         </div>
         <div style="width: 500px;height: 500px;margin-left: 750px">
-          <h1 style="color: #333333">{{ soso.goodsName }}</h1>
+          <h1 style="color: #333333">{{ good.goodsName }}</h1>
           <a style="font-size: 15px">价格：</a>
-          <a style="color: red;font-size: 25px">￥{{soso.goodsPrice}}</a>
+          <a style="color: red;font-size: 25px">￥{{good.goodsPrice}}</a>
           <div style="margin-top: 20px;padding-bottom: 20px;height: 200px">
-            <label>商品描述：{{soso.goodsDescribe}}</label>
+            <label>商品描述：{{good.goodsDescribe}}</label>
           </div>
-          <a>销量：{{soso.goodsSales}}</a>
+          <a>销量：{{good.goodsSales}}</a>
+          <br>
+          <a>库存：{{warehouse.goodsAmount}}</a>
           <el-divider></el-divider>
           <div>
-            <label>数量：<el-input-number v-model="num" @change="handleChange" :min="1" :max="10" label="描述文字"></el-input-number></label>
+            <label>数量：<el-input-number v-model="num" @change="handleChange" :min="1" :max=warehouse.goodsAmount label="描述文字"></el-input-number></label>
             <el-button type="danger">立即购买</el-button>
             <el-button type="warning">加入购物车</el-button>
           </div>
@@ -121,12 +123,12 @@ export default {
   data(){
     return{
       msg:"热门商品",
-      goods:[],
       dianqis:[],
       bangongs:[],
       meizhuangs:[],
       shipins:[],
-      soso:[],
+      good:[],
+      warehouse:[],
       dialogVisible: false,
       num: 1
     }
@@ -141,11 +143,11 @@ export default {
     getGoods(){
       var _this=this;
       this.$axios.post("/Goods/tuijian").then(function (items){
-        _this.goods=items.data;
-        _this.dianqis=_this.goods.dianqi;
-        _this.bangongs=_this.goods.bangong;
-        _this.meizhuangs=_this.goods.meizhuanag;
-        _this.shipins=_this.goods.shipin;
+        var goods=items.data;
+        _this.dianqis=goods.dianqi;
+        _this.bangongs=goods.bangong;
+        _this.meizhuangs=goods.meizhuang;
+        _this.shipins=goods.shipin;
       }).catch()
     },
     selectGoodById(id){
@@ -153,7 +155,9 @@ export default {
       var param= new URLSearchParams();
       param.append("id",id)
       this.$axios.post("/Goods/selectGoodById",param).then(function (item){
-        _this.soso=item.data;
+        var map=item.data;
+        _this.good=map.good;
+        _this.warehouse=map.warehouse;
         _this.dialogVisible=true;
       }).catch()
     },
