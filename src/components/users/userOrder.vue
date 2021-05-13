@@ -18,7 +18,7 @@
               <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">
                 <el-tab-pane label="全部订单" name="4" @click="selectUserOrder">
 
-                  <el-table height="400px" v-loading="loading" :data="tableData" border style="width: 100%;background-color: #eee" row-key="id" >
+                  <el-table max-height="400px" v-loading="loading" :data="tableData" border style="width: 100%;background-color: #eee" row-key="id" >
                       <el-table-column label="订单编号" width="250">
                         <template slot-scope="scope">
                           <el-popover placement="right" width="400" trigger="click">
@@ -44,17 +44,17 @@
                     </el-table-column>
                     <el-table-column  label="操作" >
                       <template slot-scope="scope" v-if="scope.row.orderStats">
-                        <el-button @click="pay(scope.row)" type="primary" size="small" v-if="scope.row.orderStats==='待付款'">支付</el-button>
+                        <el-button @click="isVisible" type="primary" size="small" v-if="scope.row.orderStats==='待付款'">支付</el-button>
                         <el-button @click="receipt(scope.row)" type="primary" size="small" v-if="scope.row.orderStats==='待收货'">收货</el-button>
                         <el-button @click="cancel(scope.row)" type="danger" size="small" v-if="scope.row.orderStats==='待付款'">取消</el-button>
                         <el-button @click="deleteOrder(scope.row)" type="danger" size="small" v-if="scope.row.orderStats==='待收货'">删除</el-button>
-                        <el-button @click="deleteOrder(scope.row)" type="danger" style="margin-left: 42%" size="small" v-if="scope.row.orderStats==='已收货'">删除</el-button>
+                        <el-button @click="deleteOrder(scope.row)" type="danger" style="margin-left: 45%" size="small" v-if="scope.row.orderStats==='已收货'">删除</el-button>
                       </template>
                     </el-table-column>
                   </el-table>
                 </el-tab-pane>
                 <el-tab-pane label="待付款" name="3" @click="selectUserOrder">
-                  <el-table height="400px" :data="tableData" border style="width: 100%;background-color: #eee" row-key="id" >
+                  <el-table max-height="400px" :data="tableData" border style="width: 100%;background-color: #eee" row-key="id" >
                     <el-table-column prop="orderNumber" label="订单编号" width="250">
                       <template slot-scope="scope">
                         <el-popover placement="right" width="400" trigger="click">
@@ -86,7 +86,7 @@
                   </el-table>
                 </el-tab-pane>
                 <el-tab-pane label="待收货" name="1" @click="selectUserOrder">
-                  <el-table height="400px" :data="tableData" border style="width: 100%;background-color: #eee" row-key="id" >
+                  <el-table max-height="400px" :data="tableData" border style="width: 100%;background-color: #eee" row-key="id" >
                     <el-table-column prop="orderNumber" label="订单编号" width="250">
                       <template slot-scope="scope">
                         <el-popover placement="right" width="400" trigger="click">
@@ -118,7 +118,7 @@
                   </el-table>
                 </el-tab-pane>
                 <el-tab-pane label="已收货" name="2" @click="selectUserOrder">
-                  <el-table height="400px" :data="tableData" border style="width: 100%;background-color: #eee" >
+                  <el-table max-height="400px" :data="tableData" border style="width: 100%;background-color: #eee" >
                     <el-table-column prop="orderNumber" label="订单编号" width="250">
                       <template slot-scope="scope">
                         <el-popover placement="right" width="400" trigger="click">
@@ -156,6 +156,22 @@
       </el-main>
       <el-footer style="background: yellow">Footer</el-footer>
     </el-container>
+
+
+    <el-dialog title="结算页" :visible.sync="dialogFormVisible">
+      <el-form :model="submitForm" :label-width="formLabelWidth">
+        <el-form-item label="自提店">
+          <el-select placeholder="请选择自提店" v-model="submitForm.merchantId">
+            <el-option label="--请选择--" :value="0"></el-option>
+            <el-option v-for="(item, index) in merchantData" :label="item.merchantName" :value="item.id"></el-option>
+          </el-select>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="toSettle">确 定</el-button>
+      </div>
+    </el-dialog>
   </div>
 
 </template>
@@ -176,7 +192,8 @@ export default {
       phone:"",
       birthday:"",
       tableData: [],
-      tableData2: []
+      tableData2: [],
+      dialogFormVisible: false,
     }
   },
   methods:{
@@ -221,7 +238,31 @@ export default {
     pay(row){
       alert(row.id)
     },
+    isVisible() {
+        this.dialogFormVisible = true;
+        var _this = this;
+        function queryMerchant() {return _this.$axios.post("shopCart/queryMerchant");}
 
+        function queryUser() {
+          var params = new URLSearchParams();
+          params.append("id", _this.userId);
+          return _this.$axios.post("shopCart/queryUser", params);
+        }
+
+        this.$axios.all([queryMerchant(), queryUser()]).then(this.$axios.spread(function (res1, res2) {
+          _this.merchantData = res1.data;
+          if (res2.data.merchantId != "" && res2.data.merchantId != null) {
+            _this.submitForm.merchantId = res2.data.merchantId;
+          }
+        })).catch();
+      } else {
+        this.$message({
+          showClose: true,
+          message: '请至少选择一个商品！',
+          type: 'error'
+        });
+      }
+    },
     //收货方法
     receipt(row){
       var _this=this;

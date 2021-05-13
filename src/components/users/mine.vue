@@ -19,27 +19,37 @@
             </el-col>
             <el-col :span="10" >
               <el-card shadow="never" style="height: 200px;margin-top: 16%">
-                <div style="">
-
+                <div style="margin-top: 10%;margin-left: -30%">
+                  <el-popover
+                    placement="right"
+                    width="400"
+                    trigger="click">
+                    <el-table :data="gridData">
+                      <el-table-column width="150" property="date" label="日期"></el-table-column>
+                      <el-table-column width="100" property="name" label="姓名"></el-table-column>
+                      <el-table-column width="300" property="address" label="地址"></el-table-column>
+                    </el-table>
+                    <el-button slot="reference">提货商户</el-button>
+                  </el-popover>
+                  <el-select v-model="merchantValue" placeholder="请选择提货商户">
+                    <el-option v-for="item in merchants" :key="item.value" :label="item.label" :value="item.value">
+                    </el-option>
+                  </el-select>
                 </div>
               </el-card>
             </el-col>
             <el-col :span="4">
               <div class="grid-content"></div>
             </el-col>
-            <el-col :span="16" style="margin-left: 17%">
+            <el-col :span="15" style="margin-left: 17%">
               <div class="grid-content"></div>
             <div class="grid-content" style="background-color: #ffffff">
 
               <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">
                 <el-tab-pane label="全部订单" name="4" @click="selectUserOrder">
 
-                  <el-table height="400px" v-loading="loading" :data="tableData" border style="width: 100%;background-color: #eee" row-key="id" >
+                  <el-table height="200px" v-loading="loading" :data="tableData" border style="width: 100%;background-color: #eee" row-key="id" >
                     <el-table-column label="订单编号" width="250">
-                      <template slot="header" slot-scope="scope">
-                        <label>订单编号</label>
-                        <el-button type="primary" size="small">前往订单></el-button>
-                      </template>
                       <template slot-scope="scope">
                         <el-popover placement="right" width="400" trigger="click">
                           <el-table :data="tableData2">
@@ -59,9 +69,9 @@
                     </el-table-column>
                     <el-table-column  prop="createTime"  label="创建时间"  width="150">
                     </el-table-column>
-                    <el-table-column  prop="userNickname"  label="收货人"  width="120">
+                    <el-table-column  prop="userNickname"  label="收货人"  width="150">
                     </el-table-column>
-                    <el-table-column  prop="orderStats"  label="订单状态"  width="120">
+                    <el-table-column  prop="orderStats"  label="订单状态" >
                     </el-table-column>
                   </el-table>
                 </el-tab-pane>
@@ -85,9 +95,9 @@
                     </el-table-column>
                     <el-table-column  prop="createTime"  label="创建时间"  width="150">
                     </el-table-column>
-                    <el-table-column  prop="userNickname"  label="收货人"  width="120">
+                    <el-table-column  prop="userNickname"  label="收货人"  width="150">
                     </el-table-column>
-                    <el-table-column  prop="orderStats"  label="订单状态"  width="120">
+                    <el-table-column  prop="orderStats"  label="订单状态" >
                     </el-table-column>
                   </el-table>
                 </el-tab-pane>
@@ -111,9 +121,9 @@
                     </el-table-column>
                     <el-table-column  prop="createTime"  label="创建时间"  width="150">
                     </el-table-column>
-                    <el-table-column  prop="userNickname"  label="收货人"  width="120">
+                    <el-table-column  prop="userNickname"  label="收货人"  width="150">
                     </el-table-column>
-                    <el-table-column  prop="orderStats"  label="订单状态"  width="120">
+                    <el-table-column  prop="orderStats"  label="订单状态" >
                     </el-table-column>
                   </el-table>
                 </el-tab-pane>
@@ -137,13 +147,13 @@
                     </el-table-column>
                     <el-table-column  prop="createTime"  label="创建时间"  width="150">
                     </el-table-column>
-                    <el-table-column  prop="userNickname"  label="收货人"  width="120">
+                    <el-table-column  prop="userNickname"  label="收货人"  width="150">
                     </el-table-column>
-                    <el-table-column  prop="orderStats"  label="订单状态"  width="120">
+                    <el-table-column  prop="orderStats"  label="订单状态">
                     </el-table-column>
                   </el-table>
                 </el-tab-pane>
-                <el-tab-pane @click="goUserOrder" name="5"  label="前往订单>">
+                <el-tab-pane  name="5" label="前往订单>">
                 </el-tab-pane>
               </el-tabs>
             </div>
@@ -177,12 +187,16 @@ export default {
       birthday:"",
       tableData: [],
       tableData2: [],
+      merchants:[{value:"1",label:"a"},{value:"2",label:"b"},{value:"3",label:"c"}],
+      merchantValue:"1",
       circleUrl: "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png"
     }
   },
   methods: {
-    handleClick() {
-      this.selectUserOrder();
+    handleClick(tab) {
+      if (tab.name === "5"){this.$router.push('/UserOrder');}
+      else {this.selectUserOrder();}
+
     },
     //查询订单
     selectUserOrder(){
@@ -219,9 +233,18 @@ export default {
         })
       }).catch();
     },
-    goUserOrder() {
-      this.$router.push('/UserOrder');
-    }
+    //查询提货商户
+    selectMerchants() {
+      var _this=this;
+      var params =new URLSearchParams();
+      params.append("userId",this.userId);
+      this.$axios.post("userOrder/selectUserOrderDetail",params).then(function(result) {
+        _this.tableData2 = result.data;
+        _this.tableData2.forEach(item => {item.orderPrice=item.goodsPrice+' x '+item.goodsAmount;
+
+        })
+      }).catch();
+    },
 
 
 

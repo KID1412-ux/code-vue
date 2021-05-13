@@ -726,7 +726,7 @@ a {
   width: 100%;
   left: 0;
   background: #fff;
-  box-shadow: 0 -1px 8px rgb(0 1 1 / 8%);
+  box-shadow: 0 -1px 8px rgb(0 1 18);
 }
 
 .toolbar-wrap {
