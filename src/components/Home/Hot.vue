@@ -2,88 +2,109 @@
   <div class="divcss5">
     <div style="padding-left: 150px;padding-right: 150px">
 
-      <el-tabs type="border-card">
-        <el-tab-pane label="电器">
-          <el-row :gutter="20">
-            <el-col :span="6" v-for="dq in dianqis">
-              <div @click="selectGoodById(dq.id)" >
-                <el-card :body-style="{ padding: '0px' }">
-                  <img style="width: 326px" src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png" class="image">
-                  <div style="padding: 14px;text-align: left">
-                    <span class="span">{{dq.goodsName}}</span>
-                    <div class="bottom clearfix">
-                      <a style="font-size: 25px;color: orangered"><span style="font-size: 15px">￥</span>{{dq.goodsPrice}}</a><span style="color: #99a9bf">{{dq.goodsSales}}人已购买</span>
+      <div v-if="dianqis.length>0">
+        <el-tabs type="border-card">
+          <el-tab-pane label="电器">
+            <el-row :gutter="20">
+              <el-col :span="6" v-for="dq in dianqis">
+                <div @click="selectGoodById(dq.id)" >
+                  <el-card :body-style="{ padding: '0px' }">
+                    <img style="width: 326px" src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png" class="image">
+                    <div style="padding: 14px;text-align: left">
+                      <span class="span">{{dq.goodsName}}</span>
+                      <div class="bottom clearfix">
+                        <a style="font-size: 25px;color: orangered"><span style="font-size: 15px">￥</span>{{dq.goodsPrice}}</a><span style="color: #99a9bf">{{dq.goodsSales}}人已购买</span>
+                      </div>
                     </div>
-                  </div>
-                </el-card>
-              </div>
-            </el-col>
-          </el-row>
-        </el-tab-pane>
-      </el-tabs>
+                  </el-card>
+                </div>
+              </el-col>
+            </el-row>
+          </el-tab-pane>
+          <div style="float: right;margin-top: 15px">
+            <a @click="more(1)" class="a1">更多商品>></a>
+          </div>
+        </el-tabs>
+      </div>
 
-      <el-tabs type="border-card">
-        <el-tab-pane label="办公">
-          <el-row :gutter="20">
-            <el-col :span="6" v-for="bg in bangongs">
-              <div @click="selectGoodById(bg.id)" >
-                <el-card :body-style="{ padding: '0px' }">
-                  <img style="width: 326px" src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png" class="image">
-                  <div style="padding: 14px;">
-                    <span class="span">{{bg.goodsName}}</span>
-                    <div class="bottom clearfix">
-                      <a style="font-size: 25px;color: orangered"><span style="font-size: 15px">￥</span>{{bg.goodsPrice}}</a><span style="color: #99a9bf">{{bg.goodsSales}}人已购买</span>
+      <div v-if="bangongs.length>0" style="margin-top: 10px">
+        <el-tabs type="border-card">
+          <el-tab-pane label="办公">
+            <el-row :gutter="20">
+              <el-col :span="6" v-for="bg in bangongs">
+                <div @click="selectGoodById(bg.id)" >
+                  <el-card :body-style="{ padding: '0px' }">
+                    <img style="width: 326px" src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png" class="image">
+                    <div style="padding: 14px;">
+                      <span class="span">{{bg.goodsName}}</span>
+                      <div class="bottom clearfix">
+                        <a style="font-size: 25px;color: orangered"><span style="font-size: 15px">￥</span>{{bg.goodsPrice}}</a><span style="color: #99a9bf">{{bg.goodsSales}}人已购买</span>
+                      </div>
                     </div>
-                  </div>
-                </el-card>
-              </div>
-            </el-col>
-          </el-row>
-        </el-tab-pane>
-      </el-tabs>
+                  </el-card>
+                </div>
+              </el-col>
+            </el-row>
+          </el-tab-pane>
+          <div style="float: right;margin-top: 15px">
+            <a @click="more(4)" class="a1">更多商品>></a>
+          </div>
+        </el-tabs>
+      </div>
 
-      <el-tabs type="border-card">
-        <el-tab-pane label="美妆">
-          <el-row :gutter="20">
-            <el-col :span="6" v-for="mz in meizhuangs">
-              <div @click="selectGoodById(mz.id)" >
-                <el-card :body-style="{ padding: '0px' }">
-                  <img style="width: 326px" src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png" class="image">
-                  <div style="padding: 14px;" class="dspan">
-                    <span class="span">{{mz.goodsName}}</span>
-                    <div class="bottom clearfix">
-                      <a style="font-size: 25px;color: orangered"><span style="font-size: 15px">￥</span>{{mz.goodsPrice}}</a><span style="color: #99a9bf">{{mz.goodsSales}}人已购买</span>
+      <div v-if="meizhuangs.length>0" style="margin-top: 10px">
+        <el-tabs type="border-card">
+          <el-tab-pane label="美妆">
+            <el-row :gutter="20">
+              <el-col :span="6" v-for="mz in meizhuangs">
+                <div @click="selectGoodById(mz.id)" >
+                  <el-card :body-style="{ padding: '0px' }">
+                    <img style="width: 326px" src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png" class="image">
+                    <div style="padding: 14px;" class="dspan">
+                      <span class="span">{{mz.goodsName}}</span>
+                      <div class="bottom clearfix">
+                        <a style="font-size: 25px;color: orangered"><span style="font-size: 15px">￥</span>{{mz.goodsPrice}}</a><span style="color: #99a9bf">{{mz.goodsSales}}人已购买</span>
+                      </div>
                     </div>
-                  </div>
-                </el-card>
-              </div>
-            </el-col>
-          </el-row>
-        </el-tab-pane>
-      </el-tabs>
+                  </el-card>
+                </div>
+              </el-col>
+            </el-row>
+          </el-tab-pane>
+          <div style="float: right;margin-top: 15px">
+            <a @click="more(3)" class="a1">更多商品>></a>
+          </div>
+        </el-tabs>
+      </div>
 
-      <el-tabs type="border-card">
-        <el-tab-pane label="食品">
-          <el-row :gutter="20">
-            <el-col :span="6" v-for="sp in shipins">
-              <div @click="selectGoodById(sp.id)" >
-                <el-card :body-style="{ padding: '0px' }">
-                  <img style="width: 326px" src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png" class="image">
-                  <div style="padding: 14px;">
-                    <span class="span">{{sp.goodsName}}</span>
-                    <div class="bottom clearfix">
-                      <a style="font-size: 25px;color: orangered"><span style="font-size: 15px">￥</span>{{sp.goodsPrice}}</a><span style="color: #99a9bf">{{sp.goodsSales}}人已购买</span>
+      <div v-if="shipins.length>0" style="margin-top: 10px">
+        <el-tabs type="border-card">
+          <el-tab-pane label="食品">
+            <el-row :gutter="20">
+              <el-col :span="6" v-for="sp in shipins">
+                <div @click="selectGoodById(sp.id)" >
+                  <el-card :body-style="{ padding: '0px' }">
+                    <img style="width: 326px" src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png" class="image">
+                    <div style="padding: 14px;">
+                      <span class="span">{{sp.goodsName}}</span>
+                      <div class="bottom clearfix">
+                        <a style="font-size: 25px;color: orangered"><span style="font-size: 15px">￥</span>{{sp.goodsPrice}}</a><span style="color: #99a9bf">{{sp.goodsSales}}人已购买</span>
+                      </div>
                     </div>
-                  </div>
-                </el-card>
-              </div>
-            </el-col>
-          </el-row>
-        </el-tab-pane>
-      </el-tabs>
+                  </el-card>
+                </div>
+              </el-col>
+            </el-row>
+          </el-tab-pane>
+          <div style="float: right;margin-top: 15px">
+            <a @click="more(5)" class="a1">更多商品>></a>
+          </div>
+        </el-tabs>
+      </div>
 
 
     </div>
+
     <el-dialog
       title="商品详情"
       :visible.sync="dialogVisible"
@@ -104,10 +125,15 @@
           <br>
           <a>库存：{{warehouse.goodsAmount}}</a>
           <el-divider></el-divider>
-          <div>
+          <div v-if="warehouse.goodsAmount>0">
             <label>数量：<el-input-number v-model="num" @change="handleChange" :min="1" :max=warehouse.goodsAmount label="描述文字"></el-input-number></label>
             <el-button type="danger">立即购买</el-button>
             <el-button type="warning" @click="addCart">加入购物车</el-button>
+          </div>
+          <div v-if="warehouse.goodsAmount<1">
+            <label>数量：<el-input-number v-model="num" @change="handleChange" :min="0" :max="1" label="描述文字"></el-input-number></label>
+            <el-button type="danger" :plain="true" @click="kcbz()">立即购买</el-button>
+            <el-button type="warning" @click="kcbz()">加入购物车</el-button>
           </div>
         </div>
       </div>
@@ -193,6 +219,12 @@ export default {
           message: '成功加入购物车!'
         });
       }).catch()
+    },
+    more(id){
+      alert(id)
+    },
+    kcbz(){
+      this.$message('库存不足');
     }
   },
   created() {
@@ -202,6 +234,22 @@ export default {
 </script>
 
 <style scoped>
+
+.a1{
+  font-size: 15px;
+}
+
+.a1:hover{
+  color: red;
+}
+
+.span{
+  max-width: 10em;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis; /*超出部分用...代替*/
+}
+
 .divcss5 {
   width: 100%;
   height: 100%;

@@ -5,9 +5,7 @@ import VueRouter from 'vue-router';
 
 import Hot from "../components/Home/Hot";
 import Login from "../components/users/login";
-import Register from "../components/users/register";
-import UserOrder from "../components/users/userOrder";
-import Mine from "../components/users/mine"
+// import Register from "../components/users/register";
 import Home from "../components/Home";
 import ProductData from "../components/Product/ProductData";
 import ShopCart from "../components/shop_cart/shop_cart";
@@ -22,6 +20,7 @@ const routes = [
   {path: '/Hot', component: Hot},
   {path: "/Register", component: Register},
   {path: "/login", component: Login},
+  {path: "/", component: Home,name:"Home"},
   {path: "/UserOrder", component: UserOrder},
   {path: "/Mine", component: Mine},
   {path: "/", component: Home},

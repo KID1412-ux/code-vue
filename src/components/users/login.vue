@@ -43,6 +43,8 @@
 </template>
 
 <script>
+import Home from "../Home";
+
 export default {
   name: 'app',
   data() {
@@ -72,7 +74,7 @@ export default {
             let redirect_path = _this.$route.query.redirect;
             _this.$router.push({path: redirect_path});
           } else {
-            _this.$router.push('/');
+            _this.$router.push({path:"Home",params:{"userName":result.data.userName,"userID":result.data.id}});
           }
         }
       }).catch();
