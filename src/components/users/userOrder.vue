@@ -182,38 +182,49 @@
 export default {
   data() {
     return {
-      activeName:"4",
-      userId:"1",
-      loading:true,
-      orderNum:"",
-      userMsg:"",
-      password:"",
-      sex:"0",
-      phone:"",
-      birthday:"",
+      activeName: "4",
+      userId: "1",
+      loading: true,
+      orderNum: "",
+      userMsg: "",
+      password: "",
+      sex: "0",
+      phone: "",
+      birthday: "",
       tableData: [],
       tableData2: [],
       dialogFormVisible: false,
+      submitForm: {merchantId: 0},
+      formLabelWidth: "120px",
+      merchantData: [],
     }
   },
-  methods:{
+  methods: {
     handleClick() {
       this.selectUserOrder();
     },
     //查询订单
-    selectUserOrder(){
-      var _this=this;
-      var params =new URLSearchParams();
-      params.append("userId",this.userId);
-      params.append("orderNumber",this.orderNum);
-      var orderStats=this.activeName;
-      params.append("orderStats",orderStats);
+    selectUserOrder() {
+      var _this = this;
+      var params = new URLSearchParams();
+      params.append("userId", this.userId);
+      params.append("orderNumber", this.orderNum);
+      var orderStats = this.activeName;
+      params.append("orderStats", orderStats);
       console.log(orderStats)
-      this.$axios.post("userOrder/selectUserOrderByDto",params).then(function(result) {
-        _this.loading=false;
+      this.$axios.post("userOrder/selectUserOrderByDto", params).then(function (result) {
+        _this.loading = false;
         _this.tableData = result.data;
         console.log(_this.tableData)
-        _this.tableData.forEach(item => {if(item.orderStats==="0"){item.orderStats="待付款"}else if (item.orderStats==="1"){item.orderStats="待收货"}else if (item.orderStats==="2"){item.orderStats="已收货"}})
+        _this.tableData.forEach(item => {
+          if (item.orderStats === "0") {
+            item.orderStats = "待付款"
+          } else if (item.orderStats === "1") {
+            item.orderStats = "待收货"
+          } else if (item.orderStats === "2") {
+            item.orderStats = "已收货"
+          }
+        })
         // var table = [];
         // _this.tableData.forEach((item=> {
         //   table.push(Object.assign({},item,{hasChildren:true}))
@@ -224,107 +235,104 @@ export default {
     //查看订单详情
     selectUserOrderDetail(id) {
       console.log(id)
-        var _this=this;
-        this.tableData2=[];
-        var params =new URLSearchParams();
-        params.append("orderId",id);
-        this.$axios.post("userOrder/selectUserOrderDetail",params).then(function(result) {
-          _this.tableData2 = result.data;
-          _this.tableData2.forEach(item => {item.orderPrice=item.goodsPrice+' x '+item.goodsAmount;
+      var _this = this;
+      this.tableData2 = [];
+      var params = new URLSearchParams();
+      params.append("orderId", id);
+      this.$axios.post("userOrder/selectUserOrderDetail", params).then(function (result) {
+        _this.tableData2 = result.data;
+        _this.tableData2.forEach(item => {
+          item.orderPrice = item.goodsPrice + ' x ' + item.goodsAmount;
 
-          })
-        }).catch();
+        })
+      }).catch();
     },
-    pay(row){
+    pay(row) {
       alert(row.id)
     },
     isVisible() {
-        this.dialogFormVisible = true;
-        var _this = this;
-        function queryMerchant() {return _this.$axios.post("shopCart/queryMerchant");}
+      this.dialogFormVisible = true;
+      var _this = this;
 
-        function queryUser() {
-          var params = new URLSearchParams();
-          params.append("id", _this.userId);
-          return _this.$axios.post("shopCart/queryUser", params);
-        }
-
-        this.$axios.all([queryMerchant(), queryUser()]).then(this.$axios.spread(function (res1, res2) {
-          _this.merchantData = res1.data;
-          if (res2.data.merchantId != "" && res2.data.merchantId != null) {
-            _this.submitForm.merchantId = res2.data.merchantId;
-          }
-        })).catch();
-      } else {
-        this.$message({
-          showClose: true,
-          message: '请至少选择一个商品！',
-          type: 'error'
-        });
+      function queryMerchant() {
+        return _this.$axios.post("shopCart/queryMerchant");
       }
-    },
-    //收货方法
-    receipt(row){
-      var _this=this;
-      this.$confirm('确认收货?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        var _this=this;
-        var params =new URLSearchParams();
-        params.append("orderId",row.id);
-        this.$axios.post("userOrder/receipt",params).then(function(result) {
-        }).catch();
-        this.selectUserOrder();
-        this.$message({
-          type: 'success',
-          message: '已收货!'
-        });
-      });
-    },
 
-    //取消订单方法
-    cancel(row){
-      var _this=this;
-      this.$confirm('确认取消订单?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        var _this=this;
-        var params =new URLSearchParams();
-        params.append("orderId",row.id);
-        this.$axios.post("userOrder/deleteOrder",params).then(function(result) {
-        }).catch();
-        this.selectUserOrder();
-        this.$message({
-          type: 'success',
-          message: '订单已取消!'
-        });
-      });
-    },
+      function queryUser() {
+        var params = new URLSearchParams();
+        params.append("id", _this.userId);
+        return _this.$axios.post("shopCart/queryUser", params);
+      }
 
-    //删除订单方法
-    deleteOrder(row){
-      var _this=this;
-      this.$confirm('确认删除订单?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        var _this=this;
-        var params =new URLSearchParams();
-        params.append("orderId",row.id);
-        this.$axios.post("userOrder/deleteOrder",params).then(function(result) {
-        }).catch();
-        this.selectUserOrder();
-        this.$message({
-          type: 'success',
-          message: '订单已删除!'
-        });
-      });
+      this.$axios.all([queryMerchant(), queryUser()]).then(this.$axios.spread(function (res1, res2) {
+        _this.merchantData = res1.data;
+        if (res2.data.merchantId != "" && res2.data.merchantId != null) {
+          _this.submitForm.merchantId = res2.data.merchantId;
+        }
+      })).catch();
     },
+  //收货方法
+  receipt(row) {
+    var _this = this;
+    this.$confirm('确认收货?', '提示', {
+      confirmButtonText: '确定',
+      cancelButtonText: '取消',
+      type: 'warning'
+    }).then(() => {
+      var _this = this;
+      var params = new URLSearchParams();
+      params.append("orderId", row.id);
+      this.$axios.post("userOrder/receipt", params).then(function (result) {
+      }).catch();
+      this.selectUserOrder();
+      this.$message({
+        type: 'success',
+        message: '已收货!'
+      });
+    });
+  },
+
+  //取消订单方法
+  cancel(row) {
+    var _this = this;
+    this.$confirm('确认取消订单?', '提示', {
+      confirmButtonText: '确定',
+      cancelButtonText: '取消',
+      type: 'warning'
+    }).then(() => {
+      var _this = this;
+      var params = new URLSearchParams();
+      params.append("orderId", row.id);
+      this.$axios.post("userOrder/deleteOrder", params).then(function (result) {
+      }).catch();
+      this.selectUserOrder();
+      this.$message({
+        type: 'success',
+        message: '订单已取消!'
+      });
+    });
+  },
+
+  //删除订单方法
+  deleteOrder(row) {
+    var _this = this;
+    this.$confirm('确认删除订单?', '提示', {
+      confirmButtonText: '确定',
+      cancelButtonText: '取消',
+      type: 'warning'
+    }).then(() => {
+      var _this = this;
+      var params = new URLSearchParams();
+      params.append("orderId", row.id);
+      this.$axios.post("userOrder/deleteOrder", params).then(function (result) {
+      }).catch();
+      this.selectUserOrder();
+      this.$message({
+        type: 'success',
+        message: '订单已删除!'
+      });
+    });
+  },
 
 
   },

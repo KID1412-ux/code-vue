@@ -208,10 +208,10 @@ export default {
       }
       var _this = this;
       var param = new URLSearchParams();
-      param.append("goodsId", this.soso.id);
+      param.append("goodsId", this.good.id);
       param.append("userId", userId);
       param.append("amount", this.num);
-      param.append("goodsPrice", this.soso.goodsPrice);
+      param.append("goodsPrice", this.good.goodsPrice);
       this.$axios.post("shopCart/saveOrUpdate", param).then(function (result) {
         _this.$message({
           showClose: true,
