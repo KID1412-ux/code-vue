@@ -156,7 +156,7 @@
         </el-row>
       </div>
     </div>
-    <el-dialog title="结算页" :visible.sync="dialogFormVisible">
+    <el-dialog title="结算页" :visible.sync="dialogFormVisible" center>
       <el-form :model="submitForm" :label-width="formLabelWidth">
         <el-form-item label="自提店">
           <el-select placeholder="请选择自提店" v-model="submitForm.merchantId">
@@ -166,6 +166,7 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogFormVisible = false">返回</el-button>
         <el-button type="primary" @click="counter">提交订单</el-button>
       </div>
     </el-dialog>
@@ -567,6 +568,14 @@ export default {
     },
 
     counter() {
+      if (this.submitForm.merchantId == 0) {
+        this.$message({
+          showClose: true,
+          type: 'info',
+          message: '请选择自提店'
+        });
+        return;
+      }
       this.dialogFormVisible = false;
       this.$prompt('输入数字支付密码', '收银台', {
         center: true,
