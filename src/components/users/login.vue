@@ -74,7 +74,7 @@ export default {
             let redirect_path = _this.$route.query.redirect;
             _this.$router.push({path: redirect_path});
           } else {
-            _this.$router.push({path:"/"});
+            _this.$router.push({path: "/"});
           }
         }
       }).catch();
