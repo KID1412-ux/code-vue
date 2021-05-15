@@ -506,7 +506,6 @@ export default {
     },
     cancel() {
       var _this = this;
-
       function saveUserOrder() {
         var params = new URLSearchParams();
         params.append("userId", _this.userId);

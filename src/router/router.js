@@ -7,7 +7,7 @@ import Hot from "../components/Home/Hot";
 import Login from "../components/users/login";
 import Register from "../components/users/register";
 import UserOrder from "../components/users/userOrder";
-import Mine from "../components/users/mine";
+import UserPersonal from "../components/users/userPersonal";
 import Home from "../components/Home";
 import ProductData from "../components/Product/ProductData";
 import ShopCart from "../components/shop_cart/shop_cart";
@@ -23,15 +23,21 @@ const routes = [
   {path: "/Register", component: Register},
   {path: "/login", component: Login},
   {path: "/", component: Home,name:"Home"},
-  {path: "/UserOrder", component: UserOrder},
-  {path: "/Mine", component: Mine},
+  {path: "/UserOrder",component: UserOrder,
+    meta: {  // 在路由配置元信息
+      requireAuth: true
+      }
+    },
+  {path: "/UserPersonal", component: UserPersonal,
+    meta: {  // 在路由配置元信息
+      requireAuth: true
+    }
+  },
   {path: "/", component: Home},
   {path: "/Search", component: Search,name:"Search"},
   {path: "/ProductData", component: ProductData},
-  {
-    path: "/ShopCart",
-    component: ShopCart,
-    meta: {                           // 在路由配置元信息
+  {path: "/ShopCart",component: ShopCart,
+    meta: {  // 在路由配置元信息
       requireAuth: true
     }
   },

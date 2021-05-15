@@ -66,7 +66,7 @@ export default {
           _this.msg = "账号已被拉黑";
         } else {
           _this.msg = "";
-          alert("登录成功");
+          _this.$message({type: 'success',message: '登录成功'});
           sessionStorage.setItem("userId", result.data.id);
           sessionStorage.setItem("userName", result.data.userName);
           // 如果登录后需要重定向页面，那么就通过下面的方式重定向
