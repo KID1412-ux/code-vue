@@ -500,7 +500,7 @@ export default {
             _this.getData();
             _this.batch = [];
             _this.isSelect = false;
-            // _this.$router.push('/');
+            _this.$router.push('/UserOrder');
           }).catch();
         })).catch();
       })).catch();
