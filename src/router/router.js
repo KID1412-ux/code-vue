@@ -22,21 +22,24 @@ const routes = [
   {path: '/Hot', component: Hot},
   {path: "/Register", component: Register},
   {path: "/login", component: Login},
-  {path: "/", component: Home,name:"Home"},
-  {path: "/UserOrder",component: UserOrder,
+  {path: "/", component: Home, name: "Home"},
+  {
+    path: "/UserOrder", component: UserOrder,
     meta: {  // 在路由配置元信息
       requireAuth: true
-      }
-    },
-  {path: "/UserPersonal", component: UserPersonal,
+    }
+  },
+  {
+    path: "/UserPersonal", component: UserPersonal,
     meta: {  // 在路由配置元信息
       requireAuth: true
     }
   },
   {path: "/", component: Home},
-  {path: "/Search", component: Search,name:"Search"},
+  {path: "/Search", component: Search, name: "Search"},
   {path: "/ProductData", component: ProductData},
-  {path: "/ShopCart",component: ShopCart,
+  {
+    path: "/ShopCart", component: ShopCart,
     meta: {  // 在路由配置元信息
       requireAuth: true
     }

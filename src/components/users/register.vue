@@ -12,18 +12,22 @@
             <div class="grid-content" @mouseleave="userAttest" @mousedown="clearUserInput">
               <el-input id="userName" @focus="clearUserInput" class="input" v-model="username" placeholder="请输入帐号">
                 <template slot="prepend">帐号:</template>
-              </el-input><br>
+              </el-input>
+              <br>
               <label style="color: red">{{ userMsg }}</label>
             </div>
             <div class="grid-content">
-              <el-input id="password" @mousedown="clearPasswordInput" class="input" type="password" v-model="password" placeholder="请输入密码">
+              <el-input id="password" @mousedown="clearPasswordInput" class="input" type="password" v-model="password"
+                        placeholder="请输入密码">
                 <template slot="prepend">密码:</template>
               </el-input>
             </div>
             <div class="grid-content">
-              <el-input id="password2" @mouseleave="checkPassword" @mousedown="clearPasswordInput" class="input" type="password" v-model="password2" placeholder="请再次输入密码">
+              <el-input id="password2" @mouseleave="checkPassword" @mousedown="clearPasswordInput" class="input"
+                        type="password" v-model="password2" placeholder="请再次输入密码">
                 <template slot="prepend">重复密码</template>
-              </el-input><br>
+              </el-input>
+              <br>
               <label style="color: red">{{ passwordMsg }}</label>
             </div>
             <div class="grid-content">
@@ -32,7 +36,8 @@
               <el-radio v-model="sex" label="1" style="margin-left: 10%" border>女</el-radio>
             </div>
             <div class="grid-content">
-              <el-input id="phone" @mouseleave="checkPhone" @mousedown="clearPhoneInput" class="input" type="text" v-model="phone" placeholder="请输入电话">
+              <el-input id="phone" @mouseleave="checkPhone" @mousedown="clearPhoneInput" class="input" type="text"
+                        v-model="phone" placeholder="请输入电话">
                 <template slot="prepend">电话</template>
               </el-input>
               <label style="color: red">{{ phoneMsg }}</label>
@@ -87,11 +92,25 @@ export default {
         }
       }).catch();
     },
-    checkPassword() {if (this.password!==this.password2) {this.passwordMsg = "两个密码不一致!!!"}},
-    checkPhone() {if (this.phone!=this.phone.match(/^1\\d{10}$/)) {this.phoneMsg = "电话格式错误!!!" }},
-    clearUserInput() {this.userMsg = "";},
-    clearPasswordInput() { this.passwordMsg = "";},
-    clearPhoneInput() {this.phoneMsg = "";},
+    checkPassword() {
+      if (this.password !== this.password2) {
+        this.passwordMsg = "两个密码不一致!!!"
+      }
+    },
+    checkPhone() {
+      if (this.phone != this.phone.match(/^1\\d{10}$/)) {
+        this.phoneMsg = "电话格式错误!!!"
+      }
+    },
+    clearUserInput() {
+      this.userMsg = "";
+    },
+    clearPasswordInput() {
+      this.passwordMsg = "";
+    },
+    clearPhoneInput() {
+      this.phoneMsg = "";
+    },
     insertUser() {
       var _this = this;
       var params = new URLSearchParams();

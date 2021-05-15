@@ -14,7 +14,7 @@
 
 
             <span v-if="userName!=null&&userName!=''">
-              <router-link to="">你好,{{userName}}</router-link>
+              <router-link to="">你好,{{ userName }}</router-link>
               <router-link to="/Register">注册</router-link>
             </span>
 
@@ -37,28 +37,28 @@ export default {
   data() {
     return {
       msg: 'Welcome to Your Vue.js App',
-      userName:"",
+      userName: "",
     }
   },
   methods: {
-    login(){
+    login() {
       var userName = sessionStorage.getItem("userName");
-      this.userName=userName;
+      this.userName = userName;
       // if (userId != null) {
-        // var params=new URLSearchParams();
-        // params.append("userID",userId);
-        // var _this=this;
-        // this.$axios.post("/user/selectUserByID",params).then(function (item){
-        //     _this.user=item.data;
-        //     _this.userId=item.data.id;
-        //   }).catch()
+      // var params=new URLSearchParams();
+      // params.append("userID",userId);
+      // var _this=this;
+      // this.$axios.post("/user/selectUserByID",params).then(function (item){
+      //     _this.user=item.data;
+      //     _this.userId=item.data.id;
+      //   }).catch()
       // }
     }
   },
   created() {
     this.login();
   },
-  watch:{
+  watch: {
     // 如果路由有变化，会再次执行该方法
     '$route': 'login'
   }
