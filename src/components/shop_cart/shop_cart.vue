@@ -385,7 +385,6 @@ export default {
           params.append("id", _this.userId);
           return _this.$axios.post("shopCart/queryUser", params);
         }
-
         this.$axios.all([queryMerchant(), queryUser()]).then(this.$axios.spread(function (res1, res2) {
           _this.merchantData = res1.data;
           if (res2.data.merchantId != "" && res2.data.merchantId != null) {

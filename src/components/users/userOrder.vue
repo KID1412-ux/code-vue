@@ -13,7 +13,6 @@
         <div class="grid-content" style="background-color: #ffffff">
           <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">
             <el-tab-pane label="全部订单" name="4" @click="selectUserOrder">
-
               <el-table max-height="400px" v-loading="loading" :data="tableData" border style="width: 100%;background-color: #eee" row-key="id" >
                 <el-table-column label="订单编号" width="250">
                   <template slot-scope="scope">
