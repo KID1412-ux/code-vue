@@ -153,7 +153,7 @@
       </div>
     </el-dialog>
     <el-dialog title="温馨提示" :visible.sync="dialogVisible1" center>
-      <div class="prompt-dialog"> 未获取到支付成功信息，请及时到订单中继续支付</div>
+      <div style="text-align: center"> 未获取到支付成功信息，请及时到订单中继续支付</div>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="dialogVisible1 = false">确 定</el-button>
       </div>
@@ -300,65 +300,64 @@ export default {
       }).catch(() => {
         this.cancel();
       });
-    }
-  },
-  toSettle() {
-    var userId = sessionStorage.getItem("userId");
-    var _this = this;
-    function updateUser() {
-      var params = new URLSearchParams();
-      params.append("id", userId);
-      params.append("merchantId", _this.submitForm.merchantId);
-      return _this.$axios.post("shopCart/updateUser", params);
-    }
-    function saveUserOrder() {
-      var params = new URLSearchParams();
-      params.append("userId", userId);
-      params.append("addressId", _this.submitForm.merchantId);
-      params.append("amount", _this.num);
-      params.append("orderPrice", _this.good.goodsPrice);
-      params.append("orderStats", "1");
-      return _this.$axios.post("shopCart/saveUserOrder", params);
-    }
-    function saveMerchantOrder() {
-      var params = new URLSearchParams();
-      params.append("merchantId", _this.submitForm.merchantId);
-      params.append("amount", _this.sum);
-      params.append("stats", "0");
-      return _this.$axios.post("shopCart/saveMerchantOrder", params);
-    }
-    function saveUserOrderDetail(nary) {
-      return _this.$axios({
-        method: 'post',
-        url: 'shopCart/saveUserOrderDetail',
-        data: JSON.stringify(nary),
-        headers: {
-          'Content-Type': 'application/json;charset=UTF-8'
-        }
-      });
-    }
-    function saveMerchantOrderDetail(nary) {
-      return _this.$axios({
-        method: 'post',
-        url: 'shopCart/saveMerchantOrderDetail',
-        data: JSON.stringify(nary),
-        headers: {
-          'Content-Type': 'application/json;charset=UTF-8'
-        }
-      });
-    }
-    function updateGood(ary) {
-      return _this.$axios({
-        method: 'post',
-        url: 'shopCart/updateGood',
-        data: JSON.stringify(ary),
-        headers: {
-          'Content-Type': 'application/json;charset=UTF-8'
-        }
-      });
-    }
-    this.$axios.all([updateUser(), saveUserOrder(), saveMerchantOrder()]).then(this.$axios.spread(function (res1, res2, res3, res4) {
-      var nary = [];
+    },
+    toSettle() {
+      var userId = sessionStorage.getItem("userId");
+      var _this = this;
+      function updateUser() {
+        var params = new URLSearchParams();
+        params.append("id", userId);
+        params.append("merchantId", _this.submitForm.merchantId);
+        return _this.$axios.post("shopCart/updateUser", params);
+      }
+      function saveUserOrder() {
+        var params = new URLSearchParams();
+        params.append("userId", userId);
+        params.append("addressId", _this.submitForm.merchantId);
+        params.append("amount", _this.num);
+        params.append("orderPrice", _this.good.goodsPrice*_this.num);
+        params.append("orderStats", "1");
+        return _this.$axios.post("shopCart/saveUserOrder", params);
+      }
+      function saveMerchantOrder() {
+        var params = new URLSearchParams();
+        params.append("merchantId", _this.submitForm.merchantId);
+        params.append("amount", _this.num);
+        params.append("stats", "0");
+        return _this.$axios.post("shopCart/saveMerchantOrder", params);
+      }
+      function saveUserOrderDetail(nary) {
+        return _this.$axios({
+          method: 'post',
+          url: 'shopCart/saveUserOrderDetail',
+          data: JSON.stringify(nary),
+          headers: {
+            'Content-Type': 'application/json;charset=UTF-8'
+          }
+        });
+      }
+      function saveMerchantOrderDetail(nary) {
+        return _this.$axios({
+          method: 'post',
+          url: 'shopCart/saveMerchantOrderDetail',
+          data: JSON.stringify(nary),
+          headers: {
+            'Content-Type': 'application/json;charset=UTF-8'
+          }
+        });
+      }
+      function updateGood(ary) {
+        return _this.$axios({
+          method: 'post',
+          url: 'shopCart/updateGood',
+          data: JSON.stringify(ary),
+          headers: {
+            'Content-Type': 'application/json;charset=UTF-8'
+          }
+        });
+      }
+      this.$axios.all([updateUser(), saveUserOrder(), saveMerchantOrder()]).then(this.$axios.spread(function (res1, res2, res3, res4) {
+        var nary = [];
         var json1={};
         json1["orderId"]=res2.data;
         json1["merchantOrderId"]=res3.data;
@@ -366,52 +365,55 @@ export default {
         json1["goodsAmount"]=_this.num;
         json1["goodsPrice"]=_this.good.goodsPrice;
         nary.push(json1);
-      var ary = [];
+        console.log(nary)
+        var ary = [];
         var json2 = {};
         json2["id"] = _this.good.id;
         json2["goodsSales"] = _this.num;
         ary.push(json2);
-      _this.$axios.all([saveUserOrderDetail(nary), updateGood(ary), saveMerchantOrderDetail(nary)]).then(_this.$axios.spread(function (res1, res2, res3) {
+        _this.$axios.all([saveUserOrderDetail(nary), updateGood(ary), saveMerchantOrderDetail(nary)]).then(_this.$axios.spread(function (res1, res2, res3) {
           _this.$router.push('/UserOrder');
+        })).catch();
       })).catch();
-    })).catch();
-  },
-  cancel() {
-    var userId = sessionStorage.getItem("userId");
-    var _this = this;
-    function saveUserOrder() {
-      var params = new URLSearchParams();
-      params.append("userId", userId);
-      params.append("addressId", _this.submitForm.merchantId);
-      params.append("amount", _this.num);
-      params.append("orderPrice", _this.good.goodsPrice);
-      params.append("orderStats", "0");
-      return _this.$axios.post("shopCart/saveUserOrder", params);
-    }
+    },
+    cancel() {
+      var userId = sessionStorage.getItem("userId");
+      var _this = this;
+      function saveUserOrder() {
+        var params = new URLSearchParams();
+        params.append("userId", userId);
+        params.append("addressId", _this.submitForm.merchantId);
+        params.append("amount", _this.num);
+        params.append("orderPrice", _this.good.goodsPrice*_this.num);
+        params.append("orderStats", "0");
+        return _this.$axios.post("shopCart/saveUserOrder", params);
+      }
 
-    function saveUserOrderDetail(nary) {
-      return _this.$axios({
-        method: 'post',
-        url: 'shopCart/saveUserOrderDetail',
-        data: JSON.stringify(nary),
-        headers: {
-          'Content-Type': 'application/json;charset=UTF-8'
-        }
-      });
-    }
-    this.$axios.all([saveUserOrder()]).then(this.$axios.spread(function (res1) {
-      var nary =[];
+      function saveUserOrderDetail(nary) {
+        return _this.$axios({
+          method: 'post',
+          url: 'shopCart/saveUserOrderDetail',
+          data: JSON.stringify(nary),
+          headers: {
+            'Content-Type': 'application/json;charset=UTF-8'
+          }
+        });
+      }
+      this.$axios.all([saveUserOrder()]).then(this.$axios.spread(function (res1) {
+        var nary =[];
         var json1={};
         json1["orderId"]=res1.data;
         json1["goodsId"]=_this.good.id;
         json1["goodsAmount"]=_this.num;
         json1["goodsPrice"]=_this.good.goodsPrice;
         nary.push(json1);
-      saveUserOrderDetail(nary).then(function (result) {
-        _this.dialogVisible1 = true;
-      }).catch();
-    })).catch();
+        saveUserOrderDetail(nary).then(function (result) {
+          _this.dialogVisible1 = true;
+        }).catch();
+      })).catch();
+    },
   },
+
   created() {
     this.getGoods()
   }

@@ -171,7 +171,7 @@
       </div>
     </el-dialog>
     <el-dialog title="温馨提示" :visible.sync="dialogVisible" center>
-      <div class="prompt-dialog"> 未获取到支付成功信息，请及时到订单中继续支付</div>
+      <div class="prompt-dialog">未获取到支付成功信息，请及时到订单中继续支付</div>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
       </div>

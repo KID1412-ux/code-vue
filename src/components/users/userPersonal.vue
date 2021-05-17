@@ -1,46 +1,49 @@
 <template>
-    <el-container class="footer">
-      <el-main>
+  <div>
         <el-row>
           <el-col :span="4">
             <div class="grid-content"></div>
           </el-col>
-          <el-col :span="5" style="margin-top: 3%">
+          <el-col :span="5" style="">
             <el-card class="box-card" style="width: 100%">
               <div>
                 <el-avatar :size="80" :src="circleUrl" style="margin-top: 50px"></el-avatar>
                 <br>
-                <el-link :underline="false" ><h3>用户名</h3></el-link>
+                <h3>{{userNickname}}</h3>
+                <el-button size="mini" round @click="openDialogForm">编辑个人资料</el-button>
               </div>
             </el-card>
           </el-col>
-          <el-col :span="10" style="margin-top: 3%">
+          <el-col :span="10" style="">
             <el-card shadow="never" style="height: 200px;margin-top: 16%">
               <div style="margin-top: 5%;margin-left: -10%">
                 <label>默认提货商户：</label>
-                <el-select v-model="merchantValue" @change="changeAddress">
-                  <el-option v-for="item in merchants" :key="item.merchantId" :value="item.merchantName">
-                  </el-option>
+                <el-select placeholder="请选择自提店" v-model="merchant" @change="changeAddress">
+                  <el-option label="--请选择--" :value="0"></el-option>
+                  <el-option v-for="(item, index) in merchants" :key="item.id" :label="item.merchantName" :value="item.id"></el-option>
                 </el-select>
                 <el-popover
-                  placement="left"
-                  width="400"
+                  placement="bottom-end"
+                  width="600"
                   trigger="click">
                   <el-table :data="merchants">
-                    <el-table-column width="150" property="date" label="日期"></el-table-column>
-                    <el-table-column width="100" property="name" label="姓名"></el-table-column>
-                    <el-table-column width="300" property="address" label="地址"></el-table-column>
+                    <el-table-column width="150" property="userNickname" label="商户姓名"></el-table-column>
+                    <el-table-column width="150" property="merchantName" label="店铺名"></el-table-column>
+                    <el-table-column width="150" property="deliveryAddress" label="店铺地址"></el-table-column>
+                    <el-table-column width="150" property="merchantPhone" label="店铺电话"></el-table-column>
                   </el-table>
                   <el-button slot="reference">所有商户</el-button>
                 </el-popover>
               </div>
               <div style="margin-top: 5%;margin-left: -10%">
-                <el-row>
-                  <label>当前界面：</label>
-                  <el-tag type="info" style="margin-right: 10%">用户个人</el-tag>
-                  <el-button type="primary" plain>申请商户</el-button>
-                  <el-button type="primary" plain>申请供应商</el-button>
-                </el-row>
+                  <el-row>
+                    <label>当前界面：</label>
+                    <el-tag type="primary" >用户个人</el-tag>
+                    <el-button type="primary" plain v-if="user.type =='0'||user.type =='2'">申请成为商户</el-button>
+                    <el-button type="primary" plain v-if="user.type =='1'||user.type =='3'" @click="goMerchantPersonal">前往商户主页</el-button>
+                    <el-button type="primary" plain v-if="user.type =='2'||user.type =='3'">前往供应商主页</el-button>
+                    <el-button type="primary" plain v-if="user.type =='0'||user.type =='1'">申请成为供应商</el-button>
+                  </el-row>
               </div>
             </el-card>
           </el-col>
@@ -54,7 +57,7 @@
               <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">
                 <el-tab-pane label="全部订单" name="4" @click="selectUserOrder">
 
-                  <el-table max-height="200px" v-loading="loading" :data="tableData" border style="width: 100%;background-color: #eee" row-key="id" >
+                  <el-table max-height="300px" v-loading="loading" :data="tableData" border style="width: 100%;background-color: #eee" row-key="id" >
                     <el-table-column label="订单编号" width="250">
                       <template slot-scope="scope">
                         <el-popover placement="right" width="400" trigger="click">
@@ -168,9 +171,29 @@
             </div>
           </el-col>
         </el-row>
-      </el-main>
-      <el-footer style="background: yellow">Footer</el-footer>
-    </el-container>
+    <el-dialog title="个人信息" :visible.sync="dialogForm" width="600px">
+      <el-form :model=userForm>
+        <el-form-item label="用户头像:" label-width="150px">
+          <div @click="changeImage">
+            <el-avatar :size="60" :src="circleUrl"></el-avatar>
+          </div>
+        </el-form-item>
+        <el-form-item label="用户账号：" label-width="160px">
+          <el-input v-model="userForm.userName" style="width: 250px"></el-input>
+        </el-form-item>
+        <el-form-item label="用户昵称：" label-width="160px">
+          <el-input v-model="userForm.userNickname" style="width: 250px"></el-input>
+        </el-form-item>
+        <el-form-item label="用户电话：" label-width="160px">
+          <el-input v-model="userForm.phone" style="width: 250px"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="closeDialogForm">取 消</el-button>
+        <el-button type="primary" @click="changeUser">确 定</el-button>
+      </div>
+    </el-dialog>
+  </div>
 
 </template>
 
@@ -181,6 +204,9 @@ export default {
     return {
       activeName:"3",
       userId:"",
+      user:{},
+      userForm:{},
+      userNickname:"",
       loading:true,
       orderNum:"",
       userMsg:"",
@@ -191,8 +217,9 @@ export default {
       tableData: [],
       tableData2: [],
       merchants:[],
-      merchantValue:"1",
-      circleUrl: "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png"
+      merchant:"",
+      circleUrl: "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
+      dialogForm:false
     }
   },
   methods: {
@@ -205,7 +232,7 @@ export default {
     selectUserOrder(){
       var _this=this;
       var params =new URLSearchParams();
-      params.append("userId",this.userId);
+      params.append("userId",this.userId);;
       params.append("orderNumber",this.orderNum);
       var orderStats=this.activeName;
       params.append("orderStats",orderStats);
@@ -249,23 +276,79 @@ export default {
       }
       this.$axios.all([queryMerchant(), queryUser()]).then(this.$axios.spread(function (res1, res2) {
         _this.merchants = res1.data;
-        // console.log(_this.merchants)
+        console.log(_this.merchants)
         if (res2.data.merchantId != "" && res2.data.merchantId != null) {
-          _this.merchantValue = res2.data.merchantName;
+          _this.merchant = res2.data.merchantId;
         }
       })).catch();
     },
+    //更改默认提货商户
     changeAddress(){
       var _this = this;
-      console.log(this.merchantValue)
+      // console.log(this.merchant)
       var params = new URLSearchParams();
       params.append("id", this.userId);
-      params.append("merchantId", this.merchants.merchantId);
-      // return _this.$axios.post("shopCart/updateUser", params);
+      params.append("merchantId", this.merchant);
+      this.$axios.post("shopCart/updateUser", params).then().catch()
     },
+    //打开修改个人信息模态框
+    openDialogForm(){
+      this.userForm=this.user;
+      this.dialogForm=true
+    },
+    closeDialogForm(){
+      this.dialogForm=false;
+      this.userId=sessionStorage.getItem("userId");
+      var _this = this;
+      var params = new URLSearchParams();
+      params.append("id", this.userId);
+      this.$axios.post("shopCart/queryUser", params).then(function (result) {
+        _this.userNickname=result.data.userNickname;
+        _this.user=result.data;
+        _this.merchant=_this.user.merchantId;
+        // console.log(_this.user)
+      }).catch();
+    },
+    //修改图片
+    changeImage(){
+      alert("111")
+    },
+    //提交个人信息的修改
+    changeUser(){
+      var _this = this;
+      var params = new URLSearchParams();
+      params.append("id", this.userId);
+      params.append("username", this.userForm.username);
+      params.append("userNickname", this.userForm.userNickname);
+      params.append("phone", this.userForm.phone);
+      this.$axios.post("shopCart/updateUser", params);
+      this.dialogForm=false;
+      var params1 = new URLSearchParams();
+      params1.append("id", this.userId);
+      this.$axios.post("shopCart/queryUser", params1).then(function (result) {
+        _this.userNickname=result.data.userNickname;
+        _this.user=result.data;
+        _this.merchant=_this.user.merchantId;
+        // console.log(_this.user)
+      }).catch();
+    },
+    //前往商户主页
+    goMerchantPersonal(){
+
+    }
+
   },
   created() {
     this.userId=sessionStorage.getItem("userId");
+    var _this = this;
+    var params = new URLSearchParams();
+    params.append("id", this.userId);
+    this.$axios.post("shopCart/queryUser", params).then(function (result) {
+        _this.userNickname=result.data.userNickname;
+        _this.user=result.data;
+        _this.merchant=_this.user.merchantId;
+        // console.log(_this.user)
+    }).catch();
     this.selectUserOrder();
     this.selectMerchants();
   }

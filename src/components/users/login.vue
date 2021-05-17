@@ -68,7 +68,8 @@ export default {
           _this.msg = "";
           _this.$message({type: 'success', message: '登录成功'});
           sessionStorage.setItem("userId", result.data.id);
-          sessionStorage.setItem("userName", result.data.userName);
+          sessionStorage.setItem("userName", result.data.username);
+          sessionStorage.setItem("userNickname", result.data.userNickname);
           // 如果登录后需要重定向页面，那么就通过下面的方式重定向
           if (_this.$route.query.redirect) {
             let redirect_path = _this.$route.query.redirect;
