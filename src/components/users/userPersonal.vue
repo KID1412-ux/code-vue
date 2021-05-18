@@ -7,10 +7,11 @@
           <el-col :span="5" style="">
             <el-card class="box-card" style="width: 100%">
               <div>
-                <el-avatar :size="80" :src="circleUrl" style="margin-top: 50px"></el-avatar>
+                <el-avatar :size="80" :src="userImageUrl" style="margin-top: 50px"></el-avatar>
                 <br>
-                <h3>{{userNickname}}</h3>
-                <el-button size="mini" round @click="openDialogForm">编辑个人资料</el-button>
+                <h3>{{user.userNickname}}</h3>
+                <el-button size="mini" round @click="openDialogForm">编辑个人资料</el-button><br><br>
+                <el-link type="danger" @click="outUser">退出</el-link>
               </div>
             </el-card>
           </el-col>
@@ -171,11 +172,34 @@
           </el-col>
         </el-row>
 <!--个人信息修改    -->
-    <el-dialog title="个人信息" :visible.sync="dialogForm" width="600px">
-      <el-form :model=userForm>
+    <el-dialog title="个人信息" :visible.sync="dialogForm" width="600px" @close="resetUpdateForm('userForm')">
+      <el-form :model=userForm ref="userForm">
         <el-form-item label="用户头像:" label-width="150px">
-          <div @click="changeImage">
-            <el-avatar :size="60" :src="circleUrl"></el-avatar>
+          <div>
+            <div v-if="bool" style="float: left; margin-right: 5px">
+              <img width="150px" height="150px" :src="userForm.userImage" alt="" >
+            </div>
+            <div style="float: left">
+              <el-upload
+                action="#"
+                list-type="picture-card"
+                ref="upload"
+                accept="image/jpeg,image/gif,image/png,image/jpg"
+                :on-change="updateImgChange"
+                :on-remove="updateImgRemove"
+                :auto-upload="false"
+                :file-list="updateImgList"
+                :limit="1"
+                :on-exceed="imageExceed"
+                style="width: 100%;">
+                <i class="el-icon-plus"></i>
+              </el-upload>
+              <div>
+                <el-dialog :visible.sync="updateImg">
+                  <img width="100%" :src="updateImageUrl" alt="">
+                </el-dialog>
+              </div>
+            </div>
           </div>
         </el-form-item>
         <el-form-item label="用户账号：" label-width="160px">
@@ -189,81 +213,150 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="closeDialogForm">取 消</el-button>
-        <el-button type="primary" @click="changeUser">确 定</el-button>
+        <el-button @click="dialogForm = false;">取 消</el-button>
+        <el-button type="primary" @click="changeUser('userForm')">确 定</el-button>
       </div>
     </el-dialog>
 <!--商户申请单    -->
-    <el-dialog title="录入商品" :visible.sync="addFormVisible" center @close="resetAddForm('addForm')">
-      <el-form :model="addForm" :rules="rules" ref="addForm">
-        <el-form-item label="商品名称" :label-width="formLabelWidth" prop="goodsName">
+    <el-dialog title="商户申请单" :visible.sync="merchantFromVisible" center @close="resetMerchantAddForm('merchantAddFrom')" >
+      <el-form :model="merchantAddFrom" :rules="rules" ref="merchantAddFrom" >
+        <el-form-item label="商户店铺名:" label-width="200px" prop="goodsName">
           <div class="form-input">
-            <el-input v-model="addForm.goodsName" autocomplete="off"></el-input>
+            <el-input v-model="merchantAddFrom.merchantName" autocomplete="off" style="width: 350px"></el-input>
           </div>
         </el-form-item>
-        <el-form-item label="商品图片" :label-width="formLabelWidth">
+        <el-form-item label="商户店铺图片:" label-width="200px">
           <el-upload
             action="#"
             list-type="picture-card"
             ref="upload"
             accept="image/jpeg,image/gif,image/png,image/jpg"
-            :on-change="imageChange"
+            :on-change="imageChange1"
             :auto-upload="false"
-            :file-list="imageList"
+            :file-list="imageList1"
+            :limit="1"
+            :on-exceed="imageExceed"
+            style="width: 100%;">
+            <i class="el-icon-plus" ></i>
+          </el-upload>
+<!--          <div>-->
+<!--            <el-dialog :visible.sync="dialogVisibleImg">-->
+<!--              <img width="100%" :src="dialogImageUrl" alt="">-->
+<!--            </el-dialog>-->
+<!--          </div>-->
+        </el-form-item>
+        <el-form-item label="商户营业执照图片:" label-width="200px">
+        <el-upload
+          action="#"
+          list-type="picture-card"
+          ref="upload"
+          accept="image/jpeg,image/gif,image/png,image/jpg"
+          :on-change="imageChange2"
+          :auto-upload="false"
+          :file-list="imageList2"
+          :limit="1"
+          :on-exceed="imageExceed"
+          style="width: 100%;">
+          <i class="el-icon-plus"></i>
+        </el-upload>
+<!--        <div>-->
+<!--          <el-dialog :visible.sync="dialogVisibleImg">-->
+<!--            <img width="100%" :src="dialogImageUrl" alt="">-->
+<!--          </el-dialog>-->
+<!--        </div>-->
+      </el-form-item>
+        <el-form-item label="店铺电话:" label-width="200px" prop="goodsPrice">
+          <div class="form-input">
+            <el-input autocomplete="off" v-model="merchantAddFrom.merchantPhone" style="width: 350px"></el-input>
+          </div>
+        </el-form-item>
+        <el-form-item label="店铺地址:" label-width="200px" prop="goodsUnit">
+          <div class="form-input">
+            <el-input autocomplete="off" v-model="merchantAddFrom.deliveryAddress" style="width: 350px"></el-input>
+          </div>
+        </el-form-item>
+        <el-form-item label="店铺介绍:" label-width="200px" prop="goodsDescribe">
+          <div class="form-input">
+            <el-input type="textarea" v-model="merchantAddFrom.merchantDescribe" :autosize="{ minRows: 2, maxRows: 4}" placeholder="请输入内容" style="width: 350px">
+            </el-input>
+          </div>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="addFormVisible = false">取 消</el-button>
+        <el-button type="primary" @click="merchantFormSubmit('merchantAddFrom')">确 定</el-button>
+      </div>
+    </el-dialog>
+
+
+<!--供应商申请单    -->
+    <el-dialog title="供应商申请单" :visible.sync="supplierFromVisible" center @close="resetSupplierAddForm('supplierAddFrom')" >
+      <el-form :model="supplierAddFrom" :rules="rules" ref="supplierAddFrom" >
+        <el-form-item label="供应商店铺名:" label-width="200px" prop="goodsName">
+          <div class="form-input">
+            <el-input v-model="supplierAddFrom.supplierName" autocomplete="off" style="width: 350px"></el-input>
+          </div>
+        </el-form-item>
+        <el-form-item label="供应商店铺图片:" label-width="200px">
+          <el-upload
+            action="#"
+            list-type="picture-card"
+            ref="upload"
+            accept="image/jpeg,image/gif,image/png,image/jpg"
+            :on-change="imageChange1"
+            :auto-upload="false"
+            :file-list="imageList1"
+            :limit="1"
+            :on-exceed="imageExceed"
+            style="width: 100%;">
+            <i class="el-icon-plus" ></i>
+          </el-upload>
+          <!--          <div>-->
+          <!--            <el-dialog :visible.sync="dialogVisibleImg">-->
+          <!--              <img width="100%" :src="dialogImageUrl" alt="">-->
+          <!--            </el-dialog>-->
+          <!--          </div>-->
+        </el-form-item>
+        <el-form-item label="供应商营业执照图片:" label-width="200px">
+          <el-upload
+            action="#"
+            list-type="picture-card"
+            ref="upload"
+            accept="image/jpeg,image/gif,image/png,image/jpg"
+            :on-change="imageChange2"
+            :auto-upload="false"
+            :file-list="imageList2"
             :limit="1"
             :on-exceed="imageExceed"
             style="width: 100%;">
             <i class="el-icon-plus"></i>
           </el-upload>
-          <div>
-            <el-dialog :visible.sync="dialogVisibleImg">
-              <img width="100%" :src="dialogImageUrl" alt="">
-            </el-dialog>
+          <!--        <div>-->
+          <!--          <el-dialog :visible.sync="dialogVisibleImg">-->
+          <!--            <img width="100%" :src="dialogImageUrl" alt="">-->
+          <!--          </el-dialog>-->
+          <!--        </div>-->
+        </el-form-item>
+        <el-form-item label="供应商电话:" label-width="200px" prop="goodsPrice">
+          <div class="form-input">
+            <el-input autocomplete="off" v-model="merchantAddFrom.merchantPhone" style="width: 350px"></el-input>
           </div>
         </el-form-item>
-        <el-form-item label="商品简介" :label-width="formLabelWidth" prop="goodsDescribe">
+        <el-form-item label="供应商地址:" label-width="200px" prop="goodsUnit">
           <div class="form-input">
-            <el-input
-              type="textarea"
-              v-model="addForm.goodsDescribe"
-              :autosize="{ minRows: 2, maxRows: 4}"
-              placeholder="请输入内容"
-            >
+            <el-input autocomplete="off" v-model="merchantAddFrom.deliveryAddress" style="width: 350px"></el-input>
+          </div>
+        </el-form-item>
+        <el-form-item label="供应商介绍:" label-width="200px" prop="goodsDescribe">
+          <div class="form-input">
+            <el-input type="textarea" v-model="merchantAddFrom.merchantDescribe" :autosize="{ minRows: 2, maxRows: 4}" placeholder="请输入内容" style="width: 350px">
             </el-input>
           </div>
-        </el-form-item>
-        <el-form-item label="商品价格" :label-width="formLabelWidth" prop="goodsPrice">
-          <div class="form-input">
-            <el-input autocomplete="off" v-model="addForm.goodsPrice"></el-input>
-          </div>
-        </el-form-item>
-        <el-form-item label="商品单位" :label-width="formLabelWidth" prop="goodsUnit">
-          <div class="form-input">
-            <el-input autocomplete="off" v-model="addForm.goodsUnit"></el-input>
-          </div>
-        </el-form-item>
-        <el-form-item label="商品分类" :label-width="formLabelWidth">
-          <el-cascader class="form-input"
-                       ref="addUnit"
-                       :options="data"
-                       :key="keyValue"
-                       placeholder="请选择商品分类"
-                       :props="{ expandTrigger: 'hover', checkStrictly: true, value: 'id' }"
-                       clearable
-                       filterable
-                       v-model="addVal"
-                       @change="addUnit"
-          >
-            <template slot-scope="{ node, data }">
-              <span>{{ data.label }}</span>
-              <span v-if="!node.isLeaf"> ({{ data.children.length }}) </span>
-            </template>
-          </el-cascader>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="addFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="addFormSubmit('addForm')">确 定</el-button>
+        <el-button type="primary" @click="merchantFormSubmit('merchantAddFrom')">确 定</el-button>
       </div>
     </el-dialog>
   </div>
@@ -278,8 +371,9 @@ export default {
       activeName:"3",
       userId:"",
       user:{},
-      userForm:{},
-      userNickname:"",
+      userForm:{
+        id:'',userImage:'',userName:'',userNickname:'',phone:''
+      },
       loading:true,
       orderNum:"",
       userMsg:"",
@@ -291,12 +385,53 @@ export default {
       tableData2: [],
       merchants:[],
       merchant:"",
-      circleUrl: "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
+      userImageUrl: "",
+      bool:true,
       dialogForm:false,
-      merchantFrom:false,
+      updateImgList:[],
+      updateImg:false,
+      updateImageUrl:'',
+      merchantFromVisible:false,
+      rules: {
+        merchantName: [{required: true, message: '请输入商户店铺名', trigger: 'blur'}],
+        merchantPhone: [{required: true, message: '请输入商户店铺电话', trigger: 'blur'}],
+        deliveryAddress: [{required: true, message: '请输入商户店铺地址', trigger: 'blur'}],
+        merchantDescribe: [{required: true, message: '请输入商户店铺介绍', trigger: 'blur'}]
+      },
+      merchantAddFrom: {
+        id:'',merchantName: '', merchantPhone: '', fileObj1: '',
+        fileObj2: '',deliveryAddress: '', merchantDescribe: ''
+      },
+      imageList1: [],
+      imageList2: [],
+      // dialogVisibleImg: false,
+
+      supplierFromVisible:false,
+      supplierAddFrom: {
+        id:'',supplierName: '', supplierPhone: '', fileObj1: '',
+        fileObj2: '',supplierAddress: ''
+      },
+      imageList3: [],
+      imageList4: [],
     }
   },
   methods: {
+    //查询用户
+    selectUser(){
+      var _this=this;
+      this.userId=sessionStorage.getItem("userId")
+      var params = new URLSearchParams();
+      params.append("id",this.userId);
+      this.$axios.post("shopCart/queryUser", params).then(function (result) {
+        _this.user=result.data;
+        _this.merchant=_this.user.merchantId;
+        if(_this.user.userImage==null||_this.user.userImage==''){
+          _this.userImageUrl="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png";
+        }else {
+          _this.userImageUrl=_this.user.userImage;
+        }
+      }).catch();
+    },
     handleClick(tab) {
       if (tab.name === "5"){this.$router.push('/UserOrder');}
       else {this.selectUserOrder();}
@@ -367,65 +502,225 @@ export default {
     },
     //打开修改个人信息模态框
     openDialogForm(){
-      this.userForm=this.user;
+      this.userForm.id = this.user.id;
+      this.userForm.userImage = this.user.userImage;
+      this.userForm.userName = this.user.userName;
+      this.userForm.userNickname = this.user.userNickname;
+      this.userForm.phone = this.user.phone;
       this.dialogForm=true
     },
-    closeDialogForm(){
-      this.dialogForm=false;
-      this.userId=sessionStorage.getItem("userId");
-      var _this = this;
-      var params = new URLSearchParams();
-      params.append("id", this.userId);
-      this.$axios.post("shopCart/queryUser", params).then(function (result) {
-        _this.userNickname=result.data.userNickname;
-        _this.user=result.data;
-        _this.merchant=_this.user.merchantId;
-        // console.log(_this.user)
-      }).catch();
+    resetUpdateForm(formName){
+      this.dialogForm = false;
+      this.$refs[formName].resetFields();
+      this.updateImgList = [];
+      this.bool = true;
     },
-    //修改图片
-    changeImage(){
-      alert("111")
+    updateImgChange(file) {
+      this.bool = false;
+      this.userForm.userImage = file.raw;
+    },
+    updateImgRemove() {
+      setTimeout(() => {
+        this.bool = true;
+      }, 1000);
     },
     //提交个人信息的修改
-    changeUser(){
-      var _this = this;
-      var params = new URLSearchParams();
-      params.append("id", this.userId);
-      params.append("username", this.userForm.username);
-      params.append("userNickname", this.userForm.userNickname);
-      params.append("phone", this.userForm.phone);
-      this.$axios.post("shopCart/updateUser", params);
-      this.dialogForm=false;
-      var params1 = new URLSearchParams();
-      params1.append("id", this.userId);
-      this.$axios.post("shopCart/queryUser", params1).then(function (result) {
-        _this.userNickname=result.data.userNickname;
-        _this.user=result.data;
-        _this.merchant=_this.user.merchantId;
-      }).catch();
+    changeUser(formName){
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          var _this = this;
+          this.userForm.id=this.userId;
+          var formData = new FormData();
+          Object.keys(this.userForm).forEach((key) => {
+            formData.append(key, _this.userForm[key]);
+          })
+          this.$axios({
+            method: 'post',
+              url: 'user/updateUser',
+            data: formData,
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+          }).then(function (result) {
+            // console.log(result);
+            _this.resetUpdateForm(formName);
+            _this.$message({
+              showClose: true,
+              message: '信息已更改',
+              type: 'success'
+            });
+          }).catch();
+          _this.selectUser();
+        } else {
+          return false;
+        }
+      });
     },
+
+
     //打开商户申请模态框
     openMerchantFrom(){
-        this.merchantForm=true
+        this.selectUser();
+        console.log(this.user)
+        if (this.user.merchantAuditStatus=='0'){
+          this.$message({
+            showClose: true,
+            message: '您的申请已提交，请勿重复申请',
+            type: 'warning',
+          });
+          return
+        }
+        this.merchantFromVisible=true
     },
+    resetMerchantAddForm(formName) {
+        this.merchantFromVisible = false;
+        this.$refs[formName].resetFields();
+        this.imageList1 = [];
+        this.imageList2 = [];
+      },
+      imageChange1(file) {
+        this.merchantAddFrom.fileObj1 = file.raw;
+        console.log(this.merchantAddFrom.fileObj1);
+      },
+      imageChange2(file) {
+        this.merchantAddFrom.fileObj2 = file.raw;
+        console.log(this.merchantAddFrom.fileObj2);
+      },
+      imageExceed(file, fileList) {
+        this.$message({
+          showClose: true,
+          message: '图片只需上传一张',
+          type: 'warning',
+        });
+      },
+    merchantFormSubmit(formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          if (!this.merchantAddFrom.fileObj1||!this.merchantAddFrom.fileObj2) {
+            this.$message({
+              showClose: true,
+              message: '请选择图片 ',
+              type: 'warning'
+            });
+            return false;
+          }
+          var _this = this;
+          this.merchantAddFrom.id=this.userId;
+          var formData = new FormData();
+          Object.keys(this.merchantAddFrom).forEach((key) => {
+            formData.append(key, _this.merchantAddFrom[key]);
+          })
+          this.$axios({
+            method: 'post',
+            url: 'user/merchantApply',
+            data: formData,
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+          }).then(function (result) {
+            _this.resetAddForm(formName);
+            _this.$message({
+              showClose: true,
+              message: '申请已提交',
+              type: 'success'
+            });
+          }).catch();
+          _this.selectUser();
+        } else {
+          return false;
+        }
+      });
+    },
+
+
+
+    //打开供应商申请模态框
+    openSupplierFrom(){
+      this.selectUser();
+      console.log(this.user)
+      if (this.user.supplierAuditStatus=='0'){
+        this.$message({
+          showClose: true,
+          message: '您的申请已提交，请勿重复申请',
+          type: 'warning',
+        });
+        return
+      }
+      this.supplierFromVisible=true
+    },
+    resetSupplierAddForm(formName) {
+      this.supplierFromVisible = false;
+      this.$refs[formName].resetFields();
+      this.imageList3 = [];
+      this.imageList4 = [];
+    },
+    imageChange3(file) {
+      this.supplierAddFrom.fileObj1 = file.raw;
+      console.log(this.supplierAddFrom.fileObj1);
+    },
+    imageChange4(file) {
+      this.supplierAddFrom.fileObj2 = file.raw;
+      console.log(this.supplierAddFrom.fileObj2);
+    },
+    supplierImageExceed(file, fileList) {
+      this.$message({
+        showClose: true,
+        message: '图片只需上传一张',
+        type: 'warning'
+      });
+    },
+    supplierFormSubmit(formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          if (!this.supplierAddFrom.fileObj1||!this.supplierAddFrom.fileObj2) {
+            this.$message({
+              showClose: true,
+              message: '请选择图片 ',
+              type: 'warning'
+            });
+            return false;
+          }
+          var _this = this;
+          this.supplierAddFrom.id=this.userId;
+          var formData = new FormData();
+          Object.keys(this.supplierAddFrom).forEach((key) => {
+            formData.append(key, _this.supplierAddFrom[key]);
+          })
+          this.$axios({
+            method: 'post',
+            url: 'user/merchantApply',
+            data: formData,
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+          }).then(function (result) {
+            _this.resetSupplierAddForm(formName);
+            _this.$message({
+              showClose: true,
+              message: '申请已提交',
+              type: 'success'
+            });
+          }).catch();
+          _this.selectUser();
+        } else {
+          return false;
+        }
+      });
+    },
+
     //前往商户主页
     goMerchantPersonal(){
 
+    },
+    //用户退出
+    outUser(){
+      sessionStorage.clear();
+      this.$router.push('/')
     }
-
   },
   created() {
     this.userId=sessionStorage.getItem("userId");
-    var _this = this;
-    var params = new URLSearchParams();
-    params.append("id", this.userId);
-    this.$axios.post("shopCart/queryUser", params).then(function (result) {
-        _this.userNickname=result.data.userNickname;
-        _this.user=result.data;
-        _this.merchant=_this.user.merchantId;
-        // console.log(_this.user)
-    }).catch();
+    this.selectUser();
     this.selectUserOrder();
     this.selectMerchants();
   }
@@ -434,6 +729,7 @@ export default {
 
 <style>
 #app {
+
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
