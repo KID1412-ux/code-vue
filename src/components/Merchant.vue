@@ -68,19 +68,27 @@ export default {
 <style>
 
 html, body, #app {
-  margin: 0px;
-  height: 100%;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
 }
 
 .height {
   height: 100%;
 }
 
-.el-header, .el-footer {
-  background-color: #B3C0D1;
-  color: #333;
+.el-header {
+  background-color: #475669;
   text-align: center;
   line-height: 60px;
+}
+
+el-header span, a {
+  padding-right: 20px;
+  color: #99a9bf;
+  font-size: 20px;
+  text-decoration: none;
 }
 
 .el-aside {

@@ -11,7 +11,7 @@
 <!--      <el-avatar style="margin-top: 40px" :size="90" :src="require('./../../img/gg1.png')"></el-avatar><br>-->
 <!--      -->
 <!--    </div>-->
-    <div>
+    <div style="margin-top: 150px">
 <!--      <div>-->
 <!--        <el-avatar style="margin-top: 50px" :size="60" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar><br>-->
 <!--        <a>{{user.merchantName}}</a>-->
@@ -28,20 +28,73 @@
 <!--          </el-image>-->
 <!--        </div>-->
 <!--      </div>-->
-      <el-row>
-        <el-col :span="8">
-          <el-card :body-style="{ padding: '0px' }">
-            <img src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png" class="image">
-            <div style="padding: 14px;">
-              <span>好吃的汉堡</span>
-              <div class="bottom clearfix">
-                <time class="time">{{ currentDate }}</time>
-                <el-button type="text" class="button">操作按钮</el-button>
-              </div>
+
+      <el-col :span="4">
+        <div class="grid-content"></div>
+      </el-col>
+      <el-col :span="5" >
+        <el-card class="box-card" style="width: 100%">
+          <div style="text-align: center;margin-top: 40px">
+            <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar>
+            <br>
+            <h3>{{merchant.merchantName}}</h3>
+            <el-button size="mini" round @click="openDialogForm">编辑资料</el-button><br><br>
+
+          </div>
+        </el-card>
+      </el-col>
+      <el-col :span="9" >
+        <el-card class="box-card" style="width: 100%">
+          <div style="text-align: left;margin-top: 10px">
+            <label>商户电话：{{merchant.merchantPhone}}</label><br><br>
+            <label>商户地址：{{merchant.deliveryAddress}}</label><br><br>
+            <label>商户描述：{{merchant.merchantDescribe}}</label><br><br>
+            <div>
+              <label style="">营业执照：</label>
+              <el-tooltip class="item" effect="dark" content="点击可放大查看" placement="top-start">
+                <el-image
+                  style="width: 100px; height: 100px"
+                  :src="url"
+                  :preview-src-list="srcList">
+                </el-image>
+              </el-tooltip>
             </div>
-          </el-card>
-        </el-col>
-      </el-row>
+          </div>
+        </el-card>
+      </el-col>
+<!--      <el-col :span="10" style="">-->
+<!--        <el-card shadow="never" style="height: 200px;margin-top: 18%">-->
+<!--          <div style="margin-top: 5%;margin-left: -10%">-->
+<!--            <label>默认提货商户：</label>-->
+<!--            <el-select placeholder="请选择自提店" v-model="merchant" @change="changeAddress">-->
+<!--              <el-option v-for="(item, index) in merchants" :key="item.id" :label="item.merchantName" :value="item.id"></el-option>-->
+<!--            </el-select>-->
+<!--            <el-popover-->
+<!--              placement="bottom-end"-->
+<!--              width="600"-->
+<!--              trigger="click">-->
+<!--              <el-table :data="merchants">-->
+<!--                <el-table-column width="150" property="userNickname" label="商户姓名"></el-table-column>-->
+<!--                <el-table-column width="150" property="merchantName" label="店铺名"></el-table-column>-->
+<!--                <el-table-column width="150" property="deliveryAddress" label="店铺地址"></el-table-column>-->
+<!--                <el-table-column width="150" property="merchantPhone" label="店铺电话"></el-table-column>-->
+<!--              </el-table>-->
+<!--              <el-button slot="reference">所有商户</el-button>-->
+<!--            </el-popover>-->
+<!--          </div>-->
+<!--          <div style="margin-top: 5%;margin-left: -10%">-->
+<!--            <el-row>-->
+<!--              <label>当前界面：</label>-->
+<!--              <el-tag type="primary" >用户个人</el-tag>-->
+<!--              <el-button type="success" plain v-if="user.type =='0'||user.type =='2'" @click="openMerchantFrom">申请成为商户</el-button>-->
+<!--              <el-button type="success" plain v-if="user.type =='1'||user.type =='3'" @click="goMerchantPersonal">前往商户主页</el-button>-->
+<!--              <el-button type="info" plain v-if="user.type =='2'||user.type =='3'">前往供应商主页</el-button>-->
+<!--              <el-button type="info" plain v-if="user.type =='0'||user.type =='1'">申请成为供应商</el-button>-->
+<!--            </el-row>-->
+<!--          </div>-->
+<!--        </el-card>-->
+<!--      </el-col>-->
+
     </div>
 
 
@@ -78,7 +131,7 @@ export default {
   name: "ProductData",
   data(){
     return{
-      user: {},
+      merchant: {},
       dialogForm:false,
       url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
       srcList: [
@@ -94,8 +147,11 @@ export default {
       params.append("userID","1")
       var _this=this;
       this.$axios.post("/user/selectUserByID",params).then(function (item){
-        _this.user=item.data;
+        _this.merchant=item.data;
       }).catch()
+    },
+    goMerchantPersonal(){
+
     }
   },
   created() {
@@ -106,34 +162,22 @@ export default {
 
 <style scoped>
 
-.time {
-  font-size: 13px;
-  color: #999;
+#app {
+
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
 }
 
-.bottom {
-  margin-top: 13px;
-  line-height: 12px;
+.grid-content {
+  margin-top: 30px;
 }
 
-.button {
-  padding: 0;
-  float: right;
-}
-
-.image {
-  width: 100%;
-  display: block;
-}
-
-.clearfix:before,
-.clearfix:after {
-  display: table;
-  content: "";
-}
-
-.clearfix:after {
-  clear: both
+.box-card {
+  width: 300px;
+  height: 300px;
 }
 
 </style>

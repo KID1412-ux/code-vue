@@ -40,6 +40,7 @@
                     <label>当前界面：</label>
                     <el-tag type="primary" >用户个人</el-tag>
                     <el-button type="success" plain v-if="user.type =='0'||user.type =='2'" @click="openMerchantFrom">申请成为商户</el-button>
+                    <!--@click="goMerchantPersonal" -->
                     <el-button type="success" plain v-if="user.type =='1'||user.type =='3'" @click="goMerchantPersonal">前往商户主页</el-button>
                     <el-button type="info" plain v-if="user.type =='2'||user.type =='3'">前往供应商主页</el-button>
                     <el-button type="info" plain v-if="user.type =='0'||user.type =='1'">申请成为供应商</el-button>
@@ -707,10 +708,9 @@ export default {
         }
       });
     },
-
     //前往商户主页
     goMerchantPersonal(){
-
+      this.$router.push("/Merchant")
     },
     //用户退出
     outUser(){
@@ -750,10 +750,10 @@ ul {
   padding: 0;
 }
 
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
+/*li {*/
+/*  display: inline-block;*/
+/*  margin: 0 10px;*/
+/*}*/
 
 a {
   color: #42b983;

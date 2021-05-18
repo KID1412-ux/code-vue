@@ -13,6 +13,7 @@ import ProductData from "../components/Product/ProductData";
 import ShopCart from "../components/shop_cart/shop_cart";
 import Search from "../components/Home/Search";
 import Classification from "../components/Home/Classification";
+import Merchant from "../components/Merchant";
 
 //第三方库需要use一下才能用
 Vue.use(VueRouter)
@@ -40,6 +41,7 @@ const routes = [
   {path: "/Search", component: Search, name: "Search"},
   {path: "/ProductData", component: ProductData},
   {path: "/Classification", component: Classification, name:"Classification"},
+  {path: "/Merchant", component: Merchant},
   {
     path: "/ShopCart", component: ShopCart,
     meta: {  // 在路由配置元信息
