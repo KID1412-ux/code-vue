@@ -1,5 +1,6 @@
 <template>
   <div>
+
     <div id="div-cx" style="margin-top: 15px; width: 700px">
       <el-input placeholder="请输入订单号" v-model="orderNum" style="width: 550px" class="input-with-select">
         <el-button slot="append" icon="el-icon-search" @click="selectUserOrder"></el-button>

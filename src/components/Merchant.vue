@@ -66,20 +66,25 @@ export default {
 </script>
 
 <style>
+#app {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+}
 
-html, body, #app {
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
+html, body{
+  margin: 0px;
+  height: 100%;
 }
 
 .height {
   position: absolute;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
 }
 
 .el-header {

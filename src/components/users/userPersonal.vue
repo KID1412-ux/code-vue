@@ -39,6 +39,7 @@
                   <el-row>
                     <label>当前界面：</label>
                     <el-tag type="primary" >用户个人</el-tag>
+                    <router-link to="/Merchant">商户</router-link>
                     <el-button type="success" plain v-if="user.type =='0'||user.type =='2'" @click="openMerchantFrom">申请成为商户</el-button>
                     <el-button type="success" plain v-if="user.type =='1'||user.type =='3'" @click="goMerchantPersonal">前往商户主页</el-button>
                     <el-button type="info" plain v-if="user.type =='2'||user.type =='3'">前往供应商主页</el-button>

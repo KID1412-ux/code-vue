@@ -9,18 +9,20 @@ import Register from "../components/users/register";
 import UserOrder from "../components/users/userOrder";
 import UserPersonal from "../components/users/userPersonal";
 import Home from "../components/Home";
+import App from "../App";
 import ProductData from "../components/Product/ProductData";
 import ShopCart from "../components/shop_cart/shop_cart";
 import Search from "../components/Home/Search";
 import Classification from "../components/Home/Classification";
 import Merchant from "../components/Merchant";
-
+import Test from "../components/users/test";
 //第三方库需要use一下才能用
 Vue.use(VueRouter)
 
 //定义routes路由的集合，数组类型
 const routes = [
   //单个路由均为对象类型，path代表的是路径，component代表组件
+  {path: '/Test', component: Test},
   {path: '/Hot', component: Hot},
   {path: "/Register", component: Register},
   {path: "/login", component: Login},
@@ -41,13 +43,14 @@ const routes = [
   {path: "/Search", component: Search, name: "Search"},
   {path: "/ProductData", component: ProductData},
   {path: "/Classification", component: Classification, name:"Classification"},
-  {path: "/Merchant", component: Merchant},
   {
     path: "/ShopCart", component: ShopCart,
     meta: {  // 在路由配置元信息
       requireAuth: true
     }
   },
+  {path: "/Merchant", component: Merchant},
+
 ]
 
 //实例化VueRouter并将routes添加进去
