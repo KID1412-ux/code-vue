@@ -69,6 +69,8 @@
       </el-tabs>
     </div>
 
+    <el-divider></el-divider>
+
     <div style="text-align: center">
       <el-pagination
         @size-change="handleSizeChange"
