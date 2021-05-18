@@ -441,7 +441,7 @@ export default {
     selectUserOrder(){
       var _this=this;
       var params =new URLSearchParams();
-      params.append("userId",this.userId);;
+      params.append("userId",this.userId);
       params.append("orderNumber",this.orderNum);
       var orderStats=this.activeName;
       params.append("orderStats",orderStats);
