@@ -1,16 +1,14 @@
 <template>
   <div id="app">
     <el-container class="footer">
-      <el-header style="background: red">
-      </el-header>
       <el-main>
         <el-row>
-          <el-col :span="24">
+          <el-col :span="24"  style="margin-top: 100px">
             <div class="grid-content"></div>
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="8">
+          <el-col :span="8" >
             <div class="grid-content"></div>
           </el-col>
           <div class="grid-content">
@@ -37,7 +35,6 @@
           </el-col>
         </el-row>
       </el-main>
-      <el-footer style="background: yellow">Footer</el-footer>
     </el-container>
   </div>
 </template>
@@ -123,6 +120,9 @@ a {
 }
 
 .footer {
+  background-image: url("../../img/login.jpg");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
   position: absolute;
   left: 0;
   top: 0;

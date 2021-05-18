@@ -1,14 +1,12 @@
 <template>
   <div id="app">
     <el-container class="footer">
-      <el-header style="background: red">
-      </el-header>
       <el-main>
         <el-row>
           <el-col :span="8">
             <div class="grid-content"></div>
           </el-col>
-          <el-col :span="8">
+          <el-col :span="8" style="margin-top: 50px">
             <div class="grid-content" @mouseleave="userAttest" @mousedown="clearUserInput">
               <el-input id="userName" @focus="clearUserInput" class="input" v-model="username" placeholder="请输入帐号">
                 <template slot="prepend">帐号:</template>
@@ -46,7 +44,7 @@
               <el-input class="input" type="text">
                 <template slot="prepend">生日</template>
                 <el-date-picker slot="append" v-model="birthday" type="date"
-                                style="width: 280px;height: 38px;top:-1px;margin-left:-54px;margin-right:-20px;background-color: #fff;"
+                                style="width: 280px;height: 38px;top:-1px;margin-left:-54px;margin-right:-20px;background-color: #fff;" value-format="yyyy-MM-dd"
                                 placeholder="选择日期">
                 </el-date-picker>
               </el-input>
@@ -60,7 +58,6 @@
           </el-col>
         </el-row>
       </el-main>
-      <el-footer style="background: yellow">Footer</el-footer>
     </el-container>
   </div>
 </template>
