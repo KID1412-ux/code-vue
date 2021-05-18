@@ -19,7 +19,6 @@
               <div style="margin-top: 5%;margin-left: -10%">
                 <label>默认提货商户：</label>
                 <el-select placeholder="请选择自提店" v-model="merchant" @change="changeAddress">
-                  <el-option label="--请选择--" :value="0"></el-option>
                   <el-option v-for="(item, index) in merchants" :key="item.id" :label="item.merchantName" :value="item.id"></el-option>
                 </el-select>
                 <el-popover
@@ -39,10 +38,10 @@
                   <el-row>
                     <label>当前界面：</label>
                     <el-tag type="primary" >用户个人</el-tag>
-                    <el-button type="primary" plain v-if="user.type =='0'||user.type =='2'">申请成为商户</el-button>
-                    <el-button type="primary" plain v-if="user.type =='1'||user.type =='3'" @click="goMerchantPersonal">前往商户主页</el-button>
-                    <el-button type="primary" plain v-if="user.type =='2'||user.type =='3'">前往供应商主页</el-button>
-                    <el-button type="primary" plain v-if="user.type =='0'||user.type =='1'">申请成为供应商</el-button>
+                    <el-button type="success" plain v-if="user.type =='0'||user.type =='2'" @click="openMerchantFrom">申请成为商户</el-button>
+                    <el-button type="success" plain v-if="user.type =='1'||user.type =='3'" @click="goMerchantPersonal">前往商户主页</el-button>
+                    <el-button type="info" plain v-if="user.type =='2'||user.type =='3'">前往供应商主页</el-button>
+                    <el-button type="info" plain v-if="user.type =='0'||user.type =='1'">申请成为供应商</el-button>
                   </el-row>
               </div>
             </el-card>
@@ -171,6 +170,7 @@
             </div>
           </el-col>
         </el-row>
+<!--个人信息修改    -->
     <el-dialog title="个人信息" :visible.sync="dialogForm" width="600px">
       <el-form :model=userForm>
         <el-form-item label="用户头像:" label-width="150px">
@@ -191,6 +191,79 @@
       <div slot="footer" class="dialog-footer">
         <el-button @click="closeDialogForm">取 消</el-button>
         <el-button type="primary" @click="changeUser">确 定</el-button>
+      </div>
+    </el-dialog>
+<!--商户申请单    -->
+    <el-dialog title="录入商品" :visible.sync="addFormVisible" center @close="resetAddForm('addForm')">
+      <el-form :model="addForm" :rules="rules" ref="addForm">
+        <el-form-item label="商品名称" :label-width="formLabelWidth" prop="goodsName">
+          <div class="form-input">
+            <el-input v-model="addForm.goodsName" autocomplete="off"></el-input>
+          </div>
+        </el-form-item>
+        <el-form-item label="商品图片" :label-width="formLabelWidth">
+          <el-upload
+            action="#"
+            list-type="picture-card"
+            ref="upload"
+            accept="image/jpeg,image/gif,image/png,image/jpg"
+            :on-change="imageChange"
+            :auto-upload="false"
+            :file-list="imageList"
+            :limit="1"
+            :on-exceed="imageExceed"
+            style="width: 100%;">
+            <i class="el-icon-plus"></i>
+          </el-upload>
+          <div>
+            <el-dialog :visible.sync="dialogVisibleImg">
+              <img width="100%" :src="dialogImageUrl" alt="">
+            </el-dialog>
+          </div>
+        </el-form-item>
+        <el-form-item label="商品简介" :label-width="formLabelWidth" prop="goodsDescribe">
+          <div class="form-input">
+            <el-input
+              type="textarea"
+              v-model="addForm.goodsDescribe"
+              :autosize="{ minRows: 2, maxRows: 4}"
+              placeholder="请输入内容"
+            >
+            </el-input>
+          </div>
+        </el-form-item>
+        <el-form-item label="商品价格" :label-width="formLabelWidth" prop="goodsPrice">
+          <div class="form-input">
+            <el-input autocomplete="off" v-model="addForm.goodsPrice"></el-input>
+          </div>
+        </el-form-item>
+        <el-form-item label="商品单位" :label-width="formLabelWidth" prop="goodsUnit">
+          <div class="form-input">
+            <el-input autocomplete="off" v-model="addForm.goodsUnit"></el-input>
+          </div>
+        </el-form-item>
+        <el-form-item label="商品分类" :label-width="formLabelWidth">
+          <el-cascader class="form-input"
+                       ref="addUnit"
+                       :options="data"
+                       :key="keyValue"
+                       placeholder="请选择商品分类"
+                       :props="{ expandTrigger: 'hover', checkStrictly: true, value: 'id' }"
+                       clearable
+                       filterable
+                       v-model="addVal"
+                       @change="addUnit"
+          >
+            <template slot-scope="{ node, data }">
+              <span>{{ data.label }}</span>
+              <span v-if="!node.isLeaf"> ({{ data.children.length }}) </span>
+            </template>
+          </el-cascader>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="addFormVisible = false">取 消</el-button>
+        <el-button type="primary" @click="addFormSubmit('addForm')">确 定</el-button>
       </div>
     </el-dialog>
   </div>
@@ -219,7 +292,8 @@ export default {
       merchants:[],
       merchant:"",
       circleUrl: "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
-      dialogForm:false
+      dialogForm:false,
+      merchantFrom:false,
     }
   },
   methods: {
@@ -329,8 +403,11 @@ export default {
         _this.userNickname=result.data.userNickname;
         _this.user=result.data;
         _this.merchant=_this.user.merchantId;
-        // console.log(_this.user)
       }).catch();
+    },
+    //打开商户申请模态框
+    openMerchantFrom(){
+        this.merchantForm=true
     },
     //前往商户主页
     goMerchantPersonal(){
