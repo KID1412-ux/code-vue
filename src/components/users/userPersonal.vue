@@ -194,11 +194,11 @@
                 style="width: 100%;">
                 <i class="el-icon-plus"></i>
               </el-upload>
-              <div>
-                <el-dialog :visible.sync="updateImg">
-                  <img width="100%" :src="updateImageUrl" alt="">
-                </el-dialog>
-              </div>
+<!--              <div>-->
+<!--                <el-dialog :visible.sync="updateImg">-->
+<!--                  <img width="100%" :src="updateImageUrl" alt="">-->
+<!--                </el-dialog>-->
+<!--              </div>-->
             </div>
           </div>
         </el-form-item>
@@ -303,9 +303,9 @@
             list-type="picture-card"
             ref="upload"
             accept="image/jpeg,image/gif,image/png,image/jpg"
-            :on-change="imageChange1"
+            :on-change="imageChange3"
             :auto-upload="false"
-            :file-list="imageList1"
+            :file-list="imageList3"
             :limit="1"
             :on-exceed="imageExceed"
             style="width: 100%;">
@@ -323,9 +323,9 @@
             list-type="picture-card"
             ref="upload"
             accept="image/jpeg,image/gif,image/png,image/jpg"
-            :on-change="imageChange2"
+            :on-change="imageChange4"
             :auto-upload="false"
-            :file-list="imageList2"
+            :file-list="imageList4"
             :limit="1"
             :on-exceed="imageExceed"
             style="width: 100%;">
@@ -372,7 +372,7 @@ export default {
       userId:"",
       user:{},
       userForm:{
-        id:'',userImage:'',userName:'',userNickname:'',phone:''
+        id:'',userImageUrl:'',userName:'',userNickname:'',phone:''
       },
       loading:true,
       orderNum:"",
@@ -389,7 +389,7 @@ export default {
       bool:true,
       dialogForm:false,
       updateImgList:[],
-      updateImg:false,
+      // updateImg:false,
       updateImageUrl:'',
       merchantFromVisible:false,
       rules: {
@@ -503,10 +503,11 @@ export default {
     //打开修改个人信息模态框
     openDialogForm(){
       this.userForm.id = this.user.id;
-      this.userForm.userImage = this.user.userImage;
+      this.userForm.userImageUrl = this.user.userImage;
       this.userForm.userName = this.user.userName;
       this.userForm.userNickname = this.user.userNickname;
       this.userForm.phone = this.user.phone;
+      console.log(this.userForm)
       this.dialogForm=true
     },
     resetUpdateForm(formName){
@@ -518,6 +519,7 @@ export default {
     updateImgChange(file) {
       this.bool = false;
       this.userForm.userImage = file.raw;
+      console.log(this.userForm.userImage)
     },
     updateImgRemove() {
       setTimeout(() => {
@@ -534,6 +536,7 @@ export default {
           Object.keys(this.userForm).forEach((key) => {
             formData.append(key, _this.userForm[key]);
           })
+          console.log(this.userForm)
           this.$axios({
             method: 'post',
               url: 'user/updateUser',
@@ -618,7 +621,7 @@ export default {
               'Content-Type': 'multipart/form-data'
             }
           }).then(function (result) {
-            _this.resetAddForm(formName);
+            _this.resetMerchantAddForm(formName);
             _this.$message({
               showClose: true,
               message: '申请已提交',
@@ -710,7 +713,7 @@ export default {
 
     //前往商户主页
     goMerchantPersonal(){
-
+        this.$router.push('/Merchant')
     },
     //用户退出
     outUser(){
