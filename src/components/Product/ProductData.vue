@@ -7,69 +7,111 @@
         <el-breadcrumb-item>商户资料</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
-<!--    <div id="proDiv">-->
-<!--      <el-avatar style="margin-top: 40px" :size="90" :src="require('./../../img/gg1.png')"></el-avatar><br>-->
-<!--      -->
-<!--    </div>-->
-    <div>
-<!--      <div>-->
-<!--        <el-avatar style="margin-top: 50px" :size="60" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar><br>-->
-<!--        <a>{{user.merchantName}}</a>-->
-<!--        <div class="demo-image__preview">-->
-<!--          <el-image-->
-<!--            style="width: 100px; height: 100px"-->
-<!--            :src="url"-->
-<!--            :preview-src-list="srcList">-->
-<!--          </el-image>-->
-<!--          <el-image-->
-<!--            style="width: 100px; height: 100px"-->
-<!--            :src="url"-->
-<!--            :preview-src-list="srcList">-->
-<!--          </el-image>-->
-<!--        </div>-->
-<!--      </div>-->
-      <el-row>
-        <el-col :span="8">
-          <el-card :body-style="{ padding: '0px' }">
-            <img src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png" class="image">
-            <div style="padding: 14px;">
-              <span>好吃的汉堡</span>
-              <div class="bottom clearfix">
-                <time class="time">{{ currentDate }}</time>
-                <el-button type="text" class="button">操作按钮</el-button>
-              </div>
+
+    <div style="margin-top: 150px">
+      <el-col :span="4">
+        <div class="grid-content"></div>
+      </el-col>
+      <el-col :span="5">
+        <el-card style="height: 300px;">
+          <div style="padding: 14px;text-align: center;margin-top: 10px">
+            <el-image style="width: 100px; height: 100px" :src="merchant.merchantShopImage" ></el-image>
+            <h3>{{merchant.merchantName}}</h3>
+            <div class="bottom clearfix">
+              <el-button size="mini" round @click="openDialogForm">编辑资料</el-button><br><br>
             </div>
-          </el-card>
-        </el-col>
-      </el-row>
+          </div>
+        </el-card>
+      </el-col>
+      <el-col :span="9" >
+        <el-card class="box-card" style="width: 100%">
+          <div style="text-align: left;margin-top: 10px">
+            <label>商户电话：{{merchant.merchantPhone}}</label><br><br>
+            <label>商户地址：{{merchant.deliveryAddress}}</label><br><br>
+            <label>商户描述：{{merchant.merchantDescribe}}</label><br><br>
+            <div>
+              <label style="">营业执照：</label>
+              <el-tooltip class="item" effect="dark" content="点击可放大查看" placement="top-start">
+                <el-image
+                  style="width: 100px; height: 100px"
+                  :src="merchant.merchantPermitImage"
+                  :preview-src-list="merchant.merchantPermitImage">
+                </el-image>
+              </el-tooltip>
+            </div>
+          </div>
+        </el-card>
+      </el-col>
     </div>
 
+<!-- 修改商户资料 -->
+    <el-dialog title="商户资料" center :visible.sync="dialogFormVisible">
+      <el-form :model="merchantForm" ref="merchantForm">
+        <el-form-item label="商户店铺图片：" label-width="150px">
+          <div>
+           <div v-if="bool" style="float: left; margin-right: 5px">
+             <img width="150px" height="150px" :src="merchantForm.merchantShopImage" alt="" >
+           </div>
+           <div style="float: left">
+             <el-upload
+              action="#"
+              list-type="picture-card"
+              ref="upload"
+              accept="image/jpeg,image/gif,image/png,image/jpg"
 
-<!--    <el-dialog title="个人信息" :visible.sync="dialogForm" width="600px">-->
-<!--      <el-form :model="user">-->
-<!--        <el-form-item label="用户头像:" label-width="150px">-->
-<!--          <div @click="changeImage">-->
-<!--            <el-avatar :size="60" :src="circleUrl"></el-avatar>-->
-<!--          </div>-->
-<!--        </el-form-item>-->
-<!--        <el-form-item label="用户账号：" label-width="150px">-->
-<!--          <el-input v-model="user.userName" style="width: 250px"></el-input>-->
-<!--        </el-form-item>-->
-<!--        <el-form-item label="用户昵称：" label-width="150px">-->
-<!--          <el-input v-model="user.merchantName" style="width: 250px"></el-input>-->
-<!--        </el-form-item>-->
-<!--        <el-form-item label="用户：" label-width="150px">-->
-<!--          <el-select v-model="user.region" placeholder="请选择活动区域" style="width: 250px">-->
-<!--            <el-option label="区域一" value="shanghai"></el-option>-->
-<!--            <el-option label="区域二" value="beijing"></el-option>-->
-<!--          </el-select>-->
-<!--        </el-form-item>-->
-<!--      </el-form>-->
-<!--      <div slot="footer" class="dialog-footer">-->
-<!--        <el-button @click="dialogFormVisible = false">取 消</el-button>-->
-<!--        <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>-->
-<!--      </div>-->
-<!--    </el-dialog>-->
+
+              :auto-upload="false"
+
+              :limit="1"
+
+              style="width: 100%;">
+               <i class="el-icon-plus"></i>
+             </el-upload>
+           </div>
+          </div>
+        </el-form-item>
+        <el-form-item label="商户名：" label-width="160px">
+          <el-input v-model="merchantForm.merchantName" style="width: 250px"></el-input>
+        </el-form-item>
+        <el-form-item label="联系电话：" label-width="160px">
+          <el-input v-model="merchantForm.merchantPhone" style="width: 250px"></el-input>
+        </el-form-item>
+        <el-form-item label="提货地点：" label-width="160px">
+          <el-input v-model="merchantForm.deliveryAddress" style="width: 250px"></el-input>
+        </el-form-item>
+        <el-form-item label="商户描述：" label-width="160px">
+          <el-input v-model="merchantForm.merchantDescribe" style="width: 250px"></el-input>
+        </el-form-item>
+        <el-form-item label="营业执照：" label-width="150px">
+          <div>
+            <div v-if="bool" style="float: left; margin-right: 5px">
+              <img width="150px" height="150px" :src="merchantForm.merchantPermitImage" alt="" >
+            </div>
+            <div style="float: left">
+              <el-upload
+                action="#"
+                list-type="picture-card"
+                ref="upload"
+                accept="image/jpeg,image/gif,image/png,image/jpg"
+
+
+                :auto-upload="false"
+
+                :limit="1"
+
+                style="width: 100%;">
+                <i class="el-icon-plus"></i>
+              </el-upload>
+            </div>
+          </div>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogFormVisible = false">取 消</el-button>
+        <el-button type="primary" @click="openDialogForm">确 定</el-button>
+      </div>
+    </el-dialog>
+
   </div>
 </template>
 
@@ -78,62 +120,63 @@ export default {
   name: "ProductData",
   data(){
     return{
-      user: {},
-      dialogForm:false,
-      url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
-      srcList: [
-        'https://fuss10.elemecdn.com/8/27/f01c15bb73e1ef3793e64e6b7bbccjpeg.jpeg',
-        'https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg'
-      ],
+      merchant: {},
+      dialogFormVisible: false,
+      bool:true,
+      merchantForm:{
+        merchantId:'',merchantName:'',merchantDescribe:'',merchantPermitImage:'',merchantShopImage:'',merchantPhone:'',deliveryAddress:''
+      },
     }
   },
   methods:{
-    getUser(){
+    getMerchant(){
       var userID=sessionStorage.getItem("userId");
       var params=new URLSearchParams();
       params.append("userID","1")
       var _this=this;
       this.$axios.post("/user/selectUserByID",params).then(function (item){
-        _this.user=item.data;
+        _this.merchant=item.data;
+        _this.merchant.merchantShopImage="http://127.0.0.1:8090/code/" + item.data.merchantShopImage;
+        _this.merchant.merchantPermitImage="http://127.0.0.1:8090/code/" + item.data.merchantPermitImage;
       }).catch()
-    }
+    },
+    openDialogForm(){
+      this.merchantForm.merchantId=this.merchant.merchantId;
+      this.merchantForm.merchantName = this.merchant.merchantName;
+      this.merchantForm.merchantPhone=this.merchant.merchantPhone;
+      this.merchantForm.merchantDescribe = this.merchant.merchantDescribe;
+      this.merchantForm.merchantPermitImage = this.merchant.merchantPermitImage;
+      this.merchantForm.merchantShopImage = this.merchant.merchantShopImage;
+      this.merchantForm.deliveryAddress = this.merchant.deliveryAddress;
+      console.log(this.merchant)
+      this.dialogFormVisible=true;
+    },
   },
   created() {
-    this.getUser();
+    this.getMerchant();
+    console.log(this.merchant)
   }
 }
 </script>
 
 <style scoped>
 
-.time {
-  font-size: 13px;
-  color: #999;
+#app {
+
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
 }
 
-.bottom {
-  margin-top: 13px;
-  line-height: 12px;
+.grid-content {
+  margin-top: 30px;
 }
 
-.button {
-  padding: 0;
-  float: right;
-}
-
-.image {
-  width: 100%;
-  display: block;
-}
-
-.clearfix:before,
-.clearfix:after {
-  display: table;
-  content: "";
-}
-
-.clearfix:after {
-  clear: both
+.box-card {
+  width: 300px;
+  height: 300px;
 }
 
 </style>

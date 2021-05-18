@@ -87,11 +87,17 @@ html, body{
   width: 100%;
 }
 
-.el-header, .el-footer {
-  background-color: #B3C0D1;
-  color: #333;
+.el-header {
+  background-color: #475669;
   text-align: center;
   line-height: 60px;
+}
+
+el-header span, a {
+  padding-right: 20px;
+  color: #99a9bf;
+  font-size: 20px;
+  text-decoration: none;
 }
 
 .el-aside {
