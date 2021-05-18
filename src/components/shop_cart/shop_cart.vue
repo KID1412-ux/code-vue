@@ -208,6 +208,7 @@ export default {
           item.imageUrl = "http://127.0.0.1:8090/code/" + item.imageUrl;
           return item;
         });
+        console.log(_this.tableData)
       }).catch();
     },
     getTotal() {

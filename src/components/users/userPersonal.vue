@@ -177,7 +177,7 @@
         <el-form-item label="用户头像:" label-width="150px">
           <div>
             <div v-if="bool" style="float: left; margin-right: 5px">
-              <img width="150px" height="150px" :src="userForm.userImage" alt="" >
+              <img width="150px" height="150px" :src="userForm.userImageUrl" alt="" >
             </div>
             <div style="float: left">
               <el-upload
@@ -311,11 +311,11 @@
             style="width: 100%;">
             <i class="el-icon-plus" ></i>
           </el-upload>
-          <!--          <div>-->
-          <!--            <el-dialog :visible.sync="dialogVisibleImg">-->
-          <!--              <img width="100%" :src="dialogImageUrl" alt="">-->
-          <!--            </el-dialog>-->
-          <!--          </div>-->
+<!--                    <div>-->
+<!--                      <el-dialog :visible.sync="dialogVisibleImg">-->
+<!--                        <img width="100%" :src="dialogImageUrl" alt="">-->
+<!--                      </el-dialog>-->
+<!--                    </div>-->
         </el-form-item>
         <el-form-item label="供应商营业执照图片:" label-width="200px">
           <el-upload
@@ -428,7 +428,8 @@ export default {
         if(_this.user.userImage==null||_this.user.userImage==''){
           _this.userImageUrl="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png";
         }else {
-          _this.userImageUrl=_this.user.userImage;
+          _this.user.userImage="http://127.0.0.1:8090/code/" +_this.user.userImage;
+          _this.user.userImageUrl=_this.user.userImage
         }
       }).catch();
     },
@@ -547,11 +548,6 @@ export default {
           }).then(function (result) {
             // console.log(result);
             _this.resetUpdateForm(formName);
-            _this.$message({
-              showClose: true,
-              message: '信息已更改',
-              type: 'success'
-            });
             _this.selectUser();
           }).catch();
         } else {
@@ -572,6 +568,14 @@ export default {
             type: 'warning',
           });
           return
+        }else if (this.user.merchantAuditStatus=='2'){
+          var _this=this;
+          var params = new URLSearchParams();
+          params.append("parentID", this.userId);
+          this.$axios.post("user/selectLogMerchant", params).then(function (result){
+            alert("您提交的申请未通过,原因："+result.data.logdetail);
+            return
+          }).catch();
         }
         this.merchantFromVisible=true
     },
@@ -648,6 +652,14 @@ export default {
           type: 'warning',
         });
         return
+      }else if (this.user.supplierAuditStatus=='2'){
+        var _this=this;
+        var params = new URLSearchParams();
+        params.append("parentID", this.userId);
+        this.$axios.post("user/selectLogSupplier", params).then(function (result){
+          alert("您提交的申请未通过,原因："+result.data.logDetail);
+          return
+        }).catch();
       }
       this.supplierFromVisible=true
     },
