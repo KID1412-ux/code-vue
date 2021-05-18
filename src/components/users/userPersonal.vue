@@ -39,11 +39,10 @@
                   <el-row>
                     <label>当前界面：</label>
                     <el-tag type="primary" >用户个人</el-tag>
-                    <router-link to="/Merchant">商户</router-link>
                     <el-button type="success" plain v-if="user.type =='0'||user.type =='2'" @click="openMerchantFrom">申请成为商户</el-button>
                     <el-button type="success" plain v-if="user.type =='1'||user.type =='3'" @click="goMerchantPersonal">前往商户主页</el-button>
-                    <el-button type="info" plain v-if="user.type =='2'||user.type =='3'">前往供应商主页</el-button>
-                    <el-button type="info" plain v-if="user.type =='0'||user.type =='1'">申请成为供应商</el-button>
+                    <el-button type="info" plain v-if="user.type =='0'||user.type =='1'" @click="openSupplierFrom">申请成为供应商</el-button>
+                    <el-button type="info" plain v-if="user.type =='2'||user.type =='3'" @click="goSupplierPersonal">前往供应商主页</el-button>
                   </el-row>
               </div>
             </el-card>
@@ -195,11 +194,11 @@
                 style="width: 100%;">
                 <i class="el-icon-plus"></i>
               </el-upload>
-              <div>
-                <el-dialog :visible.sync="updateImg">
-                  <img width="100%" :src="updateImageUrl" alt="">
-                </el-dialog>
-              </div>
+<!--              <div>-->
+<!--                <el-dialog :visible.sync="updateImg">-->
+<!--                  <img width="100%" :src="updateImageUrl" alt="">-->
+<!--                </el-dialog>-->
+<!--              </div>-->
             </div>
           </div>
         </el-form-item>
@@ -373,7 +372,7 @@ export default {
       userId:"",
       user:{},
       userForm:{
-        id:'',userImage:'',userName:'',userNickname:'',phone:''
+        id:'',userImageUrl:'',userName:'',userNickname:'',phone:''
       },
       loading:true,
       orderNum:"",
@@ -390,7 +389,7 @@ export default {
       bool:true,
       dialogForm:false,
       updateImgList:[],
-      updateImg:false,
+      // updateImg:false,
       updateImageUrl:'',
       merchantFromVisible:false,
       rules: {
@@ -409,8 +408,8 @@ export default {
 
       supplierFromVisible:false,
       supplierAddFrom: {
-        id:'',supplierName: '', supplierPhone: '', fileObj1: '',
-        fileObj2: '',supplierAddress: ''
+        id:'',supplierName: '', supplierPhone: '', fileObj3: '',
+        fileObj4: '',supplierAddress: ''
       },
       imageList3: [],
       imageList4: [],
@@ -442,7 +441,7 @@ export default {
     selectUserOrder(){
       var _this=this;
       var params =new URLSearchParams();
-      params.append("userId",this.userId);;
+      params.append("userId",this.userId);
       params.append("orderNumber",this.orderNum);
       var orderStats=this.activeName;
       params.append("orderStats",orderStats);
@@ -504,10 +503,11 @@ export default {
     //打开修改个人信息模态框
     openDialogForm(){
       this.userForm.id = this.user.id;
-      this.userForm.userImage = this.user.userImage;
+      this.userForm.userImageUrl = this.user.userImage;
       this.userForm.userName = this.user.userName;
       this.userForm.userNickname = this.user.userNickname;
       this.userForm.phone = this.user.phone;
+      console.log(this.userForm)
       this.dialogForm=true
     },
     resetUpdateForm(formName){
@@ -518,7 +518,8 @@ export default {
     },
     updateImgChange(file) {
       this.bool = false;
-      this.userForm.userImage = file.raw;
+      this.userForm.userImageUrl = file.raw;
+      console.log(this.userForm.userImageUrl)
     },
     updateImgRemove() {
       setTimeout(() => {
@@ -535,6 +536,7 @@ export default {
           Object.keys(this.userForm).forEach((key) => {
             formData.append(key, _this.userForm[key]);
           })
+          console.log(this.userForm)
           this.$axios({
             method: 'post',
               url: 'user/updateUser',
@@ -550,8 +552,8 @@ export default {
               message: '信息已更改',
               type: 'success'
             });
+            _this.selectUser();
           }).catch();
-          _this.selectUser();
         } else {
           return false;
         }
@@ -619,14 +621,14 @@ export default {
               'Content-Type': 'multipart/form-data'
             }
           }).then(function (result) {
-            _this.resetAddForm(formName);
+            _this.resetMerchantAddForm(formName);
             _this.$message({
               showClose: true,
               message: '申请已提交',
               type: 'success'
             });
+            _this.selectUser();
           }).catch();
-          _this.selectUser();
         } else {
           return false;
         }
@@ -656,12 +658,12 @@ export default {
       this.imageList4 = [];
     },
     imageChange3(file) {
-      this.supplierAddFrom.fileObj1 = file.raw;
-      console.log(this.supplierAddFrom.fileObj1);
+      this.supplierAddFrom.fileObj3 = file.raw;
+      console.log(this.supplierAddFrom.fileObj3);
     },
     imageChange4(file) {
-      this.supplierAddFrom.fileObj2 = file.raw;
-      console.log(this.supplierAddFrom.fileObj2);
+      this.supplierAddFrom.fileObj4 = file.raw;
+      console.log(this.supplierAddFrom.fileObj4);
     },
     supplierImageExceed(file, fileList) {
       this.$message({
@@ -673,7 +675,7 @@ export default {
     supplierFormSubmit(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          if (!this.supplierAddFrom.fileObj1||!this.supplierAddFrom.fileObj2) {
+          if (!this.supplierAddFrom.fileObj3||!this.supplierAddFrom.fileObj4) {
             this.$message({
               showClose: true,
               message: '请选择图片 ',
@@ -689,7 +691,7 @@ export default {
           })
           this.$axios({
             method: 'post',
-            url: 'user/merchantApply',
+            url: 'user/supplierApply',
             data: formData,
             headers: {
               'Content-Type': 'multipart/form-data'
@@ -701,8 +703,8 @@ export default {
               message: '申请已提交',
               type: 'success'
             });
+            _this.selectUser();
           }).catch();
-          _this.selectUser();
         } else {
           return false;
         }
@@ -711,7 +713,21 @@ export default {
 
     //前往商户主页
     goMerchantPersonal(){
-      this.$router.push("/Merchant")
+      this.selectUser();
+      if (this.user.merchantStats=='1'){
+        alert("您的商户资格已被商城加入黑名单，无法前往商户主页");
+        return
+      }
+      this.$router.push('/Merchant')
+    },
+    //前往供应商主页
+    goSupplierPersonal(){
+      this.selectUser();
+      if (this.user.supplierStats=='1'){
+        alert("您的供应商资格已被商城加入黑名单，无法前往供应商主页");
+        return
+      }
+      this.$router.push('/Merchant')
     },
     //用户退出
     outUser(){
@@ -751,10 +767,6 @@ ul {
   padding: 0;
 }
 
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
 
 a {
   color: #42b983;

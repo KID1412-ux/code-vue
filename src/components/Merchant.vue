@@ -29,7 +29,7 @@
                 <i class="el-icon-s-goods"></i>
                 <span>订单管理</span>
               </template>
-              <el-menu-item index="2-1">全部订单</el-menu-item>
+              <el-menu-item index="/Test">全部订单</el-menu-item>
               <el-menu-item index="2-2">待收货订单</el-menu-item>
               <el-menu-item index="2-3">待提货订单</el-menu-item>
               <el-menu-item index="2-4">已提货订单</el-menu-item>
