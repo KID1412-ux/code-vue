@@ -1,109 +1,87 @@
 <template>
-  <div class="divcss5">
-    <div style="padding-left: 150px;padding-right: 150px">
-      <div v-if="dianqis.length>0">
-        <el-tabs type="border-card">
-          <el-tab-pane label="电器">
-            <el-row :gutter="20">
-              <el-col :span="6" v-for="dq in dianqis">
-                <div @click="selectGoodById(dq.id)" >
+  <div id="app">
+    <div id="div-cx" style="margin-top: 15px; width: 700px">
+      <el-input placeholder="请输入内容" v-model="input3" style="width: 550px" class="input-with-select">
+        <el-button slot="append" icon="el-icon-search" @click="handleClick()"></el-button>
+      </el-input>
+    </div>
+    <div style="padding-left: 150px;padding-right: 150px;text-align: center">
+      <el-tabs v-model="activeName" @tab-click="handleClick">
+        <el-tab-pane label="全部" name="0">
+
+          <div v-if="GoodsSearch.length>0" style="margin-top: 50px">
+
+            <el-row :gutter="20" style="margin-top: 30px">
+              <el-col :span="6" v-for="good in GoodsSearch" style="margin-top: 10px">
+                <div @click="selectGoodById(good.id)">
                   <el-card :body-style="{ padding: '0px' }">
-                    <img style="width: 326px" :src="dq.imageUrl" class="image">
+                    <img style="width: 326px"
+                         src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
+                         class="image">
                     <div style="padding: 14px;text-align: left">
-                      <span class="span">{{dq.goodsName}}</span>
+                      <span class="span">{{ good.goodsName }}</span>
                       <div class="bottom clearfix">
-                        <a style="font-size: 25px;color: orangered"><span style="font-size: 15px">￥</span>{{dq.goodsPrice}}</a><span style="color: #99a9bf">{{dq.goodsSales}}人已购买</span>
+                        <a style="font-size: 25px;color: orangered"><span
+                          style="font-size: 15px">￥</span>{{ good.goodsPrice }}</a><span
+                        style="color: #99a9bf">{{ good.goodsSales }}人已购买</span>
                       </div>
                     </div>
                   </el-card>
                 </div>
               </el-col>
             </el-row>
-          </el-tab-pane>
-          <div style="float: right;margin-top: 15px">
-            <a @click="more(1)" class="a1">更多商品>></a>
           </div>
-        </el-tabs>
-      </div>
 
-      <div v-if="bangongs.length>0" style="margin-top: 10px">
-        <el-tabs type="border-card">
-          <el-tab-pane label="办公">
-            <el-row :gutter="20">
-              <el-col :span="6" v-for="bg in bangongs">
-                <div @click="selectGoodById(bg.id)" >
+          <div style="text-align: center;margin-top: 255px;" v-if="GoodsSearch.length<1">
+            <h1>未查找到相关商品</h1>
+          </div>
+        </el-tab-pane>
+        <el-tab-pane v-for="fl in fls" :label=fl.goodsTypeName :name=String(fl.id) @tab-click="search(input3)">
+
+          <div v-if="GoodsSearch.length>0" style="margin-top: 50px">
+
+            <el-row :gutter="20" style="margin-top: 30px">
+              <el-col :span="6" v-for="good in GoodsSearch" style="margin-top: 10px">
+                <div @click="selectGoodById(good.id)">
                   <el-card :body-style="{ padding: '0px' }">
-                    <img style="width: 326px" :src="bg.imageUrl" class="image">
-                    <div style="padding: 14px;">
-                      <span class="span">{{bg.goodsName}}</span>
+                    <img style="width: 326px"
+                         src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
+                         class="image">
+                    <div style="padding: 14px;text-align: left">
+                      <span class="span">{{ good.goodsName }}</span>
                       <div class="bottom clearfix">
-                        <a style="font-size: 25px;color: orangered"><span style="font-size: 15px">￥</span>{{bg.goodsPrice}}</a><span style="color: #99a9bf">{{bg.goodsSales}}人已购买</span>
+                        <a style="font-size: 25px;color: orangered"><span
+                          style="font-size: 15px">￥</span>{{ good.goodsPrice }}</a><span
+                        style="color: #99a9bf">{{ good.goodsSales }}人已购买</span>
                       </div>
                     </div>
                   </el-card>
                 </div>
               </el-col>
             </el-row>
-          </el-tab-pane>
-          <div style="float: right;margin-top: 15px">
-            <a @click="more(4)" class="a1">更多商品>></a>
           </div>
-        </el-tabs>
-      </div>
 
-      <div v-if="meizhuangs.length>0" style="margin-top: 10px">
-        <el-tabs type="border-card">
-          <el-tab-pane label="美妆">
-            <el-row :gutter="20">
-              <el-col :span="6" v-for="mz in meizhuangs">
-                <div @click="selectGoodById(mz.id)" >
-                  <el-card :body-style="{ padding: '0px' }">
-                    <img style="width: 326px" :src="mz.imageUrl" class="image">
-                    <div style="padding: 14px;" class="dspan">
-                      <span class="span">{{mz.goodsName}}</span>
-                      <div class="bottom clearfix">
-                        <a style="font-size: 25px;color: orangered"><span style="font-size: 15px">￥</span>{{mz.goodsPrice}}</a><span style="color: #99a9bf">{{mz.goodsSales}}人已购买</span>
-                      </div>
-                    </div>
-                  </el-card>
-                </div>
-              </el-col>
-            </el-row>
-          </el-tab-pane>
-          <div style="float: right;margin-top: 15px">
-            <a @click="more(3)" class="a1">更多商品>></a>
+          <div style="text-align: center;margin-top: 255px;" v-if="GoodsSearch.length<1">
+            <h1>未查找到相关商品</h1>
           </div>
-        </el-tabs>
-      </div>
 
-      <div v-if="shipins.length>0" style="margin-top: 10px">
-        <el-tabs type="border-card">
-          <el-tab-pane label="食品">
-            <el-row :gutter="20">
-              <el-col :span="6" v-for="sp in shipins">
-                <div @click="selectGoodById(sp.id)" >
-                  <el-card :body-style="{ padding: '0px' }">
-                    <img style="width: 326px" :src="sp.imageUrl" class="image">
-                    <div style="padding: 14px;">
-                      <span class="span">{{sp.goodsName}}</span>
-                      <div class="bottom clearfix">
-                        <a style="font-size: 25px;color: orangered"><span style="font-size: 15px">￥</span>{{sp.goodsPrice}}</a><span style="color: #99a9bf">{{sp.goodsSales}}人已购买</span>
-                      </div>
-                    </div>
-                  </el-card>
-                </div>
-              </el-col>
-            </el-row>
-          </el-tab-pane>
-          <div style="float: right;margin-top: 15px">
-            <a @click="more(5)" class="a1">更多商品>></a>
-          </div>
-        </el-tabs>
-      </div>
-
-
+        </el-tab-pane>
+      </el-tabs>
     </div>
 
+    <div style="text-align: center">
+      <el-pagination
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="pageNo"
+        :page-sizes="[8, 12, 16, 20]"
+        :page-size="8"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="total">
+      </el-pagination>
+    </div>
+
+<!--    商品详情，购买，加入购物车组件-->
     <el-dialog
       title="商品详情"
       :visible.sync="dialogVisible"
@@ -111,16 +89,16 @@
       :before-close="handleClose">
       <div style="margin-top: 20px">
         <div style="float: left;margin-left: 200px;width: 500px;height: 500px">
-          <img height="100%" width="100%" :src="good.imageUrl">
+          <img height="100%" width="100%" :src="soso.imageUrl">
         </div>
         <div style="width: 500px;height: 500px;margin-left: 750px">
-          <h1 style="color: #333333">{{ good.goodsName }}</h1>
+          <h1 style="color: #333333">{{ soso.goodsName }}</h1>
           <a style="font-size: 15px">价格：</a>
-          <a style="color: red;font-size: 25px">￥{{good.goodsPrice}}</a>
+          <a style="color: red;font-size: 25px">￥{{soso.goodsPrice}}</a>
           <div style="margin-top: 20px;padding-bottom: 20px;height: 200px">
-            <label>商品描述：{{good.goodsDescribe}}</label>
+            <label>商品描述：{{soso.goodsDescribe}}</label>
           </div>
-          <a>销量：{{good.goodsSales}}</a>
+          <a>销量：{{soso.goodsSales}}</a>
           <br>
           <a>库存：{{warehouse.goodsAmount}}</a>
           <el-divider></el-divider>
@@ -157,22 +135,23 @@
         <el-button type="primary" @click="dialogVisible1 = false">确 定</el-button>
       </div>
     </el-dialog>
+
   </div>
 </template>
 
 <script>
-import Test from "../../AppUserLogin";
 export default {
-  name: "Hot",
-  components: {Test},
-  data(){
-    return{
-      msg:"热门商品",
-      dianqis:[],
-      bangongs:[],
-      meizhuangs:[],
-      shipins:[],
-      good:[],
+  name: "Classification",
+  data() {
+    return {
+      activeName:String(this.$route.params.id),
+      fls:[],
+      input3:this.$route.params.ss,
+      GoodsSearch:[],
+      pageSize: 8,
+      pageNo: 1,
+      total: 0,
+      soso:[],
       warehouse:[],
       dialogFormVisible: false,
       submitForm: {merchantId: 0},
@@ -181,36 +160,34 @@ export default {
       dialogVisible: false,
       dialogVisible1: false,
       num: 1
-    }
+    };
   },
-  methods:{
-    // getGoods(){
-    //   var _this=this;
-    //   this.$axios.post("/Goods/rexiao").then(function (items){
-    //     _this.goods=items.data;
-    //   }).catch()
-    // },
-    getGoods(){
-      var _this=this;
-      this.$axios.post("/Goods/tuijian").then(function (items){
-        var goods=items.data;
-        _this.dianqis=goods.dianqi.map(item => {
-          item.imageUrl = "http://127.0.0.1:8090/code/" + item.imageUrl;
-          return item;
-        });
-        _this.bangongs=goods.bangong.map(item => {
-          item.imageUrl = "http://127.0.0.1:8090/code/" + item.imageUrl;
-          return item;
-        });
-        _this.meizhuangs=goods.meizhuang.map(item => {
-          item.imageUrl = "http://127.0.0.1:8090/code/" + item.imageUrl;
-          return item;
-        });
-        _this.shipins=goods.shipin.map(item => {
-            item.imageUrl = "http://127.0.0.1:8090/code/" + item.imageUrl;
-            return item;
-          });
+  methods: {
+    handleClick() {
+      var _this = this;
+      var param = new URLSearchParams();
+      param.append("pageSize", this.pageSize)
+      param.append("pageNo", this.pageNo)
+      param.append("search", this.input3)
+      param.append("flID",this.activeName)
+      this.$axios.post("/Goods/Search", param).then(function (items) {
+        _this.GoodsSearch = items.data.list;
+        _this.total = items.data.total;
       }).catch()
+    },
+    AllFenLei(){
+      var _this=this;
+      this.$axios.post("/Goods/FenLei").then(function (item){
+        _this.fls=item.data;
+      }).catch()
+    },
+    handleSizeChange(val) {
+      this.pageSize = val;
+      this.handleClick();
+    },
+    handleCurrentChange(val) {
+      this.pageNo = val;
+      this.handleClick();
     },
     selectGoodById(id){
       var _this=this;
@@ -218,8 +195,8 @@ export default {
       param.append("id",id)
       this.$axios.post("/Goods/selectGoodById",param).then(function (item){
         var map=item.data;
-        _this.good=map.good;
-        _this.good.imageUrl="http://127.0.0.1:8090/code/" + map.good.imageUrl;
+        _this.soso=map.good;
+        _this.soso.imageUrl="http://127.0.0.1:8090/code/" + map.good.imageUrl;
         _this.warehouse=map.warehouse;
         _this.dialogVisible=true;
       }).catch()
@@ -245,10 +222,10 @@ export default {
       }
       var _this = this;
       var param = new URLSearchParams();
-      param.append("goodsId", this.good.id);
+      param.append("goodsId", this.soso.id);
       param.append("userId", userId);
       param.append("amount", this.num);
-      param.append("goodsPrice", this.good.goodsPrice);
+      param.append("goodsPrice", this.soso.goodsPrice);
       this.$axios.post("shopCart/saveOrUpdate", param).then(function (result) {
         _this.$message({
           showClose: true,
@@ -257,38 +234,35 @@ export default {
         });
       }).catch()
     },
-    more(id){
-      this.$router.push({name: "Classification", params: {id: id,ss:""}});
-    },
     kcbz(){
       this.$message('库存不足');
     },
     isVisible() {
-        var userId = sessionStorage.getItem("userId");
-        if (userId == null) {
-          alert('请先完成登录！');
-          this.$router.push('/login');
-          return;
-        }
-        this.dialogFormVisible = true;
-        var _this = this;
-        // userId = sessionStorage.getItem("userId"),
-        function queryMerchant() {
-          return _this.$axios.post("shopCart/queryMerchant");
-        }
+      var userId = sessionStorage.getItem("userId");
+      if (userId == null) {
+        alert('请先完成登录！');
+        this.$router.push('/login');
+        return;
+      }
+      this.dialogFormVisible = true;
+      var _this = this;
+      // userId = sessionStorage.getItem("userId"),
+      function queryMerchant() {
+        return _this.$axios.post("shopCart/queryMerchant");
+      }
 
-        function queryUser() {
-          var params = new URLSearchParams();
-          params.append("id", userId);
-          return _this.$axios.post("shopCart/queryUser", params);
-        }
+      function queryUser() {
+        var params = new URLSearchParams();
+        params.append("id", userId);
+        return _this.$axios.post("shopCart/queryUser", params);
+      }
 
-        this.$axios.all([queryMerchant(), queryUser()]).then(this.$axios.spread(function (res1, res2) {
-          _this.merchantData = res1.data;
-          if (res2.data.merchantId != "" && res2.data.merchantId != null) {
-            _this.submitForm.merchantId = res2.data.merchantId;
-          }
-        })).catch();
+      this.$axios.all([queryMerchant(), queryUser()]).then(this.$axios.spread(function (res1, res2) {
+        _this.merchantData = res1.data;
+        if (res2.data.merchantId != "" && res2.data.merchantId != null) {
+          _this.submitForm.merchantId = res2.data.merchantId;
+        }
+      })).catch();
     },
     counter() {
       if (this.submitForm.merchantId == 0) {
@@ -326,7 +300,7 @@ export default {
         params.append("userId", userId);
         params.append("addressId", _this.submitForm.merchantId);
         params.append("amount", _this.num);
-        params.append("orderPrice", _this.good.goodsPrice*_this.num);
+        params.append("orderPrice", _this.soso.goodsPrice*_this.num);
         params.append("orderStats", "1");
         return _this.$axios.post("shopCart/saveUserOrder", params);
       }
@@ -372,14 +346,14 @@ export default {
         var json1={};
         json1["orderId"]=res2.data;
         json1["merchantOrderId"]=res3.data;
-        json1["goodsId"]=_this.good.id;
+        json1["goodsId"]=_this.soso.id;
         json1["goodsAmount"]=_this.num;
-        json1["goodsPrice"]=_this.good.goodsPrice;
+        json1["goodsPrice"]=_this.soso.goodsPrice;
         nary.push(json1);
         console.log(nary)
         var ary = [];
         var json2 = {};
-        json2["id"] = _this.good.id;
+        json2["id"] = _this.soso.id;
         json2["goodsSales"] = _this.num;
         ary.push(json2);
         _this.$axios.all([saveUserOrderDetail(nary), updateGood(ary), saveMerchantOrderDetail(nary)]).then(_this.$axios.spread(function (res1, res2, res3) {
@@ -395,7 +369,7 @@ export default {
         params.append("userId", userId);
         params.append("addressId", _this.submitForm.merchantId);
         params.append("amount", _this.num);
-        params.append("orderPrice", _this.good.goodsPrice*_this.num);
+        params.append("orderPrice", _this.soso.goodsPrice*_this.num);
         params.append("orderStats", "0");
         return _this.$axios.post("shopCart/saveUserOrder", params);
       }
@@ -414,31 +388,37 @@ export default {
         var nary =[];
         var json1={};
         json1["orderId"]=res1.data;
-        json1["goodsId"]=_this.good.id;
+        json1["goodsId"]=_this.soso.id;
         json1["goodsAmount"]=_this.num;
-        json1["goodsPrice"]=_this.good.goodsPrice;
+        json1["goodsPrice"]=_this.soso.goodsPrice;
         nary.push(json1);
         saveUserOrderDetail(nary).then(function (result) {
           _this.dialogVisible1 = true;
         }).catch();
       })).catch();
     },
+    // search(input3){
+    //   var _this = this;
+    //   var param = new URLSearchParams();
+    //   param.append("search", input3)
+    //   param.append("flID",this.activeName)
+    //   this.$axios.post("/Goods/Search", param).then(function (items) {
+    //     _this.GoodsSearch = items.data;
+    //   }).catch()
+    // }
   },
-
   created() {
-    this.getGoods()
+    this.AllFenLei();
+    this.handleClick();
   }
 }
 </script>
 
 <style scoped>
 
-.a1{
-  font-size: 15px;
-}
-
-.a1:hover{
-  color: red;
+#div-cx {
+  text-align: center;
+  margin: 20px auto;
 }
 
 .span{
@@ -448,31 +428,8 @@ export default {
   text-overflow: ellipsis; /*超出部分用...代替*/
 }
 
-.divcss5 {
-  width: 100%;
-  height: 100%;
-  padding-top: 20px;
-}
-
-last-child {
-  margin-bottom: 0;
-}
-
-.grid-content {
-  border-radius: 4px;
-  min-height: 300px;
-  border: 1px solid gray;
-}
-
-.el-col {
-  padding-top: 12px
-}
-
-.grid-content:hover {
-  border: 1px solid red;
-}
-
 .el-card:hover {
   border: 1px solid red;
 }
+
 </style>

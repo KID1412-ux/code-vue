@@ -42,8 +42,7 @@ export default {
   },
   methods: {
     search(zhi) {
-      alert(zhi);
-      this.$router.push({name: "Search", params: {ss: zhi}});
+      this.$router.push({name: "Classification", params: {ss: zhi,id:"0"}});
     }
   }
 }

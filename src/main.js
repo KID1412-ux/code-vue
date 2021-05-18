@@ -7,6 +7,7 @@ import 'element-ui/lib/theme-chalk/index.css';
 import router from './router/router.js'
 //导入axios
 import Axios from "axios";
+import Merchant from "./components/Merchant";
 
 Vue.config.productionTip = false
 
@@ -21,6 +22,6 @@ Vue.prototype.$axios = Axios
 
 new Vue({
   el: '#app',
-  render: h => h(App),
+  render: h => h(Merchant),
   router
 })
