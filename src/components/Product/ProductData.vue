@@ -7,39 +7,19 @@
         <el-breadcrumb-item>商户资料</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
-<!--    <div id="proDiv">-->
-<!--      <el-avatar style="margin-top: 40px" :size="90" :src="require('./../../img/gg1.png')"></el-avatar><br>-->
-<!--      -->
-<!--    </div>-->
-    <div style="margin-top: 150px">
-<!--      <div>-->
-<!--        <el-avatar style="margin-top: 50px" :size="60" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar><br>-->
-<!--        <a>{{user.merchantName}}</a>-->
-<!--        <div class="demo-image__preview">-->
-<!--          <el-image-->
-<!--            style="width: 100px; height: 100px"-->
-<!--            :src="url"-->
-<!--            :preview-src-list="srcList">-->
-<!--          </el-image>-->
-<!--          <el-image-->
-<!--            style="width: 100px; height: 100px"-->
-<!--            :src="url"-->
-<!--            :preview-src-list="srcList">-->
-<!--          </el-image>-->
-<!--        </div>-->
-<!--      </div>-->
 
+    <div style="margin-top: 150px">
       <el-col :span="4">
         <div class="grid-content"></div>
       </el-col>
-      <el-col :span="5" >
-        <el-card class="box-card" style="width: 100%">
-          <div style="text-align: center;margin-top: 40px">
-            <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar>
-            <br>
+      <el-col :span="5">
+        <el-card style="height: 300px;">
+          <div style="padding: 14px;text-align: center;margin-top: 10px">
+            <el-image style="width: 100px; height: 100px" :src="merchant.merchantShopImage" ></el-image>
             <h3>{{merchant.merchantName}}</h3>
-            <el-button size="mini" round @click="openDialogForm">编辑资料</el-button><br><br>
-
+            <div class="bottom clearfix">
+              <el-button size="mini" round @click="openDialogForm">编辑资料</el-button><br><br>
+            </div>
           </div>
         </el-card>
       </el-col>
@@ -54,75 +34,84 @@
               <el-tooltip class="item" effect="dark" content="点击可放大查看" placement="top-start">
                 <el-image
                   style="width: 100px; height: 100px"
-                  :src="url"
-                  :preview-src-list="srcList">
+                  :src="merchant.merchantPermitImage"
+                  :preview-src-list="merchant.merchantPermitImage">
                 </el-image>
               </el-tooltip>
             </div>
           </div>
         </el-card>
       </el-col>
-<!--      <el-col :span="10" style="">-->
-<!--        <el-card shadow="never" style="height: 200px;margin-top: 18%">-->
-<!--          <div style="margin-top: 5%;margin-left: -10%">-->
-<!--            <label>默认提货商户：</label>-->
-<!--            <el-select placeholder="请选择自提店" v-model="merchant" @change="changeAddress">-->
-<!--              <el-option v-for="(item, index) in merchants" :key="item.id" :label="item.merchantName" :value="item.id"></el-option>-->
-<!--            </el-select>-->
-<!--            <el-popover-->
-<!--              placement="bottom-end"-->
-<!--              width="600"-->
-<!--              trigger="click">-->
-<!--              <el-table :data="merchants">-->
-<!--                <el-table-column width="150" property="userNickname" label="商户姓名"></el-table-column>-->
-<!--                <el-table-column width="150" property="merchantName" label="店铺名"></el-table-column>-->
-<!--                <el-table-column width="150" property="deliveryAddress" label="店铺地址"></el-table-column>-->
-<!--                <el-table-column width="150" property="merchantPhone" label="店铺电话"></el-table-column>-->
-<!--              </el-table>-->
-<!--              <el-button slot="reference">所有商户</el-button>-->
-<!--            </el-popover>-->
-<!--          </div>-->
-<!--          <div style="margin-top: 5%;margin-left: -10%">-->
-<!--            <el-row>-->
-<!--              <label>当前界面：</label>-->
-<!--              <el-tag type="primary" >用户个人</el-tag>-->
-<!--              <el-button type="success" plain v-if="user.type =='0'||user.type =='2'" @click="openMerchantFrom">申请成为商户</el-button>-->
-<!--              <el-button type="success" plain v-if="user.type =='1'||user.type =='3'" @click="goMerchantPersonal">前往商户主页</el-button>-->
-<!--              <el-button type="info" plain v-if="user.type =='2'||user.type =='3'">前往供应商主页</el-button>-->
-<!--              <el-button type="info" plain v-if="user.type =='0'||user.type =='1'">申请成为供应商</el-button>-->
-<!--            </el-row>-->
-<!--          </div>-->
-<!--        </el-card>-->
-<!--      </el-col>-->
-
     </div>
 
+<!-- 修改商户资料 -->
+    <el-dialog title="商户资料" center :visible.sync="dialogFormVisible">
+      <el-form :model="merchantForm" ref="merchantForm">
+        <el-form-item label="商户店铺图片：" label-width="150px">
+          <div>
+           <div v-if="bool" style="float: left; margin-right: 5px">
+             <img width="150px" height="150px" :src="merchantForm.merchantShopImage" alt="" >
+           </div>
+           <div style="float: left">
+             <el-upload
+              action="#"
+              list-type="picture-card"
+              ref="upload"
+              accept="image/jpeg,image/gif,image/png,image/jpg"
 
-<!--    <el-dialog title="个人信息" :visible.sync="dialogForm" width="600px">-->
-<!--      <el-form :model="user">-->
-<!--        <el-form-item label="用户头像:" label-width="150px">-->
-<!--          <div @click="changeImage">-->
-<!--            <el-avatar :size="60" :src="circleUrl"></el-avatar>-->
-<!--          </div>-->
-<!--        </el-form-item>-->
-<!--        <el-form-item label="用户账号：" label-width="150px">-->
-<!--          <el-input v-model="user.userName" style="width: 250px"></el-input>-->
-<!--        </el-form-item>-->
-<!--        <el-form-item label="用户昵称：" label-width="150px">-->
-<!--          <el-input v-model="user.merchantName" style="width: 250px"></el-input>-->
-<!--        </el-form-item>-->
-<!--        <el-form-item label="用户：" label-width="150px">-->
-<!--          <el-select v-model="user.region" placeholder="请选择活动区域" style="width: 250px">-->
-<!--            <el-option label="区域一" value="shanghai"></el-option>-->
-<!--            <el-option label="区域二" value="beijing"></el-option>-->
-<!--          </el-select>-->
-<!--        </el-form-item>-->
-<!--      </el-form>-->
-<!--      <div slot="footer" class="dialog-footer">-->
-<!--        <el-button @click="dialogFormVisible = false">取 消</el-button>-->
-<!--        <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>-->
-<!--      </div>-->
-<!--    </el-dialog>-->
+
+              :auto-upload="false"
+
+              :limit="1"
+
+              style="width: 100%;">
+               <i class="el-icon-plus"></i>
+             </el-upload>
+           </div>
+          </div>
+        </el-form-item>
+        <el-form-item label="商户名：" label-width="160px">
+          <el-input v-model="merchantForm.merchantName" style="width: 250px"></el-input>
+        </el-form-item>
+        <el-form-item label="联系电话：" label-width="160px">
+          <el-input v-model="merchantForm.merchantPhone" style="width: 250px"></el-input>
+        </el-form-item>
+        <el-form-item label="提货地点：" label-width="160px">
+          <el-input v-model="merchantForm.deliveryAddress" style="width: 250px"></el-input>
+        </el-form-item>
+        <el-form-item label="商户描述：" label-width="160px">
+          <el-input v-model="merchantForm.merchantDescribe" style="width: 250px"></el-input>
+        </el-form-item>
+        <el-form-item label="营业执照：" label-width="150px">
+          <div>
+            <div v-if="bool" style="float: left; margin-right: 5px">
+              <img width="150px" height="150px" :src="merchantForm.merchantPermitImage" alt="" >
+            </div>
+            <div style="float: left">
+              <el-upload
+                action="#"
+                list-type="picture-card"
+                ref="upload"
+                accept="image/jpeg,image/gif,image/png,image/jpg"
+
+
+                :auto-upload="false"
+
+                :limit="1"
+
+                style="width: 100%;">
+                <i class="el-icon-plus"></i>
+              </el-upload>
+            </div>
+          </div>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogFormVisible = false">取 消</el-button>
+        <el-button type="primary" @click="openDialogForm">确 定</el-button>
+      </div>
+    </el-dialog>
+
   </div>
 </template>
 
@@ -132,30 +121,40 @@ export default {
   data(){
     return{
       merchant: {},
-      dialogForm:false,
-      url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
-      srcList: [
-        'https://fuss10.elemecdn.com/8/27/f01c15bb73e1ef3793e64e6b7bbccjpeg.jpeg',
-        'https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg'
-      ],
+      dialogFormVisible: false,
+      bool:true,
+      merchantForm:{
+        merchantId:'',merchantName:'',merchantDescribe:'',merchantPermitImage:'',merchantShopImage:'',merchantPhone:'',deliveryAddress:''
+      },
     }
   },
   methods:{
-    getUser(){
+    getMerchant(){
       var userID=sessionStorage.getItem("userId");
       var params=new URLSearchParams();
       params.append("userID","1")
       var _this=this;
       this.$axios.post("/user/selectUserByID",params).then(function (item){
         _this.merchant=item.data;
+        _this.merchant.merchantShopImage="http://127.0.0.1:8090/code/" + item.data.merchantShopImage;
+        _this.merchant.merchantPermitImage="http://127.0.0.1:8090/code/" + item.data.merchantPermitImage;
       }).catch()
     },
-    goMerchantPersonal(){
-
-    }
+    openDialogForm(){
+      this.merchantForm.merchantId=this.merchant.merchantId;
+      this.merchantForm.merchantName = this.merchant.merchantName;
+      this.merchantForm.merchantPhone=this.merchant.merchantPhone;
+      this.merchantForm.merchantDescribe = this.merchant.merchantDescribe;
+      this.merchantForm.merchantPermitImage = this.merchant.merchantPermitImage;
+      this.merchantForm.merchantShopImage = this.merchant.merchantShopImage;
+      this.merchantForm.deliveryAddress = this.merchant.deliveryAddress;
+      console.log(this.merchant)
+      this.dialogFormVisible=true;
+    },
   },
   created() {
-    this.getUser();
+    this.getMerchant();
+    console.log(this.merchant)
   }
 }
 </script>
