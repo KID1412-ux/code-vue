@@ -573,9 +573,14 @@ export default {
           var params = new URLSearchParams();
           params.append("parentID", this.userId);
           this.$axios.post("user/selectLogMerchant", params).then(function (result){
-            alert("您提交的申请未通过,原因："+result.data.logdetail);
-            return
+            _this.$message({
+              duration:0,
+              showClose: true,
+              message: "您提交的申请未通过,原因："+result.data.logdetail,
+              type: 'warning'
+            });
           }).catch();
+          return
         }
         this.merchantFromVisible=true
     },
@@ -657,9 +662,13 @@ export default {
         var params = new URLSearchParams();
         params.append("parentID", this.userId);
         this.$axios.post("user/selectLogSupplier", params).then(function (result){
-          alert("您提交的申请未通过,原因："+result.data.logDetail);
-          return
-        }).catch();
+          _this.$message({
+            duration:0,
+            showClose: true,
+            message: "您提交的申请未通过,原因："+result.data.logdetail,
+            type: 'warning'
+          });        }).catch();
+        return
       }
       this.supplierFromVisible=true
     },
