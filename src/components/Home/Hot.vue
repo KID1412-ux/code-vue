@@ -161,10 +161,10 @@
 </template>
 
 <script>
-import Test from "../../AppUserLogin";
+// import Test from "../../AppUserLogin";
 export default {
-  name: "Hot",
-  components: {Test},
+  // name: "Hot",
+  // components: {Test},
   data(){
     return{
       msg:"热门商品",

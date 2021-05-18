@@ -29,16 +29,18 @@
                 <i class="el-icon-s-goods"></i>
                 <span>订单管理</span>
               </template>
-              <el-menu-item index="/Test">全部订单</el-menu-item>
-              <el-menu-item index="2-2">待收货订单</el-menu-item>
-              <el-menu-item index="2-3">待提货订单</el-menu-item>
-              <el-menu-item index="2-4">已提货订单</el-menu-item>
+              <el-menu-item index="/MerchantOrder0">待发货</el-menu-item>
+              <el-menu-item index="/MerchantOrder1">已发货</el-menu-item>
+              <el-menu-item index="/MerchantOrder2">待提货</el-menu-item>
+              <el-menu-item index="/MerchantOrder3">已提货</el-menu-item>
             </el-submenu>
           </el-menu>
         </el-aside>
-        <el-main>
-          <router-view></router-view>
-        </el-main>
+        <el-container>
+          <el-main>
+            <router-view></router-view>
+          </el-main>
+        </el-container>
       </el-container>
     </el-container>
   </div>

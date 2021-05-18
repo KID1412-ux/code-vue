@@ -16,6 +16,10 @@ import Search from "../components/Home/Search";
 import Classification from "../components/Home/Classification";
 import Merchant from "../components/Merchant";
 import Test from "../components/users/test";
+import merchantOrder0 from "../components/users/merchantOrder0";
+import merchantOrder1 from "../components/users/merchantOrder1";
+import merchantOrder2 from "../components/users/merchantOrder2";
+import merchantOrder3 from "../components/users/merchantOrder3";
 //第三方库需要use一下才能用
 Vue.use(VueRouter)
 
@@ -49,9 +53,12 @@ const routes = [
     }
   },
   {path: "/Merchant", component: Merchant,
-    children:[{
-      path: "/Test", component: Test, name: "Test"
-    }]
+    children:[
+      {path: "/MerchantOrder0", component: merchantOrder0, name: "MerchantOrder0"},
+      {path: "/MerchantOrder1", component: merchantOrder1, name: "MerchantOrder1"},
+      {path: "/MerchantOrder2", component: merchantOrder2, name: "MerchantOrder2"},
+      {path: "/MerchantOrder3", component: merchantOrder3, name: "MerchantOrder3"},
+    ]
   },
 
 ]
