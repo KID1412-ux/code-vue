@@ -276,9 +276,13 @@ export default {
         }
         console.log(ary)
         _this.$axios.all([insertMerchantOrderDetail(nary), updateGood(ary)]).then(_this.$axios.spread(function (res1, res2) {
+          _this.selectUserOrder();
+          _this.$message({
+            type: 'success',
+            message: '支付完成!'
+          });
         })).catch();
       })).catch();
-      this.selectUserOrder();
     },
     //提货方法
     receipt(row) {
@@ -334,7 +338,7 @@ export default {
         params.append("orderId", row.id);
         this.$axios.post("userOrder/deleteOrder", params).then(function (result) {
         }).catch();
-        this.selectUserOrder();
+        _this.selectUserOrder();
         this.$message({
           type: 'success',
           message: '订单已删除!'
