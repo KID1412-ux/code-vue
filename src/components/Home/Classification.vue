@@ -16,7 +16,7 @@
                 <div @click="selectGoodById(good.id)">
                   <el-card :body-style="{ padding: '0px' }">
                     <img style="width: 326px"
-                         src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
+                         :src="good.imageUrl"
                          class="image">
                     <div style="padding: 14px;text-align: left">
                       <span class="span">{{ good.goodsName }}</span>
@@ -45,7 +45,7 @@
                 <div @click="selectGoodById(good.id)">
                   <el-card :body-style="{ padding: '0px' }">
                     <img style="width: 326px"
-                         src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
+                         :src="good.imageUrl"
                          class="image">
                     <div style="padding: 14px;text-align: left">
                       <span class="span">{{ good.goodsName }}</span>
@@ -173,7 +173,10 @@ export default {
       param.append("search", this.input3)
       param.append("flID",this.activeName)
       this.$axios.post("/Goods/Search", param).then(function (items) {
-        _this.GoodsSearch = items.data.list;
+        _this.GoodsSearch = items.data.list.map(item => {
+          item.imageUrl = "http://127.0.0.1:8090/code/" + item.imageUrl;
+          return item;
+        });
         _this.total = items.data.total;
       }).catch()
     },
