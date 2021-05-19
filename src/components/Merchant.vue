@@ -1,7 +1,9 @@
 <template>
   <div id="app">
     <el-container class="height">
-      <el-header>Header</el-header>
+      <el-header>
+        <div style="float: right"><el-button type="success" plain @click="Back">返回首页</el-button></div>
+      </el-header>
       <el-container>
         <el-aside width="200px">
           <el-menu router
@@ -16,7 +18,7 @@
               <i class="el-icon-menu"></i>
               <span slot="title">商户资料维护</span>
             </el-menu-item>
-            <el-menu-item index="1">
+            <el-menu-item index="/Revenue">
               <i class="el-icon-menu"></i>
               <span slot="title">统计营收</span>
             </el-menu-item>
@@ -57,7 +59,13 @@ export default {
     },
     handleClose(key, keyPath) {
       console.log(key, keyPath);
-    }
+    },
+    Back(){
+      this.$router.push("/")
+    },
+  },
+  created() {
+    this.$router.push("ProductData")
   }
 }
 

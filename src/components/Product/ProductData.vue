@@ -36,7 +36,8 @@
                 <el-image
                   style="width: 100px; height: 100px"
                   :src="merchant.merchantPermitImage"
-                  :preview-src-list="merchant.merchantPermitImage">
+
+                  >
                 </el-image>
               </el-tooltip>
             </div>
@@ -117,8 +118,12 @@
 </template>
 
 <script>
+
+import ElImageViewer from 'element-ui/packages/image/src/image-viewer'
+
 export default {
   name: "ProductData",
+  components: { ElImageViewer },
   data(){
     return{
       merchant: {},
@@ -127,6 +132,8 @@ export default {
       updateImgList2:[],
       bool1:true,
       bool2:true,
+      showViewer: false, // 显示查看器
+      url:'',
       merchantForm:{
         id:'',merchantName:'',merchantDescribe:'',PermitImage:'',ShopImage:'',merchantPhone:'',deliveryAddress:''
       },
@@ -142,6 +149,7 @@ export default {
         _this.merchant=item.data;
         _this.merchant.merchantShopImage="http://127.0.0.1:8090/code/" + item.data.merchantShopImage;
         _this.merchant.merchantPermitImage="http://127.0.0.1:8090/code/" + item.data.merchantPermitImage;
+        _this.url="http://127.0.0.1:8090/code/" + item.data.merchantPermitImage;
       }).catch()
     },
     openDialogForm(){
@@ -211,7 +219,14 @@ export default {
       });
     },
     BackHome(){
-      this.$router.push("/")
+      this.$router.push("UserPersonal")
+    },
+    onPreview() {
+      this.showViewer = true
+    },
+    // 关闭查看器
+    closeViewer() {
+      this.showViewer = false
     }
   },
   created() {
