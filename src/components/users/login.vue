@@ -63,7 +63,7 @@ export default {
           _this.msg = "账号已被拉黑";
         } else {
           _this.msg = "";
-          _this.$message({type: 'success',duration:1000, message: '登录成功'});
+          _this.$message({type: 'success',duration:1000, message: '登录成功', showClose: true});
           sessionStorage.setItem("userId", result.data.id);
           sessionStorage.setItem("userName", result.data.userName);
           sessionStorage.setItem("userNickname", result.data.userNickname);

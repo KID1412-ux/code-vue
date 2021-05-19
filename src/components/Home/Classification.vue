@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div id="div-cx" style="margin-top: 15px; width: 700px">
-      <el-input placeholder="请输入内容" v-model="input3" style="width: 550px" class="input-with-select">
+      <el-input placeholder="请输入内容" v-model="input3" style="width: 550px" class="input-with-select" clearable>
         <el-button slot="append" icon="el-icon-search" @click="handleClick()"></el-button>
       </el-input>
     </div>

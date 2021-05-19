@@ -15,7 +15,6 @@
 
             <span v-if="userName!=null&&userName!=''">
               <router-link to="/UserPersonal"><i class="el-icon-user"></i>你好,{{ user.userNickname }}</router-link>
-              <router-link to="/Register">注册</router-link>
             </span>
 
             <router-link to="/UserOrder"><i class="el-icon-shopping-bag-2"></i>我的订单</router-link>
