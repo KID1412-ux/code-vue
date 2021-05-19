@@ -11,8 +11,10 @@
   },
   "dependencies": {
     "axios": "^0.21.1",
+    "echarts": "^5.1.1",
     "element-ui": "^2.15.1",
-    "vue": "^2.5.11"
+    "vue": "^2.5.11",
+    "vue-schart": "^2.0.0"
   },
   "browserslist": [
     "> 1%",

@@ -1,7 +1,9 @@
 <template>
   <div id="app">
     <el-container class="height">
-      <el-header>Header</el-header>
+      <el-header>
+        <div style="float: right"><el-button type="success" plain @click="Back">返回首页</el-button></div>
+      </el-header>
       <el-container>
         <el-aside width="200px">
           <el-menu router
@@ -16,29 +18,27 @@
               <i class="el-icon-menu"></i>
               <span slot="title">商户资料维护</span>
             </el-menu-item>
-            <el-submenu index="1">
-              <template slot="title">
-                <i class="el-icon-s-data"></i>
-                <span>统计营收</span>
-              </template>
-              <el-menu-item index="1-1">本月营收</el-menu-item>
-              <el-menu-item index="1-2">营收查询</el-menu-item>
-            </el-submenu>
+            <el-menu-item index="/Revenue">
+              <i class="el-icon-menu"></i>
+              <span slot="title">统计营收</span>
+            </el-menu-item>
             <el-submenu index="2">
               <template slot="title">
                 <i class="el-icon-s-goods"></i>
                 <span>订单管理</span>
               </template>
-              <el-menu-item index="2-1">全部订单</el-menu-item>
-              <el-menu-item index="2-2">待收货订单</el-menu-item>
-              <el-menu-item index="2-3">待提货订单</el-menu-item>
-              <el-menu-item index="2-4">已提货订单</el-menu-item>
+              <el-menu-item index="/MerchantOrder0">待发货</el-menu-item>
+              <el-menu-item index="/MerchantOrder1">已发货</el-menu-item>
+              <el-menu-item index="/MerchantOrder2">待提货</el-menu-item>
+              <el-menu-item index="/MerchantOrder3">已提货</el-menu-item>
             </el-submenu>
           </el-menu>
         </el-aside>
-        <el-main>
-          <router-view></router-view>
-        </el-main>
+        <el-container>
+          <el-main>
+            <router-view></router-view>
+          </el-main>
+        </el-container>
       </el-container>
     </el-container>
   </div>
@@ -59,28 +59,51 @@ export default {
     },
     handleClose(key, keyPath) {
       console.log(key, keyPath);
-    }
+    },
+    Back(){
+      this.$router.push("/")
+    },
+  },
+  created() {
+    this.$router.push("ProductData")
   }
 }
 
 </script>
 
 <style>
+#app {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+}
 
-html, body, #app {
+html, body{
   margin: 0px;
   height: 100%;
 }
 
 .height {
+  position: absolute;
+  left: 0;
+  top: 0;
   height: 100%;
+  width: 100%;
 }
 
-.el-header, .el-footer {
-  background-color: #B3C0D1;
-  color: #333;
+.el-header {
+  background-color: #475669;
   text-align: center;
   line-height: 60px;
+}
+
+el-header span, a {
+  padding-right: 20px;
+  color: #99a9bf;
+  font-size: 20px;
+  text-decoration: none;
 }
 
 .el-aside {
@@ -90,12 +113,12 @@ html, body, #app {
   line-height: 200px;
 }
 
-.el-main {
-  background-color: #E9EEF3;
-  color: #333;
-  text-align: center;
-  line-height: 160px;
-}
+/*.el-main {*/
+/*  background-color: #E9EEF3;*/
+/*  color: #333;*/
+/*  text-align: center;*/
+/*  line-height: 160px;*/
+/*}*/
 
 body > .el-container {
   margin-bottom: 40px;

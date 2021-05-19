@@ -32,18 +32,17 @@ export default {
     return {
       input3: "",
       advertisements: [
-        {index: 0, picture: require('./../img/gg1.png')},
-        {index: 1, picture: require('./../img/gg2.png')},
-        {index: 2, picture: require('./../img/gg3.png')},
-        {index: 3, picture: require('./../img/gg4.png')},
-        {index: 4, picture: require('./../img/gg5.png')},
+        {index: 0, picture: require('./../img/gg1.jpg')},
+        {index: 1, picture: require('./../img/gg2.jpg')},
+        {index: 2, picture: require('./../img/gg3.jpg')},
+        {index: 3, picture: require('./../img/gg4.jpg')},
+        {index: 4, picture: require('./../img/gg5.jpg')},
       ]
     }
   },
   methods: {
     search(zhi) {
-      alert(zhi);
-      this.$router.push({name: "Search", params: {ss: zhi}});
+      this.$router.push({name: "Classification", params: {ss: zhi,id:"0"}});
     }
   }
 }
@@ -51,7 +50,7 @@ export default {
 
 <style scoped>
 .el-carousel__item h3 {
-  color: #475669;
+  color: white;
   font-size: 14px;
   opacity: 0.75;
   line-height: 200px;
@@ -59,11 +58,11 @@ export default {
 }
 
 .el-carousel__item:nth-child(2n) {
-  background-color: #99a9bf;
+  background-color: white;
 }
 
 .el-carousel__item:nth-child(2n+1) {
-  background-color: #d3dce6;
+  background-color: white;
 }
 
 .grid-content {

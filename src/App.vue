@@ -14,12 +14,13 @@
 
 
             <span v-if="userName!=null&&userName!=''">
-              <router-link to="">你好,{{ userName }}</router-link>
+              <router-link to="/UserPersonal"><i class="el-icon-user"></i>你好,{{ user.userNickname }}</router-link>
               <router-link to="/Register">注册</router-link>
             </span>
 
-            <router-link to=""><i class="el-icon-shopping-bag-2"></i>我的订单</router-link>
+            <router-link to="/UserOrder"><i class="el-icon-shopping-bag-2"></i>我的订单</router-link>
             <router-link to="/ShopCart"><i class="el-icon-shopping-cart-2"></i>购物车</router-link>
+            <a @click="fl(0)">全部分类</a>
             <router-link to="/"><i class="el-icon-guide"></i>首页</router-link>
           </el-col>
         </el-row>
@@ -38,21 +39,23 @@ export default {
     return {
       msg: 'Welcome to Your Vue.js App',
       userName: "",
+      user:{}
     }
   },
   methods: {
     login() {
       var userName = sessionStorage.getItem("userName");
       this.userName = userName;
-      // if (userId != null) {
-      // var params=new URLSearchParams();
-      // params.append("userID",userId);
-      // var _this=this;
-      // this.$axios.post("/user/selectUserByID",params).then(function (item){
-      //     _this.user=item.data;
-      //     _this.userId=item.data.id;
-      //   }).catch()
-      // }
+      var userId = sessionStorage.getItem("userId");
+      var params=new URLSearchParams();
+      params.append("userID",userId);
+      var _this=this;
+      this.$axios.post("/user/selectUserByID",params).then(function (item){
+          _this.user=item.data;
+        }).catch()
+    },
+    fl(id){
+      this.$router.push({name: "Classification", params: {id: id,ss:""}});
     }
   },
   created() {
@@ -79,7 +82,6 @@ html, body, #app {
 }
 
 el-header span, a {
-  padding-right: 20px;
   color: #99a9bf;
   font-size: 20px;
   text-decoration: none;

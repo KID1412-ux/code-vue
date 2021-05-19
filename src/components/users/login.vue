@@ -1,16 +1,14 @@
 <template>
   <div id="app">
     <el-container class="footer">
-      <el-header style="background: red">
-      </el-header>
       <el-main>
         <el-row>
-          <el-col :span="24">
+          <el-col :span="24"  style="margin-top: 100px">
             <div class="grid-content"></div>
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="8">
+          <el-col :span="8" >
             <div class="grid-content"></div>
           </el-col>
           <div class="grid-content">
@@ -37,7 +35,6 @@
           </el-col>
         </el-row>
       </el-main>
-      <el-footer style="background: yellow">Footer</el-footer>
     </el-container>
   </div>
 </template>
@@ -69,6 +66,7 @@ export default {
           _this.$message({type: 'success', message: '登录成功'});
           sessionStorage.setItem("userId", result.data.id);
           sessionStorage.setItem("userName", result.data.userName);
+          sessionStorage.setItem("userNickname", result.data.userNickname);
           // 如果登录后需要重定向页面，那么就通过下面的方式重定向
           if (_this.$route.query.redirect) {
             let redirect_path = _this.$route.query.redirect;
@@ -108,11 +106,6 @@ ul {
   padding: 0;
 }
 
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-
 a {
   color: #42b983;
 }
@@ -122,6 +115,9 @@ a {
 }
 
 .footer {
+  background-image: url("../../img/login.jpg");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
   position: absolute;
   left: 0;
   top: 0;

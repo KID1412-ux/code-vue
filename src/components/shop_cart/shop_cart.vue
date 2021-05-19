@@ -171,7 +171,7 @@
       </div>
     </el-dialog>
     <el-dialog title="温馨提示" :visible.sync="dialogVisible" center>
-      <div class="prompt-dialog"> 未获取到支付成功信息，请及时到订单中继续支付</div>
+      <div class="prompt-dialog">未获取到支付成功信息，请及时到订单中继续支付</div>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
       </div>
@@ -208,6 +208,7 @@ export default {
           item.imageUrl = "http://127.0.0.1:8090/code/" + item.imageUrl;
           return item;
         });
+        console.log(_this.tableData)
       }).catch();
     },
     getTotal() {
@@ -385,7 +386,6 @@ export default {
           params.append("id", _this.userId);
           return _this.$axios.post("shopCart/queryUser", params);
         }
-
         this.$axios.all([queryMerchant(), queryUser()]).then(this.$axios.spread(function (res1, res2) {
           _this.merchantData = res1.data;
           if (res2.data.merchantId != "" && res2.data.merchantId != null) {

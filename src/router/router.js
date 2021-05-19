@@ -12,6 +12,21 @@ import Home from "../components/Home";
 import ProductData from "../components/Product/ProductData";
 import ShopCart from "../components/shop_cart/shop_cart";
 import Search from "../components/Home/Search";
+import Classification from "../components/Home/Classification";
+import Merchant from "../components/Merchant";
+import test from "../components/users/test";
+import merchantOrder0 from "../components/Product/merchantOrder0";
+import merchantOrder1 from "../components/Product/merchantOrder1";
+import merchantOrder2 from "../components/Product/merchantOrder2";
+import merchantOrder3 from "../components/Product/merchantOrder3";
+import Revenue from "../components/Product/Revenue";
+import Supplier from "../components/Supplier/Supplier";
+import Goods from "../components/Supplier/Goods";
+import MyChart_huowu from "../components/Supplier/MyChart_huowu";
+import MyChart from "../components/Supplier/MyChart_goodsSales";
+import DealWith from "../components/order_acceptance/deal_with";
+import ApplicationQuery from "../components/warehousing_application/application_query";
+import SubmitApplication from "../components/warehousing_application/submit_application";
 
 //第三方库需要use一下才能用
 Vue.use(VueRouter)
@@ -37,13 +52,60 @@ const routes = [
   },
   {path: "/", component: Home},
   {path: "/Search", component: Search, name: "Search"},
-  {path: "/ProductData", component: ProductData},
+
+  {path: "/Classification", component: Classification, name:"Classification"},
   {
     path: "/ShopCart", component: ShopCart,
     meta: {  // 在路由配置元信息
       requireAuth: true
     }
   },
+  {path: "/Merchant", component: Merchant,
+    children:[
+      {path: "/ProductData", component: ProductData,name:"ProductData"},
+      {path: "/Revenue", component: Revenue,name:"Revenue"},
+      {path: "/MerchantOrder0", component: merchantOrder0, name: "MerchantOrder0"},
+      {path: "/MerchantOrder1", component: merchantOrder1, name: "MerchantOrder1"},
+      {path: "/MerchantOrder2", component: merchantOrder2, name: "MerchantOrder2"},
+      {path: "/MerchantOrder3", component: merchantOrder3, name: "MerchantOrder3"},
+    ]
+  },
+  {path: "/Supplier", component: Supplier, name: "Supplier",
+    children: [
+      {
+        path: '/Goods',
+        name : 'Goods',
+        component:Goods
+      },
+      {
+        path : '/MyChart',
+        name : 'MyChart',
+        component :  MyChart
+      },
+      {
+        path : '/MyChart_huowu',
+        name : 'MyChart_huowu',
+        component :  MyChart_huowu
+      },
+      {
+        path : '/DealWith',
+        name : 'DealWith',
+        component :  DealWith
+      },
+      {
+        path : '/ApplicationQuery',
+        name : 'ApplicationQuery',
+        component :  ApplicationQuery
+      },
+      {
+        path : '/SubmitApplication',
+        name : 'SubmitApplication',
+        component :  SubmitApplication
+      }
+    ]
+  },
+
+
 ]
 
 //实例化VueRouter并将routes添加进去
