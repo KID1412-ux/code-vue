@@ -20,6 +20,7 @@
             <div class="bottom clearfix">
               <el-button size="mini" round @click="openDialogForm">编辑资料</el-button><br><br>
             </div>
+            <div><el-button type="success" plain @click="BackHome">返回首页</el-button></div>
           </div>
         </el-card>
       </el-col>
@@ -209,6 +210,9 @@ export default {
         type: 'warning',
       });
     },
+    BackHome(){
+      this.$router.push("/")
+    }
   },
   created() {
     this.getMerchant();

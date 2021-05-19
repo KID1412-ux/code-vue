@@ -4,6 +4,12 @@ import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import Merchant from "./components/Merchant";
 
+// import ECharts from 'vue-echarts'  // 在 webpack 环境下指向 components/ECharts.vue
+// /* 引入echarts工具 */
+// import 'echarts/lib/component/tooltip'
+// import 'echarts/lib/component/title'
+// import 'echarts/lib/component/legend'
+// Vue.use(ECharts)
 
 //引用router.js
 import router from './router/router.js'
@@ -24,6 +30,6 @@ Vue.prototype.$axios = Axios
 
 new Vue({
   el: '#app',
-  render: h => h(Merchant),
+  render: h => h(App),
   router
 })

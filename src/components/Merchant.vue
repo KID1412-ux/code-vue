@@ -16,7 +16,7 @@
               <i class="el-icon-menu"></i>
               <span slot="title">商户资料维护</span>
             </el-menu-item>
-            <el-menu-item index="1">
+            <el-menu-item index="/Revenua">
               <i class="el-icon-menu"></i>
               <span slot="title">统计营收</span>
             </el-menu-item>

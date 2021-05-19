@@ -9,17 +9,18 @@ import Register from "../components/users/register";
 import UserOrder from "../components/users/userOrder";
 import UserPersonal from "../components/users/userPersonal";
 import Home from "../components/Home";
-import App from "../App";
 import ProductData from "../components/Product/ProductData";
 import ShopCart from "../components/shop_cart/shop_cart";
 import Search from "../components/Home/Search";
 import Classification from "../components/Home/Classification";
 import Merchant from "../components/Merchant";
 import test from "../components/users/test";
-import merchantOrder0 from "../components/users/merchantOrder0";
-import merchantOrder1 from "../components/users/merchantOrder1";
-import merchantOrder2 from "../components/users/merchantOrder2";
-import merchantOrder3 from "../components/users/merchantOrder3";
+import merchantOrder0 from "../components/Product/merchantOrder0";
+import merchantOrder1 from "../components/Product/merchantOrder1";
+import merchantOrder2 from "../components/Product/merchantOrder2";
+import merchantOrder3 from "../components/Product/merchantOrder3";
+import Revenue from "../components/Product/Revenue";
+
 //第三方库需要use一下才能用
 Vue.use(VueRouter)
 
@@ -44,7 +45,7 @@ const routes = [
   },
   {path: "/", component: Home},
   {path: "/Search", component: Search, name: "Search"},
-  {path: "/ProductData", component: ProductData},
+
   {path: "/Classification", component: Classification, name:"Classification"},
   {
     path: "/ShopCart", component: ShopCart,
@@ -54,6 +55,8 @@ const routes = [
   },
   {path: "/Merchant", component: Merchant,
     children:[
+      {path: "/ProductData", component: ProductData,name:"ProductData"},
+      {path: "/Revenue", component: Revenue,name:"Revenue"},
       {path: "/MerchantOrder0", component: merchantOrder0, name: "MerchantOrder0"},
       {path: "/MerchantOrder1", component: merchantOrder1, name: "MerchantOrder1"},
       {path: "/MerchantOrder2", component: merchantOrder2, name: "MerchantOrder2"},
