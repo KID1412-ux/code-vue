@@ -420,12 +420,12 @@ export default {
         return _this.$axios.post("shopCart/saveUserOrder", params);
       }
 
-      function saveMerchantOrder() {
+      function saveMerchantOrder(userOrderId) {
         var params = new URLSearchParams();
         params.append("merchantId", _this.submitForm.merchantId);
         params.append("amount", _this.summation);
         params.append("stats", "0");
-        params.append("userId", _this.userId);
+        params.append("userOrderId",userOrderId);
         return _this.$axios.post("shopCart/saveMerchantOrder", params);
       }
 
@@ -484,26 +484,24 @@ export default {
         });
       }
 
-      this.$axios.all([updateUser(), saveUserOrder(), listByIds(), saveMerchantOrder()]).then(this.$axios.spread(function (res1, res2, res3, res4) {
-        var nary = res3.data.map((item, index) => {
-          return Object.assign(item, {orderId: res2.data, goodsAmount: item.amount, merchantOrderId: res4.data});
-        });
-        var ary = [];
-        res3.data.forEach((item, index) => {
-          var json = {};
-          json["id"] = item.goodsId;
-          json["goodsSales"] = item.amount;
-          ary.push(json);
-        });
-        _this.$axios.all([saveUserOrderDetail(nary), updateGood(ary), saveMerchantOrderDetail(nary)]).then(_this.$axios.spread(function (res1, res2, res3) {
-          removeByIds().then(function (result) {
-            _this.getTotal();
-            _this.getData();
-            _this.batch = [];
-            _this.isSelect = false;
-            _this.$router.push('/UserOrder');
-          }).catch();
-        })).catch();
+      this.$axios.all([updateUser(), saveUserOrder(), listByIds()]).then(this.$axios.spread(function (res1, res2, res3) {
+        saveMerchantOrder(res2.data).then(function (result) {
+          var nary = res3.data.map((item, index) => {
+            return Object.assign(item, {orderId: res2.data, goodsAmount: item.amount, merchantOrderId: result.data});
+          });
+          var ary = [];
+          res3.data.forEach((item, index) => {
+            var json = {};
+            json["id"] = item.goodsId;
+            json["goodsSales"] = item.amount;
+            ary.push(json);
+          });
+          _this.$axios.all([saveUserOrderDetail(nary), updateGood(ary), saveMerchantOrderDetail(nary)]).then(_this.$axios.spread(function (res1, res2, res3) {
+            removeByIds().then(function (result) {
+              _this.$router.push('/UserOrder');
+            }).catch();
+          })).catch();
+        }).catch();
       })).catch();
     },
     cancel() {
