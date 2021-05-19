@@ -40,9 +40,9 @@
                     <label>当前界面：</label>
                     <el-tag type="primary" >用户个人</el-tag>
                     <el-button type="success" plain v-if="user.type =='0'||user.type =='2'" @click="openMerchantFrom">申请成为商户</el-button>
-                    <el-button type="success" plain v-if="user.type =='1'||user.type =='3'" @click="goMerchantPersonal">前往商户主页</el-button>
+                    <el-button type="success" plain v-if="user.type =='1'" @click="goMerchantPersonal">前往商户主页</el-button>
                     <el-button type="info" plain v-if="user.type =='0'||user.type =='1'" @click="openSupplierFrom">申请成为供应商</el-button>
-                    <el-button type="info" plain v-if="user.type =='2'||user.type =='3'" @click="goSupplierPersonal">前往供应商主页</el-button>
+                    <el-button type="info" plain v-if="user.type =='2'" @click="goSupplierPersonal">前往供应商主页</el-button>
                   </el-row>
               </div>
             </el-card>
@@ -561,23 +561,32 @@ export default {
     openMerchantFrom(){
         this.selectUser();
         console.log(this.user)
-        if (this.user.merchantAuditStatus=='0'){
+        if (this.user.type =="2"){
           this.$message({
             showClose: true,
-            message: '您的申请已提交，请勿重复申请',
+            message: '您现在是一名供应商，无法申请商户',
+            type: 'warning',
+          });
+          return
+        }
+        if(this.user.merchantAuditStatus=='0'){
+          this.$message({
+            showClose: true,
+            message: '您的申请正在审核中，请勿重复申请',
             type: 'warning',
           });
           return
         }else if (this.user.merchantAuditStatus=='2'){
-          var _this=this;
+          var _this = this;
           var params = new URLSearchParams();
           params.append("parentID", this.userId);
           this.$axios.post("user/selectLogMerchant", params).then(function (result){
-            _this.$message({
-              duration:0,
-              showClose: true,
-              message: "您提交的申请未通过,原因："+result.data.logdetail,
+            _this.$confirm("您提交的申请未通过,原因："+result.data.logdetail , '审核未通过', {
+              confirmButtonText: '重新提交',
+              cancelButtonText: '返回',
               type: 'warning'
+            }).then(() => {
+              _this.merchantFromVisible=true
             });
           }).catch();
           return
@@ -650,10 +659,18 @@ export default {
     openSupplierFrom(){
       this.selectUser();
       console.log(this.user)
+      if (this.user.type =="1"){
+        this.$message({
+          showClose: true,
+          message: '您现在是一名商户，无法申请供应商',
+          type: 'warning',
+        });
+        return
+      }
       if (this.user.supplierAuditStatus=='0'){
         this.$message({
           showClose: true,
-          message: '您的申请已提交，请勿重复申请',
+          message: '您的申请正在审核中，请勿重复申请',
           type: 'warning',
         });
         return
@@ -662,13 +679,15 @@ export default {
         var params = new URLSearchParams();
         params.append("parentID", this.userId);
         this.$axios.post("user/selectLogSupplier", params).then(function (result){
-          _this.$message({
-            duration:0,
-            showClose: true,
-            message: "您提交的申请未通过,原因："+result.data.logdetail,
+          _this.$confirm("您提交的申请未通过,原因："+result.data.logdetail , '审核未通过', {
+            confirmButtonText: '重新提交',
+            cancelButtonText: '返回',
             type: 'warning'
-          });        }).catch();
-        return
+          }).then(() => {
+            _this.supplierFromVisible=true
+          });
+        }).catch();
+          return
       }
       this.supplierFromVisible=true
     },
