@@ -32,14 +32,11 @@
             <label>商户描述：{{merchant.merchantDescribe}}</label><br><br>
             <div>
               <label style="">营业执照：</label>
-              <el-tooltip class="item" effect="dark" content="点击可放大查看" placement="top-start">
                 <el-image
                   style="width: 100px; height: 100px"
                   :src="merchant.merchantPermitImage"
-
                   >
                 </el-image>
-              </el-tooltip>
             </div>
           </div>
         </el-card>
