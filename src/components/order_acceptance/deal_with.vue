@@ -280,6 +280,17 @@ export default {
         });
       }
 
+      function updateGoods(batch) {
+        return _this.$axios({
+          method: 'post',
+          url: 'purchase/updateGoods',
+          data: JSON.stringify(batch),
+          headers: {
+            'Content-Type': 'application/json;charset=UTF-8'
+          }
+        });
+      }
+
       this.$axios.all([updatePurchase(), saveStock()]).then(this.$axios.spread(function (res1, res2) {
         var nary = [];
         _this.detailsData.forEach(item => {
@@ -289,7 +300,14 @@ export default {
           json.goodsAmount = item.amount;
           nary.push(json);
         })
-        saveDetail(nary).then(function (result) {
+        var batch = [];
+        _this.detailsData.forEach(item => {
+          var json = {};
+          json.id = item.goodsId;
+          json.goodsSales = item.amount;
+          batch.push(json);
+        })
+        _this.$axios.all([saveDetail(nary), updateGoods(batch)]).then(_this.$axios.spread(function (res1, res2) {
           _this.$message({
             showClose: true,
             message: '受理成功',
@@ -297,7 +315,7 @@ export default {
           });
           _this.dialogTableVisible = false;
           _this.getData();
-        }).catch();
+        })).catch();
       })).catch();
     }
   },
