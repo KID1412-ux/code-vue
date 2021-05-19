@@ -429,7 +429,7 @@ export default {
           _this.userImageUrl="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png";
         }else {
           _this.user.userImage="http://127.0.0.1:8090/code/" +_this.user.userImage;
-          _this.user.userImageUrl=_this.user.userImage
+          _this.userImageUrl=_this.user.userImage
         }
       }).catch();
     },
