@@ -49,8 +49,8 @@
       <el-form :model="merchantForm" ref="merchantForm">
         <el-form-item label="商户店铺图片：" label-width="150px">
           <div>
-           <div v-if="bool" style="float: left; margin-right: 5px">
-             <img width="150px" height="150px" :src="merchantForm.merchantShopImage" alt="" >
+           <div v-if="bool1" style="float: left; margin-right: 5px">
+             <img width="150px" height="150px" :src="merchantForm.ShopImage" alt="" >
            </div>
            <div style="float: left">
              <el-upload
@@ -58,12 +58,12 @@
               list-type="picture-card"
               ref="upload"
               accept="image/jpeg,image/gif,image/png,image/jpg"
-
-
+              :on-change="updateImg1"
+              :on-remove="updateImgRemove1"
               :auto-upload="false"
-
+              :file-list="updateImgList1"
               :limit="1"
-
+              :on-exceed="imageExceed"
               style="width: 100%;">
                <i class="el-icon-plus"></i>
              </el-upload>
@@ -84,8 +84,8 @@
         </el-form-item>
         <el-form-item label="营业执照：" label-width="150px">
           <div>
-            <div v-if="bool" style="float: left; margin-right: 5px">
-              <img width="150px" height="150px" :src="merchantForm.merchantPermitImage" alt="" >
+            <div v-if="bool2" style="float: left; margin-right: 5px">
+              <img width="150px" height="150px" :src="merchantForm.PermitImage" alt="" >
             </div>
             <div style="float: left">
               <el-upload
@@ -93,12 +93,12 @@
                 list-type="picture-card"
                 ref="upload"
                 accept="image/jpeg,image/gif,image/png,image/jpg"
-
-
+                :on-change="updateImg2"
+                :on-remove="updateImgRemove2"
                 :auto-upload="false"
-
+                :file-list="updateImgList2"
                 :limit="1"
-
+                :on-exceed="imageExceed"
                 style="width: 100%;">
                 <i class="el-icon-plus"></i>
               </el-upload>
@@ -108,7 +108,7 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="openDialogForm">确 定</el-button>
+        <el-button type="primary" @click="MerchantUpdate(merchantForm.merchantId)">确 定</el-button>
       </div>
     </el-dialog>
 
@@ -122,9 +122,12 @@ export default {
     return{
       merchant: {},
       dialogFormVisible: false,
-      bool:true,
+      updateImgList1:[],
+      updateImgList2:[],
+      bool1:true,
+      bool2:true,
       merchantForm:{
-        merchantId:'',merchantName:'',merchantDescribe:'',merchantPermitImage:'',merchantShopImage:'',merchantPhone:'',deliveryAddress:''
+        id:'',merchantName:'',merchantDescribe:'',PermitImage:'',ShopImage:'',merchantPhone:'',deliveryAddress:''
       },
     }
   },
@@ -141,15 +144,70 @@ export default {
       }).catch()
     },
     openDialogForm(){
-      this.merchantForm.merchantId=this.merchant.merchantId;
+      this.merchantForm.id=this.merchant.id;
       this.merchantForm.merchantName = this.merchant.merchantName;
       this.merchantForm.merchantPhone=this.merchant.merchantPhone;
       this.merchantForm.merchantDescribe = this.merchant.merchantDescribe;
-      this.merchantForm.merchantPermitImage = this.merchant.merchantPermitImage;
-      this.merchantForm.merchantShopImage = this.merchant.merchantShopImage;
+      this.merchantForm.PermitImage = this.merchant.merchantPermitImage;
+      this.merchantForm.ShopImage = this.merchant.merchantShopImage;
       this.merchantForm.deliveryAddress = this.merchant.deliveryAddress;
       console.log(this.merchant)
       this.dialogFormVisible=true;
+    },
+    // getFile1(e){
+    //   console.log(e.target.files[0])
+    //   this.merchantForm.merchantShopImage= e.target.files[0];  //获取选中的文件二进制流
+    // },
+    // getFile2(e){
+    //   console.log(e.target.files[0])
+    //   this.merchantForm.merchantPermitImage= e.target.files[0];  //获取选中的文件二进制流
+    // },
+    MerchantUpdate(id){
+      var _this =this;
+      //h5提供的类型  FormData
+      var formData = new FormData();
+      Object.keys(this.merchantForm).forEach( (key) =>{
+        formData.append(key,_this.merchantForm[key]);
+      })
+      this.$axios({
+        method: 'post',
+        url: '/user/UpdateMerchant',
+        data:formData,
+        headers: {
+          'Content-Type':'multipart/form-data'
+        }
+      }).then(function (response) {
+        _this.getMerchant();
+        _this.dialogFormVisible=false;
+
+      }).catch();
+    },
+    updateImg1(file) {
+      this.bool1 = false;
+      this.merchantForm.ShopImage = file.raw;
+      console.log(this.merchantForm.ShopImage);
+    },
+    updateImgRemove1() {
+      setTimeout(() => {
+        this.bool1 = true;
+      }, 1000);
+    },
+    updateImg2(file) {
+      this.bool2 = false;
+      this.merchantForm.PermitImage = file.raw;
+      console.log(this.merchantForm.PermitImage);
+    },
+    updateImgRemove2() {
+      setTimeout(() => {
+        this.bool2 = true;
+      }, 1000);
+    },
+    imageExceed(file, fileList) {
+      this.$message({
+        showClose: true,
+        message: '图片只需上传一张',
+        type: 'warning',
+      });
     },
   },
   created() {

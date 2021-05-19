@@ -15,7 +15,7 @@ import ShopCart from "../components/shop_cart/shop_cart";
 import Search from "../components/Home/Search";
 import Classification from "../components/Home/Classification";
 import Merchant from "../components/Merchant";
-import Test from "../components/users/test";
+import test from "../components/users/test";
 //第三方库需要use一下才能用
 Vue.use(VueRouter)
 
@@ -50,7 +50,7 @@ const routes = [
   },
   {path: "/Merchant", component: Merchant,
     children:[{
-      path: "/Test", component: Test, name: "Test"
+      path: "/Test", component: test, name: "Test"
     }]
   },
 
