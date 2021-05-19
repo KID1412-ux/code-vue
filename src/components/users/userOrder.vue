@@ -17,12 +17,12 @@
               <el-table max-height="400px" v-loading="loading" :data="tableData" border style="width: 100%;background-color: #eee" row-key="id" >
                 <el-table-column label="订单编号" width="250">
                   <template slot-scope="scope">
-                    <el-popover placement="right" width="400" trigger="click">
+                    <el-popover placement="bottom-start" width="600" trigger="click">
                       <el-table :data="tableData2">
                         <el-table-column align="center" label="订单详情">
                           <el-table-column width="100" property="id" label="详情编号"></el-table-column>
-                          <el-table-column width="150" property="goodsName" label="商品名"></el-table-column>
-                          <el-table-column width="150" property="orderPrice" label="价格"></el-table-column>
+                          <el-table-column width="300" property="goodsName" label="商品名"></el-table-column>
+                          <el-table-column property="orderPrice" label="价格"></el-table-column>
                         </el-table-column>
                       </el-table>
                       <el-link :underline="false" @click="selectUserOrderDetail(scope.row.id)" type="primary" slot="reference">{{ scope.row.orderNumber }}</el-link>
@@ -51,12 +51,12 @@
               <el-table max-height="400px" :data="tableData" border style="width: 100%;background-color: #eee" row-key="id" >
                 <el-table-column prop="orderNumber" label="订单编号" width="250">
                   <template slot-scope="scope">
-                    <el-popover placement="right" width="400" trigger="click">
+                    <el-popover placement="bottom-start" width="600" trigger="click">
                       <el-table :data="tableData2">
                         <el-table-column align="center" label="订单详情">
                           <el-table-column width="100" property="id" label="详情编号"></el-table-column>
-                          <el-table-column width="150" property="goodsName" label="商品名"></el-table-column>
-                          <el-table-column width="150" property="orderPrice" label="价格"></el-table-column>
+                          <el-table-column width="300" property="goodsName" label="商品名"></el-table-column>
+                          <el-table-column property="orderPrice" label="价格"></el-table-column>
                         </el-table-column>
                       </el-table>
                       <el-link :underline="false" @click="selectUserOrderDetail(scope.row.id)" type="primary" slot="reference">{{ scope.row.orderNumber }}</el-link>
@@ -81,29 +81,27 @@
             </el-tab-pane>
             <el-tab-pane label="待提货" name="1" @click="selectUserOrder">
               <el-table max-height="400px" :data="tableData" border style="width: 100%;background-color: #eee" row-key="id" >
-                <el-table-column prop="orderNumber" label="订单编号" width="250">
+                <el-table-column prop="orderNumber" label="订单编号" width="300">
                   <template slot-scope="scope">
-                    <el-popover placement="right" width="400" trigger="click">
+                    <el-popover placement="bottom-start" width="600" trigger="click">
                       <el-table :data="tableData2">
                         <el-table-column align="center" label="订单详情">
                           <el-table-column width="100" property="id" label="详情编号"></el-table-column>
-                          <el-table-column width="150" property="goodsName" label="商品名"></el-table-column>
-                          <el-table-column width="150" property="orderPrice" label="价格"></el-table-column>
+                          <el-table-column width="300" property="goodsName" label="商品名"></el-table-column>
+                          <el-table-column property="orderPrice" label="价格"></el-table-column>
                         </el-table-column>
                       </el-table>
                       <el-link :underline="false" @click="selectUserOrderDetail(scope.row.id)" type="primary" slot="reference">{{ scope.row.orderNumber }}</el-link>
                     </el-popover>
                   </template>
                 </el-table-column>
-                <el-table-column  prop="orderPrice"  label="总金额"  width="120">
+                <el-table-column  prop="orderPrice"  label="总金额"  width="150">
                 </el-table-column>
-                <el-table-column  prop="createTime"  label="创建时间"  width="150">
+                <el-table-column  prop="createTime"  label="创建时间"  width="180">
                 </el-table-column>
-                <el-table-column  prop="userNickname"  label="收货人"  width="120">
+                <el-table-column  prop="userNickname"  label="收货人"  width="150">
                 </el-table-column>
-                <el-table-column  prop="orderStats"  label="订单状态"  width="120">
-                </el-table-column>
-                <el-table-column   label="操作" >
+                <el-table-column  prop="orderStats"  label="订单状态"  >
                 </el-table-column>
               </el-table>
             </el-tab-pane>
@@ -111,12 +109,12 @@
               <el-table max-height="400px" :data="tableData" border style="width: 100%;background-color: #eee" >
                 <el-table-column prop="orderNumber" label="订单编号" width="250">
                   <template slot-scope="scope">
-                    <el-popover placement="right" width="400" trigger="click">
+                    <el-popover placement="bottom-start" width="600" trigger="click">
                       <el-table :data="tableData2">
                         <el-table-column align="center" label="订单详情">
                           <el-table-column width="100" property="id" label="详情编号"></el-table-column>
-                          <el-table-column width="150" property="goodsName" label="商品名"></el-table-column>
-                          <el-table-column width="150" property="orderPrice" label="价格"></el-table-column>
+                          <el-table-column width="300" property="goodsName" label="商品名"></el-table-column>
+                          <el-table-column property="orderPrice" label="价格"></el-table-column>
                         </el-table-column>
                       </el-table>
                       <el-link :underline="false" @click="selectUserOrderDetail(scope.row.id)" type="primary" slot="reference">{{ scope.row.orderNumber }}</el-link>
@@ -154,7 +152,7 @@
 export default {
   data() {
     return {
-      activeName: "3",
+      activeName: "4",
       userId: "",
       loading: true,
       orderNum: "",
@@ -186,6 +184,7 @@ export default {
       this.$axios.post("userOrder/selectUserOrderByDto", params).then(function (result) {
         _this.loading = false;
         _this.tableData = result.data;
+        console.log(result.data)
         _this.tableData.forEach(item => {
           if (item.orderStats === "0") {
             item.orderStats = "待付款"
@@ -231,7 +230,7 @@ export default {
         params2.append("merchantId", row.addressId);
         params2.append("amount", row.amount);
         params2.append("stats", "0");
-        params2.append("userId", _this.userId);
+        params2.append("userOrderId",row.id);;
         return _this.$axios.post("shopCart/saveMerchantOrder", params2);
       }
       //查询用户订单详情
@@ -284,26 +283,6 @@ export default {
           });
         })).catch();
       })).catch();
-    },
-    //提货方法
-    receipt(row) {
-      var _this = this;
-      this.$confirm('确认提货?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        var _this = this;
-        var params = new URLSearchParams();
-        params.append("orderId", row.id);
-        this.$axios.post("userOrder/receipt", params).then(function (result) {
-        }).catch();
-        _this.selectUserOrder();
-        this.$message({
-          type: 'success',
-          message: '已提货!'
-        });
-      });
     },
     //取消订单方法
     cancelOrder(row) {

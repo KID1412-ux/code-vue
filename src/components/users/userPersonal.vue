@@ -11,7 +11,7 @@
                 <br>
                 <h3>{{user.userNickname}}</h3>
                 <el-button size="mini" round @click="openDialogForm">编辑个人资料</el-button><br><br>
-                <el-link type="danger" @click="outUser">退出</el-link>
+                <el-link type="danger" @click="outUser">退出登录</el-link>
               </div>
             </el-card>
           </el-col>
@@ -368,7 +368,7 @@ export default {
   name: "userOrder",
   data() {
     return {
-      activeName:"3",
+      activeName:"4",
       userId:"",
       user:{},
       userForm:{

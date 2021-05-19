@@ -69,7 +69,10 @@
         },
         getdata(){
           var _this =this;
-          this.$axios.post("Goods/queryAll.action").then(function (response) {
+          var userId=sessionStorage.getItem("userId");
+          var params = new URLSearchParams();
+          params.append("id",userId);
+          this.$axios.post("Goods/queryAll.action",params).then(function (response) {
             _this.Goods=response.data;
             for(var i=0;i<_this.Goods.length;i++){
               var obj = new Object();
