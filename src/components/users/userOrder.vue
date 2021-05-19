@@ -231,6 +231,7 @@ export default {
         params2.append("merchantId", row.addressId);
         params2.append("amount", row.amount);
         params2.append("stats", "0");
+        params2.append("userId", _this.userId);
         return _this.$axios.post("shopCart/saveMerchantOrder", params2);
       }
       //查询用户订单详情
@@ -399,11 +400,6 @@ h1, h2 {
 ul {
   list-style-type: none;
   padding: 0;
-}
-
-li {
-  display: inline-block;
-  margin: 0 10px;
 }
 
 a {
