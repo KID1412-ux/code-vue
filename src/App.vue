@@ -77,7 +77,7 @@ html, body, #app {
 .el-header {
   background-color: #475669;
   text-align: center;
-  line-height: 70px;
+  line-height: 60px;
 }
 
 el-header span, a {
