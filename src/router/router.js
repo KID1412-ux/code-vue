@@ -25,6 +25,9 @@ import Goods from "../components/Supplier/Goods";
 import MyChart_huowu from "../components/Supplier/MyChart_huowu";
 import MyChart from "../components/Supplier/MyChart_goodsSales";
 import DealWith from "../components/order_acceptance/deal_with";
+import ApplicationQuery from "../components/warehousing_application/application_query";
+import SubmitApplication from "../components/warehousing_application/submit_application";
+
 //第三方库需要use一下才能用
 Vue.use(VueRouter)
 
@@ -88,6 +91,16 @@ const routes = [
         path : '/DealWith',
         name : 'DealWith',
         component :  DealWith
+      },
+      {
+        path : '/ApplicationQuery',
+        name : 'ApplicationQuery',
+        component :  ApplicationQuery
+      },
+      {
+        path : '/SubmitApplication',
+        name : 'SubmitApplication',
+        component :  SubmitApplication
       }
     ]
   },
