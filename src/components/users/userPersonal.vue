@@ -74,7 +74,7 @@
                     </el-table-column>
                     <el-table-column  prop="orderPrice"  label="总金额"  width="120">
                     </el-table-column>
-                    <el-table-column  prop="createTime"  label="创建时间"  width="150">
+                    <el-table-column  prop="createTime"  label="创建时间"  width="200">
                     </el-table-column>
                     <el-table-column  prop="userNickname"  label="收货人"  width="150">
                     </el-table-column>
@@ -100,7 +100,7 @@
                     </el-table-column>
                     <el-table-column  prop="orderPrice"  label="总金额"  width="120">
                     </el-table-column>
-                    <el-table-column  prop="createTime"  label="创建时间"  width="150">
+                    <el-table-column  prop="createTime"  label="创建时间"  width="200">
                     </el-table-column>
                     <el-table-column  prop="userNickname"  label="收货人"  width="150">
                     </el-table-column>
@@ -126,7 +126,7 @@
                     </el-table-column>
                     <el-table-column  prop="orderPrice"  label="总金额"  width="120">
                     </el-table-column>
-                    <el-table-column  prop="createTime"  label="创建时间"  width="150">
+                    <el-table-column  prop="createTime"  label="创建时间"  width="200">
                     </el-table-column>
                     <el-table-column  prop="userNickname"  label="收货人"  width="150">
                     </el-table-column>
@@ -152,7 +152,7 @@
                     </el-table-column>
                     <el-table-column  prop="orderPrice"  label="总金额"  width="120">
                     </el-table-column>
-                    <el-table-column  prop="createTime"  label="创建时间"  width="150">
+                    <el-table-column  prop="createTime"  label="创建时间"  width="200">
                     </el-table-column>
                     <el-table-column  prop="userNickname"  label="收货人"  width="150">
                     </el-table-column>
