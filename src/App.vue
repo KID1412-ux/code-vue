@@ -43,8 +43,7 @@ export default {
   },
   methods: {
     login() {
-      var userName = sessionStorage.getItem("userName");
-      this.userName = userName;
+
       var userId = sessionStorage.getItem("userId");
       var params=new URLSearchParams();
       params.append("userID",userId);
@@ -58,7 +57,8 @@ export default {
     }
   },
   created() {
-    // this.login();
+    var userName = sessionStorage.getItem("userName");
+    this.userName = userName;
   },
   watch: {
     // 如果路由有变化，会再次执行该方法
