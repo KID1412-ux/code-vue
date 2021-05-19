@@ -4,12 +4,12 @@
       <el-main>
         <el-row :gutter="20">
           <div class="grid-content"  style="background-color: #ffffff">
-            <el-input id="userName" class="input" style="margin-left: 55%;margin-top: -50px" v-model="goodsName" placeholder="请输入商品名">
+            <el-input id="userName" class="input" style="margin-left: 40%" v-model="goodsName" placeholder="请输入商品名">
             </el-input>
             <el-button slot="append" @click="selectMerchantOrders" type="primary">查询</el-button>
 
-            <el-table max-height="500px" :data="tableData1" border style="width: 100%;background-color: #eee" row-key="id" >
-              <el-table-column label="订单编号" width="150">
+            <el-table max-height="500px" :data="tableData1" border style="margin-left:5%;width: 1100px;background-color: #eee"  >
+              <el-table-column label="订单编号" width="100">
                 <template slot-scope="scope">
                   <span>{{scope.$index + (page)*size + 1}}</span>
                 </template>

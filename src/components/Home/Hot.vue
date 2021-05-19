@@ -333,7 +333,7 @@ export default {
         params.append("merchantId", _this.submitForm.merchantId);
         params.append("amount", _this.num);
         params.append("stats", "0");
-        params.append("userId", userId);
+        params.append("userOrderId", userId);
         return _this.$axios.post("shopCart/saveMerchantOrder", params);
       }
       function saveUserOrderDetail(nary) {
