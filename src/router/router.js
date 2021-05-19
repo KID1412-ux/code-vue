@@ -15,7 +15,7 @@ import ShopCart from "../components/shop_cart/shop_cart";
 import Search from "../components/Home/Search";
 import Classification from "../components/Home/Classification";
 import Merchant from "../components/Merchant";
-import Test from "../components/users/test";
+import test from "../components/users/test";
 import merchantOrder0 from "../components/users/merchantOrder0";
 import merchantOrder1 from "../components/users/merchantOrder1";
 import merchantOrder2 from "../components/users/merchantOrder2";
