@@ -43,20 +43,23 @@ export default {
   },
   methods: {
     login() {
+      var userName = sessionStorage.getItem("userName");
+      this.userName = userName;
 
       var userId = sessionStorage.getItem("userId");
       var params=new URLSearchParams();
       params.append("userID",userId);
       var _this=this;
       this.$axios.post("/user/selectUserByID",params).then(function (item){
-          _this.user=item.data;
-        }).catch()
+        _this.user=item.data;
+      }).catch()
     },
     fl(id){
       this.$router.push({name: "Classification", params: {id: id,ss:""}});
     }
   },
   created() {
+    this.login();
     var userName = sessionStorage.getItem("userName");
     this.userName = userName;
   },
@@ -88,4 +91,5 @@ el-header span, a {
 }
 
 </style>
+
 
