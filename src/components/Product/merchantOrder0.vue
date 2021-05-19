@@ -10,29 +10,23 @@
 
             <el-table max-height="500px" :data="tableData0" border style="width: 100%;background-color: #eee" row-key="id" >
               <el-table-column label="订单编号" width="150">
-<!--                <template slot-scope="scope">-->
-<!--                  <el-popover placement="right" width="400" trigger="click">-->
-<!--                    <el-table :data="tableData0">-->
-<!--                      <el-table-column align="center" label="订单详情">-->
-<!--                        <el-table-column width="100" property="id" label="详情编号"></el-table-column>-->
-<!--                        <el-table-column width="150" property="goodsName" label="商品名"></el-table-column>-->
-<!--                        <el-table-column width="150" property="orderPrice" label="价格"></el-table-column>-->
-<!--                      </el-table-column>-->
-<!--                    </el-table>-->
-<!--                    <el-link :underline="false" @click="selectUserOrderDetail(scope.row.id)" type="primary" slot="reference">{{ scope.row.orderNumber }}</el-link>-->
-<!--                  </el-popover>-->
-<!--                </template>-->
+                <template slot-scope="scope">
+                  <span>{{scope.$index + (page)*size + 1}}</span>
+                </template>
               </el-table-column>
 
               <el-table-column  prop="goodsName"  label="商品名称"  width="300">
               </el-table-column>
-              <el-table-column  prop="imageUrl"  label="商品图片"  width="150">
+              <el-table-column  label="商品图片"  width="150">
+                <template slot-scope="scope">
+                  <el-image style="width: 120px;height: 60px" :src="scope.row.imageUrl"></el-image>
+                </template>
               </el-table-column>
               <el-table-column  prop="goodsAmount"  label="商品数量"  width="120">
               </el-table-column>
               <el-table-column  prop="stats"  label="订单状态"  width="120">
               </el-table-column>
-              <el-table-column  label="操作" >
+              <el-table-column  prop="goodsDescribe" label="商品描述" >
 <!--                <template slot-scope="scope" v-if="scope.row.orderStats">-->
 <!--                  <el-button @click="counter(scope.row)" type="primary" size="small" v-if="scope.row.orderStats==='待付款'">支付</el-button>-->
 <!--                  <el-button @click="cancelOrder(scope.row)" type="danger" size="small" v-if="scope.row.orderStats==='待付款'">取消</el-button>-->
@@ -56,7 +50,9 @@ export default {
     return {
       userId:"",
       goodsName:"",
-      tableData0: []
+      tableData0: [],
+      page:0,
+      size:10
     }
   },
   methods:{
@@ -72,8 +68,10 @@ export default {
       params.append("goodsName", this.goodsName);
       params.append("stats", "0");
       this.$axios.post("merchantOrder/selectMerchantOrders", params).then(function (result) {
-        _this.tableData0 = result.data;
-        console.log(result.data)
+        _this.tableData0 = result.data.map(item => {
+          item.imageUrl = "http://127.0.0.1:8090/code/" + item.imageUrl;
+          return item;
+        });
         _this.tableData0.forEach(item => {
           if (item.stats === "0") {
             item.stats = "待发货"

@@ -43,7 +43,8 @@ export default {
   },
   methods: {
     login() {
-
+      var userName = sessionStorage.getItem("userName");
+      this.userName = userName;
       var userId = sessionStorage.getItem("userId");
       var params=new URLSearchParams();
       params.append("userID",userId);
@@ -57,8 +58,7 @@ export default {
     }
   },
   created() {
-    var userName = sessionStorage.getItem("userName");
-    this.userName = userName;
+    this.login();
   },
   watch: {
     // 如果路由有变化，会再次执行该方法
@@ -77,11 +77,10 @@ html, body, #app {
 .el-header {
   background-color: #475669;
   text-align: center;
-  line-height: 60px;
+  line-height: 70px;
 }
 
 el-header span, a {
-  padding-right: 20px;
   color: #99a9bf;
   font-size: 20px;
   text-decoration: none;

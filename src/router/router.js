@@ -20,7 +20,11 @@ import merchantOrder1 from "../components/Product/merchantOrder1";
 import merchantOrder2 from "../components/Product/merchantOrder2";
 import merchantOrder3 from "../components/Product/merchantOrder3";
 import Revenue from "../components/Product/Revenue";
-
+import Supplier from "../components/Supplier/Supplier";
+import Goods from "../components/Supplier/Goods";
+import MyChart_huowu from "../components/Supplier/MyChart_huowu";
+import MyChart from "../components/Supplier/MyChart_goodsSales";
+import DealWith from "../components/order_acceptance/deal_with";
 //第三方库需要use一下才能用
 Vue.use(VueRouter)
 
@@ -63,6 +67,31 @@ const routes = [
       {path: "/MerchantOrder3", component: merchantOrder3, name: "MerchantOrder3"},
     ]
   },
+  {path: "/Supplier", component: Supplier, name: "Supplier",
+    children: [
+      {
+        path: '/Goods',
+        name : 'Goods',
+        component:Goods
+      },
+      {
+        path : '/MyChart',
+        name : 'MyChart',
+        component :  MyChart
+      },
+      {
+        path : '/MyChart_huowu',
+        name : 'MyChart_huowu',
+        component :  MyChart_huowu
+      },
+      {
+        path : '/DealWith',
+        name : 'DealWith',
+        component :  DealWith
+      }
+    ]
+  },
+
 
 ]
 

@@ -15,11 +15,12 @@ import Merchant from "./components/Merchant";
 import router from './router/router.js'
 //导入axios
 import Axios from "axios";
-
+import * as Echarts from 'echarts';
 
 Vue.config.productionTip = false
 
 Vue.use(ElementUI)
+Vue.prototype.$echarts=Echarts;
 
 //配置异步将要访问的路径
 Axios.defaults.baseURL = "http://127.0.0.1:8090/code"

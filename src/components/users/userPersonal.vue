@@ -748,7 +748,7 @@ export default {
         alert("您的供应商资格已被商城加入黑名单，无法前往供应商主页");
         return
       }
-      this.$router.push('/Merchant')
+      this.$router.push('/Supplier')
     },
     //用户退出
     outUser(){
