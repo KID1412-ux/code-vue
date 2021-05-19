@@ -63,7 +63,7 @@ export default {
       myChart.setOption({
         title : {
           text: '营收统计',//主标题
-          subtext: '商户',//副标题
+          subtext: '温馨提示：只有客户提货后才会计入营收',//副标题
           x:'center',//x轴方向对齐方式
         },
         tooltip : {
