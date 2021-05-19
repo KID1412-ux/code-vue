@@ -11,15 +11,15 @@
             <el-table max-height="500px" :data="tableData3" border style="margin-left:5%;width: 1100px;background-color: #eee"  >
               <el-table-column label="订单编号" width="300">
                 <template slot-scope="scope">
-                  <el-popover placement="right" width="500" trigger="click">
+                  <el-popover placement="bottom-start" width="600" trigger="click">
                     <el-table :data="tableDetailData">
                       <el-table-column align="center" label="订单详情">
                         <el-table-column width="100" property="id" label="详情编号"></el-table-column>
-                        <el-table-column width="150" property="goodsName" label="商品名"></el-table-column>
-                        <el-table-column width="150" property="orderPrice" label="价格"></el-table-column>
+                        <el-table-column width="300" property="goodsName" label="商品名"></el-table-column>
+                        <el-table-column property="goodsPrice" label="价格"></el-table-column>
                       </el-table-column>
                     </el-table>
-                    <el-link :underline="false" @click="selectUserOrderDetail(scope.row.id)" type="primary" slot="reference">{{ scope.row.orderNumber }}</el-link>
+                    <el-link :underline="false" @click="selectMerchantOrderDetail(scope.row.id)" type="primary" slot="reference">{{ scope.row.orderNumber }}</el-link>
                   </el-popover>
                 </template>
               </el-table-column>
@@ -30,12 +30,7 @@
               </el-table-column>
               <el-table-column  prop="userNickname"  label="所属提货人"  width="150">
               </el-table-column>
-              <el-table-column  prop="stats"  label="订单状态"  width="150">
-              </el-table-column>
-              <el-table-column  label="操作" >
-                <template slot-scope="scope">
-                  <el-button @click="receipt(scope.row)" type="success" >确认提货</el-button>
-                </template>
+              <el-table-column  prop="stats"  label="订单状态"  >
               </el-table-column>
             </el-table>
           </div>
@@ -89,19 +84,19 @@ export default {
         })
       }).catch();
     },
-    // //查看订单详情
-    // selectUserOrderDetail(id) {
-    //   var _this = this;
-    //   this.tableData2 = [];
-    //   var params = new URLSearchParams();
-    //   params.append("orderId", id);
-    //   this.$axios.post("userOrder/selectUserOrderDetail", params).then(function (result) {
-    //     _this.tableData2 = result.data;
-    //     _this.tableData2.forEach(item => {
-    //       item.orderPrice = item.goodsPrice + ' x ' + item.goodsAmount;
-    //     })
-    //   }).catch();
-    // },
+    //查看订单详情
+    selectMerchantOrderDetail(id) {
+      var _this = this;
+      this.tableDetailData = [];
+      var params = new URLSearchParams();
+      params.append("merchantOrderId", id);
+      this.$axios.post("merchantOrder/selectMerchantOrderDetail", params).then(function (result) {
+        _this.tableDetailData = result.data;
+        _this.tableDetailData.forEach(item => {
+          item.goodsPrice = item.goodsPrice + ' x ' + item.goodsAmount;
+        })
+      }).catch();
+    },
   },
   created() {
     this.selectMerchantOrders();

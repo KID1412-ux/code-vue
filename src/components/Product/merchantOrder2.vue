@@ -11,12 +11,12 @@
             <el-table max-height="500px" :data="tableData2" border style="margin-left:5%;width: 1100px;background-color: #eee"  >
               <el-table-column label="订单编号" width="300">
                 <template slot-scope="scope">
-                  <el-popover placement="right" width="500" trigger="click">
+                  <el-popover placement="bottom-start" width="600" trigger="click">
                     <el-table :data="tableDetailData">
                       <el-table-column align="center" label="订单详情">
                         <el-table-column width="100" property="id" label="详情编号"></el-table-column>
-                        <el-table-column width="150" property="goodsName" label="商品名"></el-table-column>
-                        <el-table-column width="150" property="orderPrice" label="价格"></el-table-column>
+                        <el-table-column width="300" property="goodsName" label="商品名"></el-table-column>
+                        <el-table-column property="goodsPrice" label="价格"></el-table-column>
                       </el-table-column>
                     </el-table>
                     <el-link :underline="false" @click="selectMerchantOrderDetail(scope.row.id)" type="primary" slot="reference">{{ scope.row.orderNumber }}</el-link>
@@ -72,6 +72,7 @@ export default {
       params.append("goodsName", this.goodsName);
       params.append("stats", "2");
       this.$axios.post("merchantOrder/selectAllMerchantOrder", params).then(function (result) {
+        console.log(result.data)
         _this.tableData2 = result.data.map(item => {
           item.imageUrl = "http://127.0.0.1:8090/code/" + item.imageUrl;
           return item;
@@ -98,7 +99,7 @@ export default {
       this.$axios.post("merchantOrder/selectMerchantOrderDetail", params).then(function (result) {
         _this.tableDetailData = result.data;
         _this.tableDetailData.forEach(item => {
-          item.orderPrice = item.goodsPrice + ' x ' + item.goodsAmount;
+          item.goodsPrice = item.goodsPrice + ' x ' + item.goodsAmount;
         })
       }).catch();
     },
@@ -114,6 +115,7 @@ export default {
         var params = new URLSearchParams();
         params.append("id", row.id);
         params.append("stats", "3");
+        params.append("userOrderId", row.userOrderId);
         this.$axios.post("merchantOrder/receipt", params).then(function (result) {
           _this.selectMerchantOrders();
         }).catch();

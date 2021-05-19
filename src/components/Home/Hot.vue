@@ -328,12 +328,12 @@ export default {
         params.append("orderStats", "1");
         return _this.$axios.post("shopCart/saveUserOrder", params);
       }
-      function saveMerchantOrder() {
+      function saveMerchantOrder(userOrderId) {
         var params = new URLSearchParams();
         params.append("merchantId", _this.submitForm.merchantId);
         params.append("amount", _this.num);
         params.append("stats", "0");
-        params.append("userOrderId", userId);
+        params.append("userOrderId", userOrderId);
         return _this.$axios.post("shopCart/saveMerchantOrder", params);
       }
       function saveUserOrderDetail(nary) {
@@ -366,24 +366,26 @@ export default {
           }
         });
       }
-      this.$axios.all([updateUser(), saveUserOrder(), saveMerchantOrder()]).then(this.$axios.spread(function (res1, res2, res3, res4) {
-        var nary = [];
-        var json1={};
-        json1["orderId"]=res2.data;
-        json1["merchantOrderId"]=res3.data;
-        json1["goodsId"]=_this.good.id;
-        json1["goodsAmount"]=_this.num;
-        json1["goodsPrice"]=_this.good.goodsPrice;
-        nary.push(json1);
-        console.log(nary)
-        var ary = [];
-        var json2 = {};
-        json2["id"] = _this.good.id;
-        json2["goodsSales"] = _this.num;
-        ary.push(json2);
-        _this.$axios.all([saveUserOrderDetail(nary), updateGood(ary), saveMerchantOrderDetail(nary)]).then(_this.$axios.spread(function (res1, res2, res3) {
-          _this.$router.push('/UserOrder');
-        })).catch();
+      this.$axios.all([updateUser(), saveUserOrder() ]).then(this.$axios.spread(function (res1, res2) {
+        saveMerchantOrder(res2.data).then(function (res3) {
+          var nary = [];
+          var json1={};
+          json1["orderId"]=res2.data;
+          json1["merchantOrderId"]=res3.data;
+          json1["goodsId"]=_this.good.id;
+          json1["goodsAmount"]=_this.num;
+          json1["goodsPrice"]=_this.good.goodsPrice;
+          nary.push(json1);
+          console.log(nary)
+          var ary = [];
+          var json2 = {};
+          json2["id"] = _this.good.id;
+          json2["goodsSales"] = _this.num;
+          ary.push(json2);
+          _this.$axios.all([saveUserOrderDetail(nary), updateGood(ary), saveMerchantOrderDetail(nary)]).then(_this.$axios.spread(function (res1, res2, res3) {
+            _this.$router.push('/UserOrder');
+          })).catch();
+        }).catch()
       })).catch();
     },
     cancel() {

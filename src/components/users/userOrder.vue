@@ -81,7 +81,7 @@
             </el-tab-pane>
             <el-tab-pane label="待提货" name="1" @click="selectUserOrder">
               <el-table max-height="400px" :data="tableData" border style="width: 100%;background-color: #eee" row-key="id" >
-                <el-table-column prop="orderNumber" label="订单编号" width="250">
+                <el-table-column prop="orderNumber" label="订单编号" width="300">
                   <template slot-scope="scope">
                     <el-popover placement="bottom-start" width="600" trigger="click">
                       <el-table :data="tableData2">
@@ -95,15 +95,13 @@
                     </el-popover>
                   </template>
                 </el-table-column>
-                <el-table-column  prop="orderPrice"  label="总金额"  width="120">
+                <el-table-column  prop="orderPrice"  label="总金额"  width="150">
                 </el-table-column>
-                <el-table-column  prop="createTime"  label="创建时间"  width="150">
+                <el-table-column  prop="createTime"  label="创建时间"  width="180">
                 </el-table-column>
-                <el-table-column  prop="userNickname"  label="收货人"  width="120">
+                <el-table-column  prop="userNickname"  label="收货人"  width="150">
                 </el-table-column>
-                <el-table-column  prop="orderStats"  label="订单状态"  width="120">
-                </el-table-column>
-                <el-table-column   label="操作" >
+                <el-table-column  prop="orderStats"  label="订单状态"  >
                 </el-table-column>
               </el-table>
             </el-tab-pane>
@@ -232,7 +230,7 @@ export default {
         params2.append("merchantId", row.addressId);
         params2.append("amount", row.amount);
         params2.append("stats", "0");
-        params2.append("userId", _this.userId);
+        params2.append("userOrderId",row.id);;
         return _this.$axios.post("shopCart/saveMerchantOrder", params2);
       }
       //查询用户订单详情
