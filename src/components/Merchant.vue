@@ -2,7 +2,9 @@
   <div id="app">
     <el-container class="height">
       <el-header>
-        <div style="float: right"><el-button type="success" plain @click="Back">返回首页</el-button></div>
+        <div style="float: right">
+<!--          <el-button type="success" plain @click="Back">返回首页</el-button>-->
+          <el-button @click="Back">返回首页</el-button></div>
       </el-header>
       <el-container>
         <el-aside width="200px">
