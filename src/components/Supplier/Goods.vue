@@ -95,6 +95,25 @@
           <el-input v-model="addform.goodsPrice"></el-input>
         </el-form-item>
 
+        <el-form-item label="商品分类">
+          <el-cascader class="form-input"
+                       ref="addUnit"
+                       :options="data"
+                       :key="keyValue"
+                       placeholder="请选择商品分类"
+                       :props="{ expandTrigger: 'hover', checkStrictly: true, value: 'id' }"
+                       clearable
+                       filterable
+                       v-model="addVal"
+                       @change="addUnit"
+          >
+            <template slot-scope="{ node, data }">
+              <span>{{ data.label }}</span>
+              <span v-if="!node.isLeaf"> ({{ data.children.length }}) </span>
+            </template>
+          </el-cascader>
+        </el-form-item>
+
         <el-button type="info" @click="addgoods">新增</el-button>
         <el-button type="warming" @click="addwinshow=false">关闭</el-button>
 
@@ -121,9 +140,11 @@
         <el-form-item label="商品价格">
           <el-input v-model="editform.goodsPrice" ></el-input>
         </el-form-item>
+
         <el-form-item label="商品销量">
           <el-input v-model="editform.goodsSales" ></el-input>
         </el-form-item>
+
       </el-form>
 
       <el-button type="info" @click="updategoods">保存</el-button>
@@ -150,6 +171,9 @@
         gname:"",
         gmax:"",
         tableData: [],
+        data: [],
+        keyValue: 1,
+        addVal: [],
         total:0,
         pageno:1,
         pagsize:10,
@@ -161,9 +185,11 @@
         addform:{
           goodsName:"",
           goodsDescribe:"",
-          img2:""   //二进制文件流
+          img2:"",   //二进制文件流
+          firstKindId: '', secondKindId: '', thirdKindId: '',
+          firstKindName: '', secondKindName: '', thirdKindName: ''
         },
-        scid:""
+        scid:"",
       }
     },
         methods:{
@@ -247,6 +273,12 @@
           this.pagsize=val;
             this.getdata();
           },
+          getType() {
+            var _this = this;
+            this.$axios.post("goodsMain/showType").then(function (result) {
+              _this.data = result.data;
+            }).catch();
+          },
           //选择文件时，获取文件数据
           getFile(e){
             console.log(e.target.files[0])
@@ -262,13 +294,15 @@
             //文件上传   post提交  enctype=“mu....”
             var _this =this;
             //h5提供的类型  FormData
+            var userid =sessionStorage.getItem("userId")
+
             var formData = new FormData();
             //formData.append("name",this.addform.name);
             //Object.keys(this.addform)  得到一个数组 元素： 对象中的属性名
             Object.keys(this.addform).forEach( (key) =>{
               formData.append(key,_this.addform[key]);
             })
-
+            formData.append("supplierId",userid);
             this.$axios({
               method: 'post',
               url: 'Goods/addgoods.action',
@@ -289,6 +323,32 @@
               }
 
             }).catch();
+          },
+          addUnit(a) {
+            this.addform.firstKindId = '';
+            this.addform.firstKindName = '';
+            this.addform.secondKindId = '';
+            this.addform.secondKindName = '';
+            this.addform.thirdKindId = '';
+            this.addform.thirdKindName = '';
+            if (this.$refs.addUnit) {
+              this.$refs.addUnit.dropDownVisible = false;
+              if (this.$refs.addUnit.getCheckedNodes().length != 0) {
+                var labels = this.$refs.addUnit.getCheckedNodes()[0].pathLabels;
+                if (this.addVal[0] && labels[0]) {
+                  this.addform.firstKindId = this.addVal[0];
+                  this.addform.firstKindName = labels[0];
+                }
+                if (this.addVal[1] && labels[1]) {
+                  this.addform.secondKindId = this.addVal[1];
+                  this.addform.secondKindName = labels[1];
+                }
+                if (this.addVal[2] && labels[2]) {
+                  this.addform.thirdKindId = this.addVal[2];
+                  this.addform.thirdKindName = labels[2];
+                }
+              }
+            }
           },
           updategoods(){
             var _this =this;
@@ -323,8 +383,14 @@
           }
       },
     created() {
+      this.getType();
       this.getdata();
-    }
+    },
+    watch: {
+      data(newVal) {
+        this.keyValue++;
+      }
+    },
   }
 </script>
 

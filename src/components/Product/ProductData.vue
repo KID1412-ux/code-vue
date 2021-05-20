@@ -140,7 +140,7 @@ export default {
     getMerchant(){
       var userID=sessionStorage.getItem("userId");
       var params=new URLSearchParams();
-      params.append("userID","1")
+      params.append("userID",userID)
       var _this=this;
       this.$axios.post("/user/selectUserByID",params).then(function (item){
         _this.merchant=item.data;

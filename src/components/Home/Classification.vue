@@ -167,6 +167,12 @@ export default {
   methods: {
     handleClick() {
       var _this = this;
+      if (this.input3==undefined){
+        this.input3 = '';
+      }
+      if (this.activeName=="undefined"){
+        this.activeName=0;
+      }
       var param = new URLSearchParams();
       param.append("pageSize", this.pageSize)
       param.append("pageNo", this.pageNo)
