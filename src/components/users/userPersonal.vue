@@ -239,11 +239,11 @@
             style="width: 100%;">
             <i class="el-icon-plus" ></i>
           </el-upload>
-<!--          <div>-->
-<!--            <el-dialog :visible.sync="dialogVisibleImg">-->
-<!--              <img width="100%" :src="dialogImageUrl" alt="">-->
-<!--            </el-dialog>-->
-<!--          </div>-->
+          <div>
+            <el-dialog :visible.sync="dialogVisibleImg">
+              <img width="100%" :src="dialogImageUrl" alt="">
+            </el-dialog>
+          </div>
         </el-form-item>
         <el-form-item label="商户营业执照图片:" label-width="200px">
         <el-upload
@@ -259,11 +259,11 @@
           style="width: 100%;">
           <i class="el-icon-plus"></i>
         </el-upload>
-<!--        <div>-->
-<!--          <el-dialog :visible.sync="dialogVisibleImg">-->
-<!--            <img width="100%" :src="dialogImageUrl" alt="">-->
-<!--          </el-dialog>-->
-<!--        </div>-->
+        <div>
+          <el-dialog :visible.sync="dialogVisibleImg">
+            <img width="100%" :src="dialogImageUrl" alt="">
+          </el-dialog>
+        </div>
       </el-form-item>
         <el-form-item label="店铺电话:" label-width="200px" prop="goodsPrice">
           <div class="form-input">
@@ -311,11 +311,11 @@
             style="width: 100%;">
             <i class="el-icon-plus" ></i>
           </el-upload>
-<!--                    <div>-->
-<!--                      <el-dialog :visible.sync="dialogVisibleImg">-->
-<!--                        <img width="100%" :src="dialogImageUrl" alt="">-->
-<!--                      </el-dialog>-->
-<!--                    </div>-->
+              <div>
+                <el-dialog :visible.sync="dialogVisibleImg">
+                  <img width="100%" :src="dialogImageUrl" alt="">
+                </el-dialog>
+              </div>
         </el-form-item>
         <el-form-item label="供应商营业执照图片:" label-width="200px">
           <el-upload
@@ -331,25 +331,25 @@
             style="width: 100%;">
             <i class="el-icon-plus"></i>
           </el-upload>
-          <!--        <div>-->
-          <!--          <el-dialog :visible.sync="dialogVisibleImg">-->
-          <!--            <img width="100%" :src="dialogImageUrl" alt="">-->
-          <!--          </el-dialog>-->
-          <!--        </div>-->
+          <div>
+            <el-dialog :visible.sync="dialogVisibleImg">
+              <img width="100%" :src="dialogImageUrl" alt="">
+            </el-dialog>
+          </div>
         </el-form-item>
         <el-form-item label="供应商电话:" label-width="200px" prop="goodsPrice">
           <div class="form-input">
-            <el-input autocomplete="off" v-model="merchantAddFrom.merchantPhone" style="width: 350px"></el-input>
+            <el-input autocomplete="off" v-model="supplierAddFrom.supplierPhone" style="width: 350px"></el-input>
           </div>
         </el-form-item>
         <el-form-item label="供应商地址:" label-width="200px" prop="goodsUnit">
           <div class="form-input">
-            <el-input autocomplete="off" v-model="merchantAddFrom.deliveryAddress" style="width: 350px"></el-input>
+            <el-input autocomplete="off" v-model="supplierAddFrom.supplierAddress" style="width: 350px"></el-input>
           </div>
         </el-form-item>
         <el-form-item label="供应商介绍:" label-width="200px" prop="goodsDescribe">
           <div class="form-input">
-            <el-input type="textarea" v-model="merchantAddFrom.merchantDescribe" :autosize="{ minRows: 2, maxRows: 4}" placeholder="请输入内容" style="width: 350px">
+            <el-input type="textarea" v-model="supplierAddFrom.supplierDescribe" :autosize="{ minRows: 2, maxRows: 4}" placeholder="请输入内容" style="width: 350px">
             </el-input>
           </div>
         </el-form-item>
@@ -404,12 +404,12 @@ export default {
       },
       imageList1: [],
       imageList2: [],
-      // dialogVisibleImg: false,
-
+      dialogVisibleImg: false,
+      dialogImageUrl:'',
       supplierFromVisible:false,
       supplierAddFrom: {
         id:'',supplierName: '', supplierPhone: '', fileObj3: '',
-        fileObj4: '',supplierAddress: ''
+        fileObj4: '',supplierAddress: '',supplierDescribe:''
       },
       imageList3: [],
       imageList4: [],
@@ -586,6 +586,9 @@ export default {
               cancelButtonText: '返回',
               type: 'warning'
             }).then(() => {
+              var params1=new URLSearchParams();
+              params1.append("parentID", _this.userId);
+              _this.$axios.post("user/clearLogMerchant", params)
               _this.merchantFromVisible=true
             });
           }).catch();
@@ -684,6 +687,9 @@ export default {
             cancelButtonText: '返回',
             type: 'warning'
           }).then(() => {
+            var params1=new URLSearchParams();
+            params1.append("parentID", _this.userId);
+            _this.$axios.post("user/clearLogSupplier", params)
             _this.supplierFromVisible=true
           });
         }).catch();

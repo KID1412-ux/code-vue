@@ -264,7 +264,7 @@ export default {
         var params = new URLSearchParams();
         params.append("amount", total);
         params.append("price", totalPrice);
-        params.append("supplierId", _this.form.id);
+        params.append("supplierId", _this.supplierId);
         params.append("registerStats", "0");
         return _this.$axios.post("stock/saveStock", params);
       }
